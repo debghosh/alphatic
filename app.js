@@ -336,11 +336,7 @@ function renderPortfolioBuilder() {
 }
 
 function clearPortfolio() {
-    if (confirm('Clear all holdings from portfolio?')) {
-        currentPortfolio = [];
-        renderPortfolioBuilder();
-        renderETFSelector();
-    }
+    clearPortfolioEnhanced();
 }
 
 // ============================================================================
@@ -433,22 +429,7 @@ function loadSavedPortfolios() {
 }
 
 function loadPortfolio(index) {
-    const portfolios = getCurrentPortfolios();
-    
-    if (index < 0 || index >= portfolios.length) {
-        alert('Invalid portfolio index');
-        return;
-    }
-    
-    const portfolio = portfolios[index];
-    currentPortfolio = portfolio.holdings.map(h => ({
-        ...ETF_LOOKUP[h.symbol],
-        weight: h.weight
-    })).filter(h => h.symbol); // Filter out any undefined
-    
-    renderPortfolioBuilder();
-    renderETFSelector();
-    alert(`✅ Loaded portfolio: ${portfolio.name}\n\nHoldings: ${currentPortfolio.length}\nLast saved: ${new Date(portfolio.timestamp).toLocaleString()}`);
+    loadPortfolioEnhanced(index);
 }
 
 function deletePortfolio(index) {
@@ -800,6 +781,8 @@ async function renderAnalysisView() {
                     <div id="risk-contribution"></div>
                 </div>
             </div>
+            
+            ${renderComprehensiveComparisonTable(metrics)}
             
             <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
                 <button onclick="openOptimizerModal()" class="btn btn-primary">
@@ -2707,3 +2690,852 @@ Persistence: Permanent (until manually cleared)
 
 console.log('Alphatic Persistent Storage Module loaded successfully! 💾');
 console.log('Your portfolios will now persist across browser sessions');
+// ============================================================================
+// ALPHATIC V1.2 - ENHANCED PORTFOLIO MANAGEMENT
+// Save/Save As functionality + Portfolio tracking
+// ============================================================================
+
+// Track currently loaded portfolio
+let currentLoadedPortfolio = null; // { index: number, name: string } or null
+
+// ============================================================================
+// ENHANCED SAVE/SAVE AS FUNCTIONALITY
+// ============================================================================
+
+function savePortfolio() {
+    // Check if we have a currently loaded portfolio
+    if (currentLoadedPortfolio !== null) {
+        // We loaded a portfolio - show Save vs Save As options
+        showSaveOptionsDialog();
+    } else {
+        // Fresh portfolio - just save as new
+        saveAsNewPortfolio();
+    }
+}
+
+function showSaveOptionsDialog() {
+    const portfolioName = currentLoadedPortfolio.name;
+    
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.style.display = 'block';
+    modal.innerHTML = `
+        <div class="modal-content" style="max-width: 500px;">
+            <h3 class="text-xl font-bold mb-4">Save Portfolio</h3>
+            <p class="text-sm text-gray-600 mb-4">
+                You loaded <strong>"${portfolioName}"</strong> and made changes.
+            </p>
+            <p class="text-sm text-gray-600 mb-6">
+                Do you want to update the existing portfolio or save as a new one?
+            </p>
+            
+            <div class="space-y-3">
+                <button onclick="updateExistingPortfolio(); closeSaveDialog();" class="btn btn-primary w-full">
+                    💾 Save (Update "${portfolioName}")
+                </button>
+                <button onclick="saveAsNewPortfolio(); closeSaveDialog();" class="btn btn-secondary w-full">
+                    📝 Save As New Portfolio
+                </button>
+                <button onclick="closeSaveDialog();" class="btn btn-outline w-full">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    window.currentSaveDialog = modal;
+}
+
+function closeSaveDialog() {
+    if (window.currentSaveDialog) {
+        document.body.removeChild(window.currentSaveDialog);
+        window.currentSaveDialog = null;
+    }
+}
+
+function updateExistingPortfolio() {
+    if (currentLoadedPortfolio === null) {
+        alert('No portfolio loaded to update');
+        return;
+    }
+    
+    const portfolio = {
+        name: currentLoadedPortfolio.name,
+        timestamp: new Date().toISOString(),
+        holdings: currentPortfolio.map(h => ({
+            symbol: h.symbol,
+            weight: h.weight
+        }))
+    };
+    
+    if (updatePortfolioInStorage(currentLoadedPortfolio.index, portfolio)) {
+        alert(`✅ Portfolio "${portfolio.name}" updated successfully!\n\n💾 Changes saved to storage`);
+        
+        // Update the loaded portfolio reference (index stays same, update timestamp)
+        currentLoadedPortfolio.timestamp = portfolio.timestamp;
+        
+        loadSavedPortfolios();
+    } else {
+        alert('Error updating portfolio. Check console for details.');
+    }
+}
+
+function saveAsNewPortfolio() {
+    const name = prompt('Enter portfolio name:');
+    if (!name) return;
+    
+    const portfolio = {
+        name: name,
+        timestamp: new Date().toISOString(),
+        holdings: currentPortfolio.map(h => ({
+            symbol: h.symbol,
+            weight: h.weight
+        }))
+    };
+    
+    if (addPortfolioToStorage(portfolio)) {
+        alert(`✅ Portfolio "${name}" saved successfully!\n\n💾 Saved to browser storage (persists across sessions)`);
+        
+        // Update current loaded portfolio to the new one
+        const portfolios = getCurrentPortfolios();
+        currentLoadedPortfolio = {
+            index: portfolios.length - 1,
+            name: name,
+            timestamp: portfolio.timestamp
+        };
+        
+        loadSavedPortfolios();
+    } else {
+        alert('Error saving portfolio. Check console for details.');
+    }
+}
+
+// Updated loadPortfolio to track what's loaded
+function loadPortfolioEnhanced(index) {
+    const portfolios = getCurrentPortfolios();
+    
+    if (index < 0 || index >= portfolios.length) {
+        alert('Invalid portfolio index');
+        return;
+    }
+    
+    const portfolio = portfolios[index];
+    currentPortfolio = portfolio.holdings.map(h => ({
+        ...ETF_LOOKUP[h.symbol],
+        weight: h.weight
+    })).filter(h => h.symbol);
+    
+    // Track which portfolio is loaded
+    currentLoadedPortfolio = {
+        index: index,
+        name: portfolio.name,
+        timestamp: portfolio.timestamp
+    };
+    
+    renderPortfolioBuilder();
+    renderETFSelector();
+    
+    alert(`✅ Loaded portfolio: ${portfolio.name}\n\nHoldings: ${currentPortfolio.length}\nLast saved: ${new Date(portfolio.timestamp).toLocaleString()}\n\n💡 Click "Save" to update this portfolio or "Save As" to create a new version.`);
+}
+
+// Clear loaded portfolio tracking when building fresh
+function clearLoadedPortfolioTracking() {
+    currentLoadedPortfolio = null;
+}
+
+// Update clearPortfolio to reset tracking
+function clearPortfolioEnhanced() {
+    if (confirm('Clear all holdings from portfolio?')) {
+        currentPortfolio = [];
+        currentLoadedPortfolio = null; // Reset tracking
+        renderPortfolioBuilder();
+        renderETFSelector();
+    }
+}
+
+// ============================================================================
+// PORTFOLIO FUNDAMENTALS & CHARACTERISTICS
+// ============================================================================
+
+function calculatePortfolioFundamentals() {
+    // Calculate weighted average expense ratio
+    const weightedExpenseRatio = currentPortfolio.reduce((sum, holding) => {
+        return sum + (holding.weight / 100) * (holding.expense / 100);
+    }, 0);
+    
+    // Calculate factor concentration (Herfindahl index)
+    const factorWeights = {};
+    currentPortfolio.forEach(holding => {
+        const factor = holding.factor;
+        if (!factorWeights[factor]) factorWeights[factor] = 0;
+        factorWeights[factor] += holding.weight / 100;
+    });
+    
+    const factorHHI = Object.values(factorWeights).reduce((sum, weight) => {
+        return sum + weight * weight;
+    }, 0);
+    
+    const factorDiversification = 1 / factorHHI; // Effective number of factors
+    
+    // Calculate holding concentration (Herfindahl index)
+    const holdingHHI = currentPortfolio.reduce((sum, holding) => {
+        const weight = holding.weight / 100;
+        return sum + weight * weight;
+    }, 0);
+    
+    const holdingDiversification = 1 / holdingHHI; // Effective number of holdings
+    
+    // Get largest holding
+    const largestHolding = currentPortfolio.reduce((max, holding) => {
+        return holding.weight > max.weight ? holding : max;
+    }, currentPortfolio[0]);
+    
+    // Count holdings by type
+    const holdingTypes = {
+        equity: 0,
+        bonds: 0,
+        alternatives: 0
+    };
+    
+    currentPortfolio.forEach(holding => {
+        if (holding.factor === 'Bonds' || holding.factor === 'Long Bonds' || holding.factor === 'Short Bonds') {
+            holdingTypes.bonds += holding.weight / 100;
+        } else if (holding.factor === 'Gold' || holding.factor === 'Real Estate') {
+            holdingTypes.alternatives += holding.weight / 100;
+        } else {
+            holdingTypes.equity += holding.weight / 100;
+        }
+    });
+    
+    return {
+        numberOfHoldings: currentPortfolio.length,
+        weightedExpenseRatio: weightedExpenseRatio,
+        factorDiversification: factorDiversification,
+        holdingDiversification: holdingDiversification,
+        largestHolding: {
+            symbol: largestHolding.symbol,
+            weight: largestHolding.weight
+        },
+        assetAllocation: {
+            equity: holdingTypes.equity,
+            bonds: holdingTypes.bonds,
+            alternatives: holdingTypes.alternatives
+        },
+        factorCount: Object.keys(factorWeights).length,
+        factors: Object.keys(factorWeights).sort()
+    };
+}
+
+// ============================================================================
+// COMPREHENSIVE COMPARISON TABLE
+// ============================================================================
+
+function renderComprehensiveComparisonTable(metrics) {
+    const fundamentals = calculatePortfolioFundamentals();
+    
+    // Calculate SPY max drawdown
+    const alignedData = alignDataArrays();
+    const spyReturns = alignedData['SPY'].returns;
+    const spyValues = [10000];
+    for (let i = 0; i < spyReturns.length; i++) {
+        spyValues.push(spyValues[spyValues.length - 1] * (1 + spyReturns[i]));
+    }
+    
+    let spyPeak = spyValues[0];
+    let spyMaxDD = 0;
+    for (let i = 1; i < spyValues.length; i++) {
+        spyPeak = Math.max(spyPeak, spyValues[i]);
+        const dd = (spyValues[i] - spyPeak) / spyPeak;
+        spyMaxDD = Math.min(spyMaxDD, dd);
+    }
+    
+    let html = `
+        <div class="mb-6">
+            <h3 class="text-lg font-semibold mb-3">📋 Comprehensive Portfolio vs Benchmark Comparison</h3>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr class="bg-gray-100 border-b-2 border-gray-300">
+                            <th class="text-left p-3 font-semibold">Metric</th>
+                            <th class="text-right p-3 font-semibold">Your Portfolio</th>
+                            <th class="text-right p-3 font-semibold">S&P 500 (SPY)</th>
+                            <th class="text-right p-3 font-semibold">Difference</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Performance Metrics -->
+                        <tr class="bg-blue-50 border-b border-gray-200">
+                            <td colspan="4" class="p-2 font-semibold text-sm">PERFORMANCE METRICS</td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <td class="p-3">Annual Return</td>
+                            <td class="text-right p-3 font-semibold">${(metrics.expectedReturn * 100).toFixed(2)}%</td>
+                            <td class="text-right p-3 font-semibold">${(metrics.spyReturn * 100).toFixed(2)}%</td>
+                            <td class="text-right p-3 font-semibold ${metrics.excessReturn > 0 ? 'text-green-600' : 'text-red-600'}">
+                                ${metrics.excessReturn > 0 ? '+' : ''}${(metrics.excessReturn * 100).toFixed(2)}%
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <td class="p-3">Cumulative Return</td>
+                            <td class="text-right p-3 font-semibold">${(metrics.cumulativeReturn * 100).toFixed(2)}%</td>
+                            <td class="text-right p-3 font-semibold">${(metrics.spyCumulativeReturn * 100).toFixed(2)}%</td>
+                            <td class="text-right p-3 font-semibold ${(metrics.cumulativeReturn - metrics.spyCumulativeReturn) > 0 ? 'text-green-600' : 'text-red-600'}">
+                                ${(metrics.cumulativeReturn - metrics.spyCumulativeReturn) > 0 ? '+' : ''}${((metrics.cumulativeReturn - metrics.spyCumulativeReturn) * 100).toFixed(2)}%
+                            </td>
+                        </tr>
+                        
+                        <!-- Risk Metrics -->
+                        <tr class="bg-blue-50 border-b border-gray-200">
+                            <td colspan="4" class="p-2 font-semibold text-sm">RISK METRICS</td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <td class="p-3">Volatility (Annual)</td>
+                            <td class="text-right p-3 font-semibold">${(metrics.volatility * 100).toFixed(2)}%</td>
+                            <td class="text-right p-3 font-semibold">${(metrics.spyVolatility * 100).toFixed(2)}%</td>
+                            <td class="text-right p-3 font-semibold ${(metrics.volatility - metrics.spyVolatility) < 0 ? 'text-green-600' : 'text-red-600'}">
+                                ${(metrics.volatility - metrics.spyVolatility) > 0 ? '+' : ''}${((metrics.volatility - metrics.spyVolatility) * 100).toFixed(2)}%
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <td class="p-3">Maximum Drawdown</td>
+                            <td class="text-right p-3 font-semibold">${(metrics.maxDrawdown * 100).toFixed(2)}%</td>
+                            <td class="text-right p-3 font-semibold">${(spyMaxDD * 100).toFixed(2)}%</td>
+                            <td class="text-right p-3 font-semibold ${(metrics.maxDrawdown - spyMaxDD) > 0 ? 'text-green-600' : 'text-red-600'}">
+                                ${(metrics.maxDrawdown - spyMaxDD) > 0 ? '+' : ''}${((metrics.maxDrawdown - spyMaxDD) * 100).toFixed(2)}%
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <td class="p-3">Beta</td>
+                            <td class="text-right p-3 font-semibold">${metrics.beta.toFixed(3)}</td>
+                            <td class="text-right p-3 font-semibold">1.000</td>
+                            <td class="text-right p-3 font-semibold ${(metrics.beta - 1) < 0 ? 'text-green-600' : 'text-red-600'}">
+                                ${(metrics.beta - 1) > 0 ? '+' : ''}${(metrics.beta - 1).toFixed(3)}
+                            </td>
+                        </tr>
+                        
+                        <!-- Risk-Adjusted Metrics -->
+                        <tr class="bg-blue-50 border-b border-gray-200">
+                            <td colspan="4" class="p-2 font-semibold text-sm">RISK-ADJUSTED METRICS</td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <td class="p-3">Sharpe Ratio</td>
+                            <td class="text-right p-3 font-semibold">${metrics.sharpe.toFixed(3)}</td>
+                            <td class="text-right p-3 font-semibold">${metrics.spySharpe.toFixed(3)}</td>
+                            <td class="text-right p-3 font-semibold ${(metrics.sharpe - metrics.spySharpe) > 0 ? 'text-green-600' : 'text-red-600'}">
+                                ${(metrics.sharpe - metrics.spySharpe) > 0 ? '+' : ''}${(metrics.sharpe - metrics.spySharpe).toFixed(3)}
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <td class="p-3">Alpha (Annual)</td>
+                            <td class="text-right p-3 font-semibold ${metrics.alpha > 0 ? 'text-green-600' : 'text-red-600'}">
+                                ${(metrics.alpha * 100).toFixed(2)}%
+                            </td>
+                            <td class="text-right p-3 font-semibold">0.00%</td>
+                            <td class="text-right p-3 font-semibold ${metrics.alpha > 0 ? 'text-green-600' : 'text-red-600'}">
+                                ${metrics.alpha > 0 ? '+' : ''}${(metrics.alpha * 100).toFixed(2)}%
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <td class="p-3">Correlation to S&P 500</td>
+                            <td class="text-right p-3 font-semibold">${metrics.correlation.toFixed(3)}</td>
+                            <td class="text-right p-3 font-semibold">1.000</td>
+                            <td class="text-right p-3 font-semibold">
+                                ${(metrics.correlation - 1).toFixed(3)}
+                            </td>
+                        </tr>
+                        
+                        <!-- Portfolio Characteristics -->
+                        <tr class="bg-blue-50 border-b border-gray-200">
+                            <td colspan="4" class="p-2 font-semibold text-sm">PORTFOLIO CHARACTERISTICS</td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <td class="p-3">Number of Holdings</td>
+                            <td class="text-right p-3 font-semibold">${fundamentals.numberOfHoldings}</td>
+                            <td class="text-right p-3 font-semibold">1 (SPY ETF)</td>
+                            <td class="text-right p-3 font-semibold">+${fundamentals.numberOfHoldings - 1}</td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <td class="p-3">Weighted Expense Ratio</td>
+                            <td class="text-right p-3 font-semibold">${(fundamentals.weightedExpenseRatio * 100).toFixed(3)}%</td>
+                            <td class="text-right p-3 font-semibold">0.090%</td>
+                            <td class="text-right p-3 font-semibold ${(fundamentals.weightedExpenseRatio - 0.0009) > 0 ? 'text-red-600' : 'text-green-600'}">
+                                ${(fundamentals.weightedExpenseRatio - 0.0009) > 0 ? '+' : ''}${((fundamentals.weightedExpenseRatio - 0.0009) * 100).toFixed(3)}%
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <td class="p-3">Asset Allocation - Equity</td>
+                            <td class="text-right p-3 font-semibold">${(fundamentals.assetAllocation.equity * 100).toFixed(1)}%</td>
+                            <td class="text-right p-3 font-semibold">100.0%</td>
+                            <td class="text-right p-3 font-semibold">
+                                ${(fundamentals.assetAllocation.equity - 1) > 0 ? '+' : ''}${((fundamentals.assetAllocation.equity - 1) * 100).toFixed(1)}%
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <td class="p-3">Asset Allocation - Bonds</td>
+                            <td class="text-right p-3 font-semibold">${(fundamentals.assetAllocation.bonds * 100).toFixed(1)}%</td>
+                            <td class="text-right p-3 font-semibold">0.0%</td>
+                            <td class="text-right p-3 font-semibold">
+                                ${fundamentals.assetAllocation.bonds > 0 ? '+' : ''}${(fundamentals.assetAllocation.bonds * 100).toFixed(1)}%
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <td class="p-3">Asset Allocation - Alternatives</td>
+                            <td class="text-right p-3 font-semibold">${(fundamentals.assetAllocation.alternatives * 100).toFixed(1)}%</td>
+                            <td class="text-right p-3 font-semibold">0.0%</td>
+                            <td class="text-right p-3 font-semibold">
+                                ${fundamentals.assetAllocation.alternatives > 0 ? '+' : ''}${(fundamentals.assetAllocation.alternatives * 100).toFixed(1)}%
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <td class="p-3">Largest Holding</td>
+                            <td class="text-right p-3 font-semibold">${fundamentals.largestHolding.symbol} (${fundamentals.largestHolding.weight.toFixed(1)}%)</td>
+                            <td class="text-right p-3 font-semibold">SPY (100%)</td>
+                            <td class="text-right p-3 font-semibold">-${(100 - fundamentals.largestHolding.weight).toFixed(1)}%</td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <td class="p-3">Factor Diversification</td>
+                            <td class="text-right p-3 font-semibold">${fundamentals.factorDiversification.toFixed(2)} effective factors</td>
+                            <td class="text-right p-3 font-semibold">1.00 (market only)</td>
+                            <td class="text-right p-3 font-semibold text-green-600">+${(fundamentals.factorDiversification - 1).toFixed(2)}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="p-4 bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200 rounded-lg">
+            <h4 class="font-semibold mb-2">💡 Interpretation Guide</h4>
+            <div class="text-sm space-y-1">
+                <p><strong class="text-green-600">Green values:</strong> Better than S&P 500 (lower risk, higher return, better efficiency)</p>
+                <p><strong class="text-red-600">Red values:</strong> Worse than S&P 500 (higher risk, lower return, lower efficiency)</p>
+                <p><strong>Alpha:</strong> Your skill-based excess return after accounting for market risk (beta)</p>
+                <p><strong>Factor Diversification:</strong> Higher = more diversified across investment styles</p>
+            </div>
+        </div>
+    `;
+    
+    return html;
+}
+
+console.log('Alphatic V1.2 Enhanced Portfolio Management loaded! 💾');
+// ============================================================================
+// COMPARE PORTFOLIOS FEATURE
+// Side-by-side comparison of multiple saved portfolios
+// ============================================================================
+
+async function renderCompareView() {
+    const container = document.getElementById('compare-content');
+    if (!container) return;
+    
+    const portfolios = getCurrentPortfolios();
+    
+    if (portfolios.length < 2) {
+        container.innerHTML = `
+            <div class="text-center text-gray-500 py-12">
+                <p class="text-lg mb-4">You need at least 2 saved portfolios to compare</p>
+                <p class="text-sm">Save some portfolios first, then come back here!</p>
+                <p class="text-xs mt-4 text-gray-400">Currently saved: ${portfolios.length} portfolio${portfolios.length === 1 ? '' : 's'}</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Show portfolio selector
+    let html = `
+        <div class="mb-6">
+            <h3 class="text-lg font-semibold mb-3">📊 Compare Saved Portfolios</h3>
+            <p class="text-sm text-gray-600 mb-4">Select 2-4 portfolios to compare side-by-side</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-4">
+    `;
+    
+    portfolios.forEach((portfolio, idx) => {
+        html += `
+            <div class="p-3 border border-gray-300 rounded-lg hover:border-blue-500 cursor-pointer" 
+                 onclick="togglePortfolioForComparison(${idx})">
+                <input type="checkbox" id="compare-${idx}" class="mr-2" onchange="togglePortfolioForComparison(${idx})">
+                <label for="compare-${idx}" class="cursor-pointer">
+                    <div class="font-semibold text-sm">${portfolio.name}</div>
+                    <div class="text-xs text-gray-500">${new Date(portfolio.timestamp).toLocaleDateString()}</div>
+                    <div class="text-xs text-gray-400">${portfolio.holdings.length} holdings</div>
+                </label>
+            </div>
+        `;
+    });
+    
+    html += `
+            </div>
+            
+            <button onclick="runPortfolioComparison()" class="btn btn-primary" id="compare-btn" disabled>
+                🔍 Compare Selected Portfolios
+            </button>
+        </div>
+        
+        <div id="comparison-results"></div>
+    `;
+    
+    container.innerHTML = html;
+    
+    // Initialize comparison state
+    window.selectedPortfoliosForComparison = new Set();
+}
+
+function togglePortfolioForComparison(index) {
+    if (!window.selectedPortfoliosForComparison) {
+        window.selectedPortfoliosForComparison = new Set();
+    }
+    
+    const checkbox = document.getElementById(`compare-${index}`);
+    
+    if (checkbox.checked) {
+        if (window.selectedPortfoliosForComparison.size >= 4) {
+            alert('Maximum 4 portfolios can be compared at once');
+            checkbox.checked = false;
+            return;
+        }
+        window.selectedPortfoliosForComparison.add(index);
+    } else {
+        window.selectedPortfoliosForComparison.delete(index);
+    }
+    
+    // Enable/disable compare button
+    const compareBtn = document.getElementById('compare-btn');
+    if (compareBtn) {
+        compareBtn.disabled = window.selectedPortfoliosForComparison.size < 2;
+    }
+}
+
+async function runPortfolioComparison() {
+    if (!window.selectedPortfoliosForComparison || window.selectedPortfoliosForComparison.size < 2) {
+        alert('Select at least 2 portfolios to compare');
+        return;
+    }
+    
+    const resultsContainer = document.getElementById('comparison-results');
+    resultsContainer.innerHTML = '<div class="text-center py-12"><div class="loader"></div><p class="mt-4">Analyzing portfolios...</p></div>';
+    
+    try {
+        // Get selected portfolios
+        const allPortfolios = getCurrentPortfolios();
+        const selectedIndices = Array.from(window.selectedPortfoliosForComparison);
+        const portfoliosToCompare = selectedIndices.map(idx => ({
+            ...allPortfolios[idx],
+            index: idx
+        }));
+        
+        // Calculate metrics for each portfolio
+        const comparisonData = [];
+        
+        for (const portfolio of portfoliosToCompare) {
+            // Temporarily load this portfolio
+            const tempPortfolio = portfolio.holdings.map(h => ({
+                ...ETF_LOOKUP[h.symbol],
+                weight: h.weight
+            })).filter(h => h.symbol);
+            
+            // Store current portfolio
+            const savedCurrentPortfolio = [...currentPortfolio];
+            currentPortfolio = tempPortfolio;
+            
+            // Calculate metrics
+            await fetchPortfolioData();
+            const metrics = calculatePortfolioMetrics();
+            const fundamentals = calculatePortfolioFundamentals();
+            
+            comparisonData.push({
+                name: portfolio.name,
+                timestamp: portfolio.timestamp,
+                holdings: portfolio.holdings,
+                metrics: metrics,
+                fundamentals: fundamentals
+            });
+            
+            // Restore current portfolio
+            currentPortfolio = savedCurrentPortfolio;
+        }
+        
+        // Render comparison table
+        renderComparisonTable(comparisonData);
+        
+    } catch (error) {
+        console.error('Comparison error:', error);
+        resultsContainer.innerHTML = `
+            <div class="text-center text-red-600 py-12">
+                <p class="text-lg font-semibold">Error comparing portfolios</p>
+                <p class="text-sm mt-2">${error.message}</p>
+            </div>
+        `;
+    }
+}
+
+function renderComparisonTable(portfolios) {
+    const resultsContainer = document.getElementById('comparison-results');
+    
+    // Find best values for highlighting
+    const bestReturn = Math.max(...portfolios.map(p => p.metrics.expectedReturn));
+    const bestSharpe = Math.max(...portfolios.map(p => p.metrics.sharpe));
+    const bestAlpha = Math.max(...portfolios.map(p => p.metrics.alpha));
+    const lowestVol = Math.min(...portfolios.map(p => p.metrics.volatility));
+    const lowestDD = Math.max(...portfolios.map(p => p.metrics.maxDrawdown)); // Max because it's negative
+    const lowestExpense = Math.min(...portfolios.map(p => p.fundamentals.weightedExpenseRatio));
+    
+    let html = `
+        <div class="mb-4">
+            <h3 class="text-xl font-bold mb-2">📊 Portfolio Comparison Results</h3>
+            <p class="text-sm text-gray-600">Comparing ${portfolios.length} portfolios | <span class="text-green-600">Green = Best</span></p>
+        </div>
+        
+        <div class="overflow-x-auto">
+            <table class="w-full border-collapse text-sm">
+                <thead>
+                    <tr class="bg-gray-800 text-white">
+                        <th class="text-left p-3 font-semibold sticky left-0 bg-gray-800">Metric</th>
+    `;
+    
+    portfolios.forEach(portfolio => {
+        html += `<th class="text-right p-3 font-semibold">${portfolio.name}</th>`;
+    });
+    
+    html += `
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Performance Metrics -->
+                    <tr class="bg-blue-100">
+                        <td colspan="${portfolios.length + 1}" class="p-2 font-semibold">PERFORMANCE</td>
+                    </tr>
+                    
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="p-3 font-medium sticky left-0 bg-white">Annual Return</td>
+    `;
+    
+    portfolios.forEach(p => {
+        const isBest = Math.abs(p.metrics.expectedReturn - bestReturn) < 0.0001;
+        html += `<td class="text-right p-3 ${isBest ? 'bg-green-100 font-bold' : ''}">${(p.metrics.expectedReturn * 100).toFixed(2)}%</td>`;
+    });
+    
+    html += `
+                    </tr>
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="p-3 font-medium sticky left-0 bg-white">Cumulative Return</td>
+    `;
+    
+    portfolios.forEach(p => {
+        html += `<td class="text-right p-3">${(p.metrics.cumulativeReturn * 100).toFixed(2)}%</td>`;
+    });
+    
+    html += `
+                    </tr>
+                    
+                    <!-- Risk Metrics -->
+                    <tr class="bg-blue-100">
+                        <td colspan="${portfolios.length + 1}" class="p-2 font-semibold">RISK</td>
+                    </tr>
+                    
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="p-3 font-medium sticky left-0 bg-white">Volatility</td>
+    `;
+    
+    portfolios.forEach(p => {
+        const isBest = Math.abs(p.metrics.volatility - lowestVol) < 0.0001;
+        html += `<td class="text-right p-3 ${isBest ? 'bg-green-100 font-bold' : ''}">${(p.metrics.volatility * 100).toFixed(2)}%</td>`;
+    });
+    
+    html += `
+                    </tr>
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="p-3 font-medium sticky left-0 bg-white">Max Drawdown</td>
+    `;
+    
+    portfolios.forEach(p => {
+        const isBest = Math.abs(p.metrics.maxDrawdown - lowestDD) < 0.0001;
+        html += `<td class="text-right p-3 ${isBest ? 'bg-green-100 font-bold' : ''}">${(p.metrics.maxDrawdown * 100).toFixed(2)}%</td>`;
+    });
+    
+    html += `
+                    </tr>
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="p-3 font-medium sticky left-0 bg-white">Beta</td>
+    `;
+    
+    portfolios.forEach(p => {
+        html += `<td class="text-right p-3">${p.metrics.beta.toFixed(3)}</td>`;
+    });
+    
+    html += `
+                    </tr>
+                    
+                    <!-- Risk-Adjusted Metrics -->
+                    <tr class="bg-blue-100">
+                        <td colspan="${portfolios.length + 1}" class="p-2 font-semibold">RISK-ADJUSTED</td>
+                    </tr>
+                    
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="p-3 font-medium sticky left-0 bg-white">Sharpe Ratio</td>
+    `;
+    
+    portfolios.forEach(p => {
+        const isBest = Math.abs(p.metrics.sharpe - bestSharpe) < 0.001;
+        html += `<td class="text-right p-3 ${isBest ? 'bg-green-100 font-bold' : ''}">${p.metrics.sharpe.toFixed(3)}</td>`;
+    });
+    
+    html += `
+                    </tr>
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="p-3 font-medium sticky left-0 bg-white">Alpha</td>
+    `;
+    
+    portfolios.forEach(p => {
+        const isBest = Math.abs(p.metrics.alpha - bestAlpha) < 0.0001;
+        const isPositive = p.metrics.alpha > 0;
+        html += `<td class="text-right p-3 ${isBest ? 'bg-green-100 font-bold' : ''} ${isPositive ? 'text-green-600' : 'text-red-600'}">${(p.metrics.alpha * 100).toFixed(2)}%</td>`;
+    });
+    
+    html += `
+                    </tr>
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="p-3 font-medium sticky left-0 bg-white">vs SPY</td>
+    `;
+    
+    portfolios.forEach(p => {
+        const isPositive = p.metrics.excessReturn > 0;
+        html += `<td class="text-right p-3 ${isPositive ? 'text-green-600' : 'text-red-600'}">${isPositive ? '+' : ''}${(p.metrics.excessReturn * 100).toFixed(2)}%</td>`;
+    });
+    
+    html += `
+                    </tr>
+                    
+                    <!-- Portfolio Characteristics -->
+                    <tr class="bg-blue-100">
+                        <td colspan="${portfolios.length + 1}" class="p-2 font-semibold">CHARACTERISTICS</td>
+                    </tr>
+                    
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="p-3 font-medium sticky left-0 bg-white"># Holdings</td>
+    `;
+    
+    portfolios.forEach(p => {
+        html += `<td class="text-right p-3">${p.fundamentals.numberOfHoldings}</td>`;
+    });
+    
+    html += `
+                    </tr>
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="p-3 font-medium sticky left-0 bg-white">Expense Ratio</td>
+    `;
+    
+    portfolios.forEach(p => {
+        const isBest = Math.abs(p.fundamentals.weightedExpenseRatio - lowestExpense) < 0.00001;
+        html += `<td class="text-right p-3 ${isBest ? 'bg-green-100 font-bold' : ''}">${(p.fundamentals.weightedExpenseRatio * 100).toFixed(3)}%</td>`;
+    });
+    
+    html += `
+                    </tr>
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="p-3 font-medium sticky left-0 bg-white">Equity %</td>
+    `;
+    
+    portfolios.forEach(p => {
+        html += `<td class="text-right p-3">${(p.fundamentals.assetAllocation.equity * 100).toFixed(1)}%</td>`;
+    });
+    
+    html += `
+                    </tr>
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="p-3 font-medium sticky left-0 bg-white">Bonds %</td>
+    `;
+    
+    portfolios.forEach(p => {
+        html += `<td class="text-right p-3">${(p.fundamentals.assetAllocation.bonds * 100).toFixed(1)}%</td>`;
+    });
+    
+    html += `
+                    </tr>
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="p-3 font-medium sticky left-0 bg-white">Factor Diversification</td>
+    `;
+    
+    portfolios.forEach(p => {
+        html += `<td class="text-right p-3">${p.fundamentals.factorDiversification.toFixed(2)}</td>`;
+    });
+    
+    html += `
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h4 class="font-semibold mb-2">🏆 Best Performing</h4>
+                <div class="text-sm space-y-1">
+                    <p>Highest Return: <strong>${portfolios.find(p => Math.abs(p.metrics.expectedReturn - bestReturn) < 0.0001).name}</strong></p>
+                    <p>Best Sharpe: <strong>${portfolios.find(p => Math.abs(p.metrics.sharpe - bestSharpe) < 0.001).name}</strong></p>
+                    <p>Best Alpha: <strong>${portfolios.find(p => Math.abs(p.metrics.alpha - bestAlpha) < 0.0001).name}</strong></p>
+                </div>
+            </div>
+            
+            <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                <h4 class="font-semibold mb-2">🛡️ Lowest Risk</h4>
+                <div class="text-sm space-y-1">
+                    <p>Lowest Volatility: <strong>${portfolios.find(p => Math.abs(p.metrics.volatility - lowestVol) < 0.0001).name}</strong></p>
+                    <p>Smallest Drawdown: <strong>${portfolios.find(p => Math.abs(p.metrics.maxDrawdown - lowestDD) < 0.0001).name}</strong></p>
+                    <p>Lowest Expense: <strong>${portfolios.find(p => Math.abs(p.fundamentals.weightedExpenseRatio - lowestExpense) < 0.00001).name}</strong></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-4 flex gap-2">
+            <button onclick="exportComparisonToCSV()" class="btn btn-secondary">
+                📥 Export Comparison
+            </button>
+            <button onclick="renderCompareView()" class="btn btn-outline">
+                🔄 New Comparison
+            </button>
+        </div>
+    `;
+    
+    resultsContainer.innerHTML = html;
+    
+    // Store comparison data for export
+    window.currentComparisonData = portfolios;
+}
+
+function exportComparisonToCSV() {
+    if (!window.currentComparisonData || window.currentComparisonData.length === 0) {
+        alert('No comparison data to export');
+        return;
+    }
+    
+    const portfolios = window.currentComparisonData;
+    
+    let csv = 'PORTFOLIO COMPARISON\n\n';
+    csv += 'Metric,' + portfolios.map(p => p.name).join(',') + '\n';
+    
+    csv += '\nPERFORMANCE\n';
+    csv += 'Annual Return (%),' + portfolios.map(p => (p.metrics.expectedReturn * 100).toFixed(2)).join(',') + '\n';
+    csv += 'Cumulative Return (%),' + portfolios.map(p => (p.metrics.cumulativeReturn * 100).toFixed(2)).join(',') + '\n';
+    
+    csv += '\nRISK\n';
+    csv += 'Volatility (%),' + portfolios.map(p => (p.metrics.volatility * 100).toFixed(2)).join(',') + '\n';
+    csv += 'Max Drawdown (%),' + portfolios.map(p => (p.metrics.maxDrawdown * 100).toFixed(2)).join(',') + '\n';
+    csv += 'Beta,' + portfolios.map(p => p.metrics.beta.toFixed(3)).join(',') + '\n';
+    
+    csv += '\nRISK-ADJUSTED\n';
+    csv += 'Sharpe Ratio,' + portfolios.map(p => p.metrics.sharpe.toFixed(3)).join(',') + '\n';
+    csv += 'Alpha (%),' + portfolios.map(p => (p.metrics.alpha * 100).toFixed(2)).join(',') + '\n';
+    csv += 'vs SPY (%),' + portfolios.map(p => (p.metrics.excessReturn * 100).toFixed(2)).join(',') + '\n';
+    
+    csv += '\nCHARACTERISTICS\n';
+    csv += 'Number of Holdings,' + portfolios.map(p => p.fundamentals.numberOfHoldings).join(',') + '\n';
+    csv += 'Expense Ratio (%),' + portfolios.map(p => (p.fundamentals.weightedExpenseRatio * 100).toFixed(3)).join(',') + '\n';
+    csv += 'Equity (%),' + portfolios.map(p => (p.fundamentals.assetAllocation.equity * 100).toFixed(1)).join(',') + '\n';
+    csv += 'Bonds (%),' + portfolios.map(p => (p.fundamentals.assetAllocation.bonds * 100).toFixed(1)).join(',') + '\n';
+    csv += 'Factor Diversification,' + portfolios.map(p => p.fundamentals.factorDiversification.toFixed(2)).join(',') + '\n';
+    
+    downloadCSV(csv, 'portfolio_comparison.csv');
+}
+
+console.log('Alphatic Compare Portfolios feature loaded! 📊');
