@@ -743,6 +743,24 @@ async function renderAnalysisView() {
                     <div id="risk-contribution"></div>
                 </div>
             </div>
+            
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+                <button onclick="openOptimizerModal()" class="btn btn-primary">
+                    🎯 Optimize Portfolio
+                </button>
+                <button onclick="openRegimeModal()" class="btn btn-success">
+                    🌡️ Market Regime
+                </button>
+                <button onclick="openFactorModal()" class="btn btn-info">
+                    📊 Factor Attribution
+                </button>
+                <button onclick="exportCompleteAnalysis()" class="btn btn-secondary">
+                    📥 Export Analysis
+                </button>
+                <button onclick="window.print()" class="btn btn-outline">
+                    🖨️ Print Report
+                </button>
+            </div>
         `;
         
         container.innerHTML = html;
@@ -1237,3 +1255,1108 @@ if (currentPortfolio.length === 0 && typeof SAVED_PORTFOLIOS !== 'undefined' && 
 
 console.log('Alphatic initialized successfully! 🚀');
 console.log('REMINDER: This uses REAL market data for REAL capital allocation decisions');
+// ============================================================================
+// ALPHATIC VERSION 1.1 - ENHANCEMENT MODULE
+// New Features: Optimizer, Regime Detection, Factor Attribution, Export
+// ============================================================================
+
+// ============================================================================
+// PORTFOLIO OPTIMIZER - MAXIMUM SHARPE RATIO
+// ============================================================================
+
+function openOptimizerModal() {
+    const modal = document.getElementById('optimizer-modal');
+    const content = document.getElementById('optimizer-content');
+    
+    if (currentPortfolio.length < 2) {
+        alert('Add at least 2 holdings to optimize');
+        return;
+    }
+    
+    modal.style.display = 'block';
+    content.innerHTML = '<div class="text-center py-12"><div class="loader"></div><p class="mt-4">Running portfolio optimization...</p></div>';
+    
+    setTimeout(async () => {
+        try {
+            await fetchPortfolioData();
+            const results = await optimizePortfolio();
+            renderOptimizerResults(results);
+        } catch (error) {
+            console.error('Optimizer error:', error);
+            content.innerHTML = `
+                <div class="text-center text-red-600 py-12">
+                    <p class="text-lg font-semibold">Error running optimizer</p>
+                    <p class="text-sm mt-2">${error.message}</p>
+                </div>
+            `;
+        }
+    }, 100);
+}
+
+function closeOptimizerModal() {
+    document.getElementById('optimizer-modal').style.display = 'none';
+}
+
+async function optimizePortfolio() {
+    console.log('Starting portfolio optimization...');
+    
+    const alignedData = alignDataArrays();
+    const symbols = currentPortfolio.map(h => h.symbol);
+    const n = symbols.length;
+    
+    // Get returns for each asset
+    const assetReturns = symbols.map(symbol => alignedData[symbol].returns);
+    const spyReturns = alignedData['SPY'].returns;
+    
+    // Calculate covariance matrix
+    const covMatrix = calculateCovarianceMatrix(assetReturns);
+    const expectedReturns = assetReturns.map(returns => mean(returns) * 252);
+    
+    // Run multiple optimization scenarios
+    const scenarios = [];
+    
+    // Scenario 1: Maximum Sharpe Ratio (unconstrained)
+    const maxSharpe = findMaxSharpeRatio(expectedReturns, covMatrix, n);
+    scenarios.push({
+        name: 'Maximum Sharpe Ratio',
+        weights: maxSharpe.weights,
+        ...calculatePortfolioStats(maxSharpe.weights, expectedReturns, covMatrix, assetReturns, spyReturns)
+    });
+    
+    // Scenario 2: Maximum Sharpe with minimum 5% per holding
+    const maxSharpeMin5 = findMaxSharpeRatioConstrained(expectedReturns, covMatrix, n, 0.05, 0.40);
+    scenarios.push({
+        name: 'Max Sharpe (Min 5% per holding)',
+        weights: maxSharpeMin5.weights,
+        ...calculatePortfolioStats(maxSharpeMin5.weights, expectedReturns, covMatrix, assetReturns, spyReturns)
+    });
+    
+    // Scenario 3: Minimum Variance
+    const minVar = findMinimumVariance(covMatrix, n);
+    scenarios.push({
+        name: 'Minimum Variance',
+        weights: minVar.weights,
+        ...calculatePortfolioStats(minVar.weights, expectedReturns, covMatrix, assetReturns, spyReturns)
+    });
+    
+    // Scenario 4: Equal Risk Contribution
+    const equalRisk = findEqualRiskContribution(expectedReturns, covMatrix, n);
+    scenarios.push({
+        name: 'Equal Risk Contribution',
+        weights: equalRisk.weights,
+        ...calculatePortfolioStats(equalRisk.weights, expectedReturns, covMatrix, assetReturns, spyReturns)
+    });
+    
+    // Scenario 5: Maximum Return (for given risk = current portfolio vol)
+    const currentMetrics = calculatePortfolioMetrics();
+    const targetVol = currentMetrics.volatility;
+    const maxReturn = findMaxReturnForRisk(expectedReturns, covMatrix, n, targetVol);
+    scenarios.push({
+        name: `Max Return (Vol ≤ ${(targetVol * 100).toFixed(1)}%)`,
+        weights: maxReturn.weights,
+        ...calculatePortfolioStats(maxReturn.weights, expectedReturns, covMatrix, assetReturns, spyReturns)
+    });
+    
+    return {
+        scenarios: scenarios,
+        symbols: symbols,
+        currentPortfolio: {
+            weights: currentPortfolio.map(h => h.weight / 100),
+            ...currentMetrics
+        }
+    };
+}
+
+function findMaxSharpeRatio(expectedReturns, covMatrix, n) {
+    // Grid search for maximum Sharpe ratio
+    let bestSharpe = -Infinity;
+    let bestWeights = null;
+    
+    const iterations = 5000;
+    
+    for (let i = 0; i < iterations; i++) {
+        // Generate random weights
+        let weights = Array(n).fill(0).map(() => Math.random());
+        const sum = weights.reduce((a, b) => a + b, 0);
+        weights = weights.map(w => w / sum);
+        
+        // Calculate portfolio metrics
+        const portReturn = weights.reduce((sum, w, idx) => sum + w * expectedReturns[idx], 0);
+        const portVol = Math.sqrt(calculatePortfolioVariance(weights, covMatrix));
+        const sharpe = (portReturn - RISK_FREE_RATE) / portVol;
+        
+        if (sharpe > bestSharpe && !isNaN(sharpe) && isFinite(sharpe)) {
+            bestSharpe = sharpe;
+            bestWeights = [...weights];
+        }
+    }
+    
+    return { weights: bestWeights, sharpe: bestSharpe };
+}
+
+function findMaxSharpeRatioConstrained(expectedReturns, covMatrix, n, minWeight, maxWeight) {
+    let bestSharpe = -Infinity;
+    let bestWeights = null;
+    
+    const iterations = 10000;
+    
+    for (let i = 0; i < iterations; i++) {
+        // Generate random weights with constraints
+        let weights = Array(n).fill(0).map(() => minWeight + Math.random() * (maxWeight - minWeight));
+        const sum = weights.reduce((a, b) => a + b, 0);
+        weights = weights.map(w => w / sum);
+        
+        // Check constraints
+        if (weights.some(w => w < minWeight - 0.001 || w > maxWeight + 0.001)) {
+            continue;
+        }
+        
+        const portReturn = weights.reduce((sum, w, idx) => sum + w * expectedReturns[idx], 0);
+        const portVol = Math.sqrt(calculatePortfolioVariance(weights, covMatrix));
+        const sharpe = (portReturn - RISK_FREE_RATE) / portVol;
+        
+        if (sharpe > bestSharpe && !isNaN(sharpe) && isFinite(sharpe)) {
+            bestSharpe = sharpe;
+            bestWeights = [...weights];
+        }
+    }
+    
+    return { weights: bestWeights || Array(n).fill(1/n), sharpe: bestSharpe };
+}
+
+function findMinimumVariance(covMatrix, n) {
+    let bestVar = Infinity;
+    let bestWeights = null;
+    
+    const iterations = 5000;
+    
+    for (let i = 0; i < iterations; i++) {
+        let weights = Array(n).fill(0).map(() => Math.random());
+        const sum = weights.reduce((a, b) => a + b, 0);
+        weights = weights.map(w => w / sum);
+        
+        const portVar = calculatePortfolioVariance(weights, covMatrix);
+        
+        if (portVar < bestVar && !isNaN(portVar)) {
+            bestVar = portVar;
+            bestWeights = [...weights];
+        }
+    }
+    
+    return { weights: bestWeights, variance: bestVar };
+}
+
+function findEqualRiskContribution(expectedReturns, covMatrix, n) {
+    // Start with equal weights and adjust
+    let weights = Array(n).fill(1/n);
+    
+    // Simple heuristic: inverse volatility weighting
+    const vols = Array(n).fill(0).map((_, idx) => Math.sqrt(covMatrix[idx][idx]));
+    const invVols = vols.map(v => 1/v);
+    const sumInvVol = invVols.reduce((a, b) => a + b, 0);
+    weights = invVols.map(iv => iv / sumInvVol);
+    
+    return { weights: weights };
+}
+
+function findMaxReturnForRisk(expectedReturns, covMatrix, n, targetVol) {
+    let bestReturn = -Infinity;
+    let bestWeights = null;
+    
+    const iterations = 5000;
+    const tolerance = 0.005; // 0.5% tolerance on volatility
+    
+    for (let i = 0; i < iterations; i++) {
+        let weights = Array(n).fill(0).map(() => Math.random());
+        const sum = weights.reduce((a, b) => a + b, 0);
+        weights = weights.map(w => w / sum);
+        
+        const portReturn = weights.reduce((sum, w, idx) => sum + w * expectedReturns[idx], 0);
+        const portVol = Math.sqrt(calculatePortfolioVariance(weights, covMatrix));
+        
+        // Only consider if within volatility target
+        if (Math.abs(portVol - targetVol) <= tolerance || portVol <= targetVol) {
+            if (portReturn > bestReturn) {
+                bestReturn = portReturn;
+                bestWeights = [...weights];
+            }
+        }
+    }
+    
+    return { weights: bestWeights || Array(n).fill(1/n), return: bestReturn };
+}
+
+function calculateCovarianceMatrix(assetReturns) {
+    const n = assetReturns.length;
+    const covMatrix = Array(n).fill(0).map(() => Array(n).fill(0));
+    
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            covMatrix[i][j] = calculateCovariance(assetReturns[i], assetReturns[j]) * 252; // Annualized
+        }
+    }
+    
+    return covMatrix;
+}
+
+function calculateCovariance(returns1, returns2) {
+    const n = returns1.length;
+    const mean1 = mean(returns1);
+    const mean2 = mean(returns2);
+    
+    let cov = 0;
+    for (let i = 0; i < n; i++) {
+        cov += (returns1[i] - mean1) * (returns2[i] - mean2);
+    }
+    
+    return cov / n;
+}
+
+function calculatePortfolioVariance(weights, covMatrix) {
+    const n = weights.length;
+    let variance = 0;
+    
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            variance += weights[i] * weights[j] * covMatrix[i][j];
+        }
+    }
+    
+    return variance;
+}
+
+function calculatePortfolioStats(weights, expectedReturns, covMatrix, assetReturns, spyReturns) {
+    const portReturn = weights.reduce((sum, w, idx) => sum + w * expectedReturns[idx], 0);
+    const portVol = Math.sqrt(calculatePortfolioVariance(weights, covMatrix));
+    const sharpe = (portReturn - RISK_FREE_RATE) / portVol;
+    
+    // Calculate portfolio returns for beta/alpha
+    const portfolioReturns = [];
+    for (let i = 0; i < assetReturns[0].length; i++) {
+        let ret = 0;
+        for (let j = 0; j < weights.length; j++) {
+            ret += weights[j] * assetReturns[j][i];
+        }
+        portfolioReturns.push(ret);
+    }
+    
+    const beta = calculateBeta(portfolioReturns, spyReturns);
+    const spyReturn = mean(spyReturns) * 252;
+    const alpha = portReturn - (RISK_FREE_RATE + beta * (spyReturn - RISK_FREE_RATE));
+    
+    return {
+        expectedReturn: portReturn,
+        volatility: portVol,
+        sharpe: sharpe,
+        beta: beta,
+        alpha: alpha
+    };
+}
+
+function renderOptimizerResults(results) {
+    const content = document.getElementById('optimizer-content');
+    
+    let html = `
+        <div class="mb-6">
+            <h3 class="text-lg font-semibold mb-3">📊 Current Portfolio</h3>
+            <div class="grid grid-cols-5 gap-4 p-4 bg-gray-50 rounded-lg">
+                <div class="text-center">
+                    <div class="text-sm text-gray-600">Return</div>
+                    <div class="text-lg font-bold">${(results.currentPortfolio.expectedReturn * 100).toFixed(2)}%</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-sm text-gray-600">Volatility</div>
+                    <div class="text-lg font-bold">${(results.currentPortfolio.volatility * 100).toFixed(2)}%</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-sm text-gray-600">Sharpe</div>
+                    <div class="text-lg font-bold">${results.currentPortfolio.sharpe.toFixed(3)}</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-sm text-gray-600">Beta</div>
+                    <div class="text-lg font-bold">${results.currentPortfolio.beta.toFixed(3)}</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-sm text-gray-600">Alpha</div>
+                    <div class="text-lg font-bold">${(results.currentPortfolio.alpha * 100).toFixed(2)}%</div>
+                </div>
+            </div>
+        </div>
+        
+        <h3 class="text-lg font-semibold mb-3">🎯 Optimized Portfolios</h3>
+        <p class="text-sm text-gray-600 mb-4">Using the same holdings, here are optimized allocations for different objectives:</p>
+    `;
+    
+    results.scenarios.forEach((scenario, idx) => {
+        const improvement = scenario.sharpe - results.currentPortfolio.sharpe;
+        const improvementPct = (improvement / results.currentPortfolio.sharpe) * 100;
+        
+        html += `
+            <div class="card mb-4">
+                <div class="flex justify-between items-center mb-3">
+                    <h4 class="font-semibold text-lg">${scenario.name}</h4>
+                    ${improvement > 0.01 ? `<span class="text-green-600 font-semibold">+${improvementPct.toFixed(1)}% Sharpe ↑</span>` : ''}
+                </div>
+                
+                <div class="grid grid-cols-5 gap-4 mb-4 p-3 bg-blue-50 rounded">
+                    <div class="text-center">
+                        <div class="text-xs text-gray-600">Return</div>
+                        <div class="font-bold text-blue-900">${(scenario.expectedReturn * 100).toFixed(2)}%</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xs text-gray-600">Volatility</div>
+                        <div class="font-bold text-blue-900">${(scenario.volatility * 100).toFixed(2)}%</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xs text-gray-600">Sharpe</div>
+                        <div class="font-bold text-blue-900">${scenario.sharpe.toFixed(3)}</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xs text-gray-600">Beta</div>
+                        <div class="font-bold text-blue-900">${scenario.beta.toFixed(3)}</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xs text-gray-600">Alpha</div>
+                        <div class="font-bold text-blue-900">${(scenario.alpha * 100).toFixed(2)}%</div>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <h5 class="text-sm font-semibold mb-2">Allocation:</h5>
+                    <div class="grid grid-cols-2 gap-2">
+        `;
+        
+        scenario.weights.forEach((weight, i) => {
+            if (weight >= 0.01) { // Only show if >= 1%
+                html += `
+                    <div class="flex justify-between text-sm p-2 bg-gray-50 rounded">
+                        <span>${results.symbols[i]}</span>
+                        <span class="font-semibold">${(weight * 100).toFixed(1)}%</span>
+                    </div>
+                `;
+            }
+        });
+        
+        html += `
+                    </div>
+                </div>
+                
+                <button onclick="applyOptimizedWeights(${idx})" class="btn btn-primary w-full">
+                    Apply These Weights
+                </button>
+            </div>
+        `;
+    });
+    
+    html += `
+        <div class="flex gap-2 mt-6">
+            <button onclick="exportOptimizerResults()" class="btn btn-secondary flex-1">
+                📥 Export Results
+            </button>
+            <button onclick="closeOptimizerModal()" class="btn btn-outline flex-1">
+                Close
+            </button>
+        </div>
+    `;
+    
+    content.innerHTML = html;
+    
+    // Store results for later use
+    window.optimizerResults = results;
+}
+
+function applyOptimizedWeights(scenarioIndex) {
+    const results = window.optimizerResults;
+    if (!results) return;
+    
+    const scenario = results.scenarios[scenarioIndex];
+    
+    // Update current portfolio weights
+    currentPortfolio.forEach((holding, i) => {
+        holding.weight = scenario.weights[i] * 100;
+    });
+    
+    // Filter out zero weights
+    currentPortfolio = currentPortfolio.filter(h => h.weight >= 0.1);
+    
+    closeOptimizerModal();
+    renderPortfolioBuilder();
+    alert(`Applied: ${scenario.name}\n\nNew Sharpe Ratio: ${scenario.sharpe.toFixed(3)}`);
+}
+
+function exportOptimizerResults() {
+    const results = window.optimizerResults;
+    if (!results) return;
+    
+    let csv = 'Scenario,Symbol,Weight (%),Return (%),Volatility (%),Sharpe,Beta,Alpha (%)\n';
+    
+    // Current portfolio
+    csv += 'CURRENT PORTFOLIO\n';
+    results.currentPortfolio.weights.forEach((weight, i) => {
+        csv += `Current,${results.symbols[i]},${(weight * 100).toFixed(2)},`;
+        csv += `${(results.currentPortfolio.expectedReturn * 100).toFixed(2)},`;
+        csv += `${(results.currentPortfolio.volatility * 100).toFixed(2)},`;
+        csv += `${results.currentPortfolio.sharpe.toFixed(3)},`;
+        csv += `${results.currentPortfolio.beta.toFixed(3)},`;
+        csv += `${(results.currentPortfolio.alpha * 100).toFixed(2)}\n`;
+    });
+    
+    csv += '\nOPTIMIZED PORTFOLIOS\n';
+    
+    // Optimized portfolios
+    results.scenarios.forEach(scenario => {
+        scenario.weights.forEach((weight, i) => {
+            if (weight >= 0.01) {
+                csv += `${scenario.name},${results.symbols[i]},${(weight * 100).toFixed(2)},`;
+                csv += `${(scenario.expectedReturn * 100).toFixed(2)},`;
+                csv += `${(scenario.volatility * 100).toFixed(2)},`;
+                csv += `${scenario.sharpe.toFixed(3)},`;
+                csv += `${scenario.beta.toFixed(3)},`;
+                csv += `${(scenario.alpha * 100).toFixed(2)}\n`;
+            }
+        });
+    });
+    
+    downloadCSV(csv, 'portfolio_optimization.csv');
+}
+
+// ============================================================================
+// REGIME DETECTION
+// ============================================================================
+
+function openRegimeModal() {
+    const modal = document.getElementById('regime-modal');
+    const content = document.getElementById('regime-content');
+    
+    modal.style.display = 'block';
+    content.innerHTML = '<div class="text-center py-12"><div class="loader"></div><p class="mt-4">Analyzing market regime...</p></div>';
+    
+    setTimeout(async () => {
+        try {
+            await fetchPortfolioData();
+            const regimeAnalysis = await detectMarketRegime();
+            renderRegimeResults(regimeAnalysis);
+        } catch (error) {
+            console.error('Regime detection error:', error);
+            content.innerHTML = `
+                <div class="text-center text-red-600 py-12">
+                    <p class="text-lg font-semibold">Error detecting regime</p>
+                    <p class="text-sm mt-2">${error.message}</p>
+                </div>
+            `;
+        }
+    }, 100);
+}
+
+function closeRegimeModal() {
+    document.getElementById('regime-modal').style.display = 'none';
+}
+
+async function detectMarketRegime() {
+    console.log('Detecting market regime...');
+    
+    const alignedData = alignDataArrays();
+    const spyReturns = alignedData['SPY'].returns;
+    const dates = alignedData['SPY'].dates;
+    
+    // Analyze recent period (last 252 days = 1 year)
+    const recentReturns = spyReturns.slice(-252);
+    const recentDates = dates.slice(-252);
+    
+    // Calculate regime indicators
+    const volatility = stdDev(recentReturns) * Math.sqrt(252);
+    const trend = mean(recentReturns) * 252;
+    const skewness = calculateSkewness(recentReturns);
+    const currentPrice = alignedData['SPY'].prices[alignedData['SPY'].prices.length - 1];
+    const sma50 = calculateSMA(alignedData['SPY'].prices, 50);
+    const sma200 = calculateSMA(alignedData['SPY'].prices, 200);
+    
+    // Calculate rolling metrics
+    const rolling30DayVol = [];
+    const rolling90DayRet = [];
+    
+    for (let i = 30; i < recentReturns.length; i++) {
+        const window = recentReturns.slice(i - 30, i);
+        rolling30DayVol.push(stdDev(window) * Math.sqrt(252));
+    }
+    
+    for (let i = 90; i < recentReturns.length; i++) {
+        const window = recentReturns.slice(i - 90, i);
+        rolling90DayRet.push(mean(window) * 252);
+    }
+    
+    const avgVol = mean(rolling30DayVol);
+    const volTrend = rolling30DayVol[rolling30DayVol.length - 1] > avgVol ? 'Rising' : 'Falling';
+    
+    // Determine regime
+    let regime;
+    let regimeScore;
+    let regimeDescription;
+    let recommendation;
+    
+    if (trend > 0.10 && volatility < 0.18) {
+        regime = 'Bull Market - Low Volatility';
+        regimeScore = 1.0;
+        regimeDescription = 'Strong uptrend with low volatility. Ideal conditions for risk-taking.';
+        recommendation = 'Favor: Momentum, Growth, Small Cap. Reduce: Defensive, Bonds.';
+    } else if (trend > 0.10 && volatility >= 0.18) {
+        regime = 'Bull Market - High Volatility';
+        regimeScore = 0.6;
+        regimeDescription = 'Positive trend but elevated volatility. Exercise caution.';
+        recommendation = 'Favor: Quality, Momentum. Maintain: Diversification, Some defensive.';
+    } else if (trend <= 0 && trend > -0.10 && volatility < 0.18) {
+        regime = 'Sideways Market - Low Volatility';
+        regimeScore = 0.2;
+        regimeDescription = 'Range-bound market with low volatility. Mean reversion likely.';
+        recommendation = 'Favor: Value, Dividend, Quality. Reduce: Momentum.';
+    } else if (trend <= -0.10 && volatility >= 0.18) {
+        regime = 'Bear Market - High Volatility';
+        regimeScore = -1.0;
+        regimeDescription = 'Downtrend with high volatility. Risk-off environment.';
+        recommendation = 'Favor: Defensive, Bonds, Low Volatility. Reduce: Beta, Growth.';
+    } else {
+        regime = 'Mixed Signals';
+        regimeScore = 0.0;
+        regimeDescription = 'Unclear market direction. Balanced approach recommended.';
+        recommendation = 'Maintain: Diversified allocation across factors.';
+    }
+    
+    // Factor performance in current regime
+    const factorPerformance = calculateFactorPerformanceByRegime(regimeScore, volatility);
+    
+    return {
+        regime: regime,
+        score: regimeScore,
+        description: regimeDescription,
+        recommendation: recommendation,
+        metrics: {
+            trend: trend,
+            volatility: volatility,
+            skewness: skewness,
+            volTrend: volTrend,
+            sma50: sma50,
+            sma200: sma200,
+            currentPrice: currentPrice,
+            priceVsSMA50: ((currentPrice / sma50 - 1) * 100).toFixed(2),
+            priceVsSMA200: ((currentPrice / sma200 - 1) * 100).toFixed(2)
+        },
+        factorPerformance: factorPerformance,
+        period: {
+            start: recentDates[0],
+            end: recentDates[recentDates.length - 1],
+            days: recentDates.length
+        }
+    };
+}
+
+function calculateSkewness(returns) {
+    const n = returns.length;
+    const meanRet = mean(returns);
+    const stdRet = stdDev(returns);
+    
+    let skew = 0;
+    for (let i = 0; i < n; i++) {
+        skew += Math.pow((returns[i] - meanRet) / stdRet, 3);
+    }
+    
+    return skew / n;
+}
+
+function calculateSMA(prices, period) {
+    if (prices.length < period) return prices[prices.length - 1];
+    
+    const recent = prices.slice(-period);
+    return mean(recent);
+}
+
+function calculateFactorPerformanceByRegime(regimeScore, volatility) {
+    // Simulated factor performance based on regime
+    // In production, this would use actual factor ETF data
+    
+    const baseScores = {
+        'Market': 0.70,
+        'Growth': 0.75,
+        'Value': 0.65,
+        'Size': 0.60,
+        'Momentum': 0.80,
+        'Quality': 0.75,
+        'Low Volatility': 0.70,
+        'Dividend': 0.65,
+        'International': 0.60,
+        'Tech': 0.80,
+        'Financials': 0.65,
+        'Energy': 0.60,
+        'Healthcare': 0.70,
+        'Real Estate': 0.60,
+        'Bonds': 0.50,
+        'Gold': 0.55
+    };
+    
+    // Adjust based on regime
+    const factors = {};
+    
+    for (const [factor, base] of Object.entries(baseScores)) {
+        let score = base;
+        
+        // Bull market adjustments
+        if (regimeScore > 0.5) {
+            if (factor === 'Momentum' || factor === 'Growth' || factor === 'Tech') score += 0.15;
+            if (factor === 'Size') score += 0.10;
+            if (factor === 'Low Volatility' || factor === 'Bonds') score -= 0.15;
+        }
+        
+        // Bear market adjustments
+        if (regimeScore < -0.5) {
+            if (factor === 'Low Volatility' || factor === 'Quality' || factor === 'Bonds') score += 0.20;
+            if (factor === 'Dividend' || factor === 'Healthcare') score += 0.10;
+            if (factor === 'Momentum' || factor === 'Growth' || factor === 'Size') score -= 0.20;
+        }
+        
+        // High volatility adjustments
+        if (volatility > 0.20) {
+            if (factor === 'Quality' || factor === 'Low Volatility') score += 0.10;
+            if (factor === 'Momentum') score -= 0.10;
+        }
+        
+        // Low volatility adjustments
+        if (volatility < 0.15) {
+            if (factor === 'Momentum' || factor === 'Size') score += 0.10;
+        }
+        
+        factors[factor] = Math.max(0.1, Math.min(1.0, score));
+    }
+    
+    return factors;
+}
+
+function renderRegimeResults(analysis) {
+    const content = document.getElementById('regime-content');
+    
+    const scoreColor = analysis.score > 0.5 ? 'green' : analysis.score < -0.5 ? 'red' : 'yellow';
+    
+    let html = `
+        <div class="mb-6 p-6 bg-${scoreColor}-50 border-2 border-${scoreColor}-200 rounded-lg">
+            <h3 class="text-2xl font-bold mb-2">${analysis.regime}</h3>
+            <p class="text-gray-700 mb-3">${analysis.description}</p>
+            <div class="p-3 bg-white rounded border border-${scoreColor}-300">
+                <strong>Recommendation:</strong> ${analysis.recommendation}
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <div class="card text-center">
+                <div class="text-sm text-gray-600">Market Trend</div>
+                <div class="text-xl font-bold ${analysis.metrics.trend > 0 ? 'text-green-600' : 'text-red-600'}">
+                    ${(analysis.metrics.trend * 100).toFixed(2)}%
+                </div>
+                <div class="text-xs text-gray-500">Annualized</div>
+            </div>
+            <div class="card text-center">
+                <div class="text-sm text-gray-600">Volatility</div>
+                <div class="text-xl font-bold">${(analysis.metrics.volatility * 100).toFixed(2)}%</div>
+                <div class="text-xs text-gray-500">${analysis.metrics.volTrend}</div>
+            </div>
+            <div class="card text-center">
+                <div class="text-sm text-gray-600">vs 50-Day SMA</div>
+                <div class="text-xl font-bold ${parseFloat(analysis.metrics.priceVsSMA50) > 0 ? 'text-green-600' : 'text-red-600'}">
+                    ${analysis.metrics.priceVsSMA50}%
+                </div>
+                <div class="text-xs text-gray-500">Price Position</div>
+            </div>
+            <div class="card text-center">
+                <div class="text-sm text-gray-600">vs 200-Day SMA</div>
+                <div class="text-xl font-bold ${parseFloat(analysis.metrics.priceVsSMA200) > 0 ? 'text-green-600' : 'text-red-600'}">
+                    ${analysis.metrics.priceVsSMA200}%
+                </div>
+                <div class="text-xs text-gray-500">Trend Indicator</div>
+            </div>
+        </div>
+        
+        <div class="mb-6">
+            <h3 class="text-lg font-semibold mb-3">📊 Factor Performance in Current Regime</h3>
+            <p class="text-sm text-gray-600 mb-3">Based on historical factor performance in similar market conditions:</p>
+    `;
+    
+    // Sort factors by score
+    const sortedFactors = Object.entries(analysis.factorPerformance)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10); // Top 10
+    
+    html += '<div class="space-y-2">';
+    sortedFactors.forEach(([factor, score]) => {
+        const colorClass = score > 0.75 ? 'bg-green-600' : score > 0.65 ? 'bg-blue-600' : score > 0.55 ? 'bg-yellow-600' : 'bg-gray-600';
+        
+        html += `
+            <div>
+                <div class="flex justify-between text-sm mb-1">
+                    <span class="font-medium">${factor}</span>
+                    <span class="font-semibold">${(score * 100).toFixed(0)}%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-3">
+                    <div class="${colorClass} h-3 rounded-full" style="width: ${score * 100}%"></div>
+                </div>
+            </div>
+        `;
+    });
+    html += '</div>';
+    
+    html += `
+        </div>
+        
+        <div class="p-4 bg-blue-50 border border-blue-200 rounded-lg mb-6">
+            <h4 class="font-semibold mb-2">💡 Portfolio Implications</h4>
+            <p class="text-sm text-gray-700">
+                Analysis period: ${analysis.period.start} to ${analysis.period.end} (${analysis.period.days} days)
+            </p>
+        </div>
+        
+        <div class="flex gap-2">
+            <button onclick="exportRegimeAnalysis()" class="btn btn-secondary flex-1">
+                📥 Export Analysis
+            </button>
+            <button onclick="closeRegimeModal()" class="btn btn-outline flex-1">
+                Close
+            </button>
+        </div>
+    `;
+    
+    content.innerHTML = html;
+    
+    // Store for export
+    window.regimeAnalysis = analysis;
+}
+
+function exportRegimeAnalysis() {
+    const analysis = window.regimeAnalysis;
+    if (!analysis) return;
+    
+    let csv = 'Market Regime Analysis\n\n';
+    csv += `Regime,${analysis.regime}\n`;
+    csv += `Score,${analysis.score.toFixed(2)}\n`;
+    csv += `Description,${analysis.description}\n`;
+    csv += `Recommendation,${analysis.recommendation}\n\n`;
+    
+    csv += 'Market Metrics\n';
+    csv += `Trend (Annualized),${(analysis.metrics.trend * 100).toFixed(2)}%\n`;
+    csv += `Volatility (Annualized),${(analysis.metrics.volatility * 100).toFixed(2)}%\n`;
+    csv += `Volatility Trend,${analysis.metrics.volTrend}\n`;
+    csv += `Price vs 50-Day SMA,${analysis.metrics.priceVsSMA50}%\n`;
+    csv += `Price vs 200-Day SMA,${analysis.metrics.priceVsSMA200}%\n`;
+    csv += `Skewness,${analysis.metrics.skewness.toFixed(3)}\n\n`;
+    
+    csv += 'Factor Performance Scores\n';
+    csv += 'Factor,Score (%)\n';
+    
+    const sortedFactors = Object.entries(analysis.factorPerformance).sort((a, b) => b[1] - a[1]);
+    sortedFactors.forEach(([factor, score]) => {
+        csv += `${factor},${(score * 100).toFixed(1)}\n`;
+    });
+    
+    csv += `\nAnalysis Period,${analysis.period.start} to ${analysis.period.end}\n`;
+    csv += `Days Analyzed,${analysis.period.days}\n`;
+    
+    downloadCSV(csv, 'regime_analysis.csv');
+}
+
+// ============================================================================
+// FACTOR ATTRIBUTION
+// ============================================================================
+
+function openFactorModal() {
+    const modal = document.getElementById('factor-modal');
+    const content = document.getElementById('factor-modal-content');
+    
+    if (currentPortfolio.length === 0) {
+        alert('Build a portfolio first');
+        return;
+    }
+    
+    modal.style.display = 'block';
+    content.innerHTML = '<div class="text-center py-12"><div class="loader"></div><p class="mt-4">Calculating factor attribution...</p></div>';
+    
+    setTimeout(async () => {
+        try {
+            await fetchPortfolioData();
+            const attribution = await calculateDetailedFactorAttribution();
+            renderFactorAttribution(attribution);
+        } catch (error) {
+            console.error('Factor attribution error:', error);
+            content.innerHTML = `
+                <div class="text-center text-red-600 py-12">
+                    <p class="text-lg font-semibold">Error calculating attribution</p>
+                    <p class="text-sm mt-2">${error.message}</p>
+                </div>
+            `;
+        }
+    }, 100);
+}
+
+function closeFactorModal() {
+    document.getElementById('factor-modal').style.display = 'none';
+}
+
+async function calculateDetailedFactorAttribution() {
+    console.log('Calculating factor attribution...');
+    
+    const metrics = calculatePortfolioMetrics();
+    const alignedData = alignDataArrays();
+    
+    // Group holdings by factor
+    const factorGroups = {};
+    const factorWeights = {};
+    const factorReturns = {};
+    const factorVolatilities = {};
+    const factorBetas = {};
+    const factorAlphas = {};
+    
+    currentPortfolio.forEach(holding => {
+        const factor = holding.factor;
+        const weight = holding.weight / 100;
+        const returns = alignedData[holding.symbol].returns;
+        const holdingReturn = mean(returns) * 252;
+        
+        if (!factorGroups[factor]) {
+            factorGroups[factor] = [];
+            factorWeights[factor] = 0;
+            factorReturns[factor] = 0;
+        }
+        
+        factorGroups[factor].push(holding.symbol);
+        factorWeights[factor] += weight;
+        factorReturns[factor] += weight * holdingReturn;
+    });
+    
+    // Calculate metrics for each factor
+    const spyReturns = alignedData['SPY'].returns;
+    const spyReturn = mean(spyReturns) * 252;
+    
+    for (const factor of Object.keys(factorGroups)) {
+        // Get all returns for this factor's holdings
+        const factorHoldings = currentPortfolio.filter(h => h.factor === factor);
+        const factorHoldingReturns = factorHoldings.map(h => alignedData[h.symbol].returns);
+        const factorHoldingWeights = factorHoldings.map(h => h.weight / factorWeights[factor] / 100);
+        
+        // Calculate weighted returns
+        const weightedReturns = [];
+        for (let i = 0; i < factorHoldingReturns[0].length; i++) {
+            let ret = 0;
+            for (let j = 0; j < factorHoldingReturns.length; j++) {
+                ret += factorHoldingWeights[j] * factorHoldingReturns[j][i];
+            }
+            weightedReturns.push(ret);
+        }
+        
+        factorVolatilities[factor] = stdDev(weightedReturns) * Math.sqrt(252);
+        factorBetas[factor] = calculateBeta(weightedReturns, spyReturns);
+        
+        const factorAnnualReturn = mean(weightedReturns) * 252;
+        factorAlphas[factor] = factorAnnualReturn - (RISK_FREE_RATE + factorBetas[factor] * (spyReturn - RISK_FREE_RATE));
+    }
+    
+    return {
+        totalReturn: metrics.expectedReturn,
+        totalAlpha: metrics.alpha,
+        totalBeta: metrics.beta,
+        totalVolatility: metrics.volatility,
+        spyReturn: spyReturn,
+        factorGroups: factorGroups,
+        factorWeights: factorWeights,
+        factorReturns: factorReturns,
+        factorVolatilities: factorVolatilities,
+        factorBetas: factorBetas,
+        factorAlphas: factorAlphas
+    };
+}
+
+function renderFactorAttribution(attribution) {
+    const content = document.getElementById('factor-modal-content');
+    
+    let html = `
+        <div class="grid grid-cols-4 gap-4 mb-6">
+            <div class="card text-center">
+                <div class="text-sm text-gray-600">Portfolio Return</div>
+                <div class="text-2xl font-bold">${(attribution.totalReturn * 100).toFixed(2)}%</div>
+            </div>
+            <div class="card text-center">
+                <div class="text-sm text-gray-600">Portfolio Alpha</div>
+                <div class="text-2xl font-bold ${attribution.totalAlpha > 0 ? 'text-green-600' : 'text-red-600'}">
+                    ${(attribution.totalAlpha * 100).toFixed(2)}%
+                </div>
+            </div>
+            <div class="card text-center">
+                <div class="text-sm text-gray-600">Portfolio Beta</div>
+                <div class="text-2xl font-bold">${attribution.totalBeta.toFixed(3)}</div>
+            </div>
+            <div class="card text-center">
+                <div class="text-sm text-gray-600">SPY Return</div>
+                <div class="text-2xl font-bold">${(attribution.spyReturn * 100).toFixed(2)}%</div>
+            </div>
+        </div>
+        
+        <h3 class="text-lg font-semibold mb-3">Factor Breakdown</h3>
+        <p class="text-sm text-gray-600 mb-4">
+            How each investment factor contributes to your portfolio's performance:
+        </p>
+        
+        <div class="space-y-4 mb-6">
+    `;
+    
+    // Sort factors by weight
+    const sortedFactors = Object.entries(attribution.factorWeights).sort((a, b) => b[1] - a[1]);
+    
+    sortedFactors.forEach(([factor, weight]) => {
+        const returnContribution = attribution.factorReturns[factor];
+        const volatility = attribution.factorVolatilities[factor];
+        const beta = attribution.factorBetas[factor];
+        const alpha = attribution.factorAlphas[factor];
+        const holdings = attribution.factorGroups[factor].join(', ');
+        
+        html += `
+            <div class="card">
+                <div class="flex justify-between items-start mb-3">
+                    <div>
+                        <h4 class="font-semibold text-lg">${factor}</h4>
+                        <p class="text-xs text-gray-500">${holdings}</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-sm text-gray-600">Weight</div>
+                        <div class="text-xl font-bold">${(weight * 100).toFixed(1)}%</div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-4 gap-3 p-3 bg-gray-50 rounded">
+                    <div class="text-center">
+                        <div class="text-xs text-gray-600">Return Contribution</div>
+                        <div class="font-semibold">${(returnContribution * 100).toFixed(2)}%</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xs text-gray-600">Volatility</div>
+                        <div class="font-semibold">${(volatility * 100).toFixed(2)}%</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xs text-gray-600">Beta</div>
+                        <div class="font-semibold">${beta.toFixed(3)}</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xs text-gray-600">Alpha</div>
+                        <div class="font-semibold ${alpha > 0 ? 'text-green-600' : 'text-red-600'}">
+                            ${(alpha * 100).toFixed(2)}%
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-2 w-full bg-gray-200 rounded-full h-3">
+                    <div class="bg-blue-600 h-3 rounded-full" style="width: ${weight * 100}%"></div>
+                </div>
+            </div>
+        `;
+    });
+    
+    html += `
+        </div>
+        
+        <div class="p-4 bg-blue-50 border border-blue-200 rounded-lg mb-6">
+            <h4 class="font-semibold mb-2">💡 Key Insights</h4>
+            <p class="text-sm">
+                Your portfolio's ${(attribution.totalAlpha * 100).toFixed(2)}% alpha comes from a combination of factor exposures.
+                Factors with positive alpha are adding value beyond their market risk (beta).
+            </p>
+        </div>
+        
+        <div class="flex gap-2">
+            <button onclick="exportFactorAttribution()" class="btn btn-secondary flex-1">
+                📥 Export Attribution
+            </button>
+            <button onclick="closeFactorModal()" class="btn btn-outline flex-1">
+                Close
+            </button>
+        </div>
+    `;
+    
+    content.innerHTML = html;
+    
+    // Store for export
+    window.factorAttribution = attribution;
+}
+
+function exportFactorAttribution() {
+    const attribution = window.factorAttribution;
+    if (!attribution) return;
+    
+    let csv = 'Factor Attribution Analysis\n\n';
+    csv += 'Portfolio Metrics\n';
+    csv += `Total Return,${(attribution.totalReturn * 100).toFixed(2)}%\n`;
+    csv += `Total Alpha,${(attribution.totalAlpha * 100).toFixed(2)}%\n`;
+    csv += `Total Beta,${attribution.totalBeta.toFixed(3)}\n`;
+    csv += `Total Volatility,${(attribution.totalVolatility * 100).toFixed(2)}%\n`;
+    csv += `SPY Return,${(attribution.spyReturn * 100).toFixed(2)}%\n\n`;
+    
+    csv += 'Factor,Weight (%),Holdings,Return Contribution (%),Volatility (%),Beta,Alpha (%)\n';
+    
+    const sortedFactors = Object.entries(attribution.factorWeights).sort((a, b) => b[1] - a[1]);
+    
+    sortedFactors.forEach(([factor, weight]) => {
+        const holdings = attribution.factorGroups[factor].join(' | ');
+        csv += `${factor},${(weight * 100).toFixed(2)},${holdings},`;
+        csv += `${(attribution.factorReturns[factor] * 100).toFixed(2)},`;
+        csv += `${(attribution.factorVolatilities[factor] * 100).toFixed(2)},`;
+        csv += `${attribution.factorBetas[factor].toFixed(3)},`;
+        csv += `${(attribution.factorAlphas[factor] * 100).toFixed(2)}\n`;
+    });
+    
+    downloadCSV(csv, 'factor_attribution.csv');
+}
+
+// ============================================================================
+// COMPREHENSIVE EXPORT FUNCTIONALITY
+// ============================================================================
+
+function exportCompleteAnalysis() {
+    if (currentPortfolio.length === 0) {
+        alert('Build a portfolio first');
+        return;
+    }
+    
+    try {
+        const metrics = calculatePortfolioMetrics();
+        
+        let csv = 'ALPHATIC PORTFOLIO ANALYSIS REPORT\n';
+        csv += `Generated: ${new Date().toISOString()}\n\n`;
+        
+        csv += '=== PORTFOLIO COMPOSITION ===\n';
+        csv += 'Symbol,Name,Weight (%),Factor\n';
+        currentPortfolio.forEach(h => {
+            csv += `${h.symbol},${h.name},${h.weight.toFixed(2)},${h.factor}\n`;
+        });
+        
+        csv += '\n=== PERFORMANCE METRICS ===\n';
+        csv += 'Metric,Value\n';
+        csv += `Annual Return,${(metrics.expectedReturn * 100).toFixed(2)}%\n`;
+        csv += `Volatility,${(metrics.volatility * 100).toFixed(2)}%\n`;
+        csv += `Sharpe Ratio,${metrics.sharpe.toFixed(3)}\n`;
+        csv += `Max Drawdown,${(metrics.maxDrawdown * 100).toFixed(2)}%\n`;
+        csv += `Cumulative Return,${(metrics.cumulativeReturn * 100).toFixed(2)}%\n`;
+        
+        csv += '\n=== RELATIVE METRICS (vs SPY) ===\n';
+        csv += 'Metric,Value\n';
+        csv += `Beta,${metrics.beta.toFixed(3)}\n`;
+        csv += `Alpha,${(metrics.alpha * 100).toFixed(2)}%\n`;
+        csv += `Correlation,${metrics.correlation.toFixed(3)}\n`;
+        csv += `Excess Return,${(metrics.excessReturn * 100).toFixed(2)}%\n`;
+        csv += `SPY Return,${(metrics.spyReturn * 100).toFixed(2)}%\n`;
+        csv += `SPY Volatility,${(metrics.spyVolatility * 100).toFixed(2)}%\n`;
+        csv += `SPY Sharpe,${metrics.spySharpe.toFixed(3)}\n`;
+        
+        csv += '\n=== DATA PERIOD ===\n';
+        csv += `Start Date,${metrics.dates[0]}\n`;
+        csv += `End Date,${metrics.dates[metrics.dates.length - 1]}\n`;
+        csv += `Trading Days,${metrics.dates.length}\n`;
+        
+        downloadCSV(csv, 'portfolio_analysis.csv');
+    } catch (error) {
+        alert('Error exporting analysis: ' + error.message);
+    }
+}
+
+console.log('Alphatic V1.1 Enhancement Module loaded successfully! 🚀');
+console.log('New features: Portfolio Optimizer, Regime Detection, Factor Attribution, Export');
