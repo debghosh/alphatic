@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alphatic - Advanced Portfolio Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .nav-item {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .nav-item:hover {
+            background-color: #f3f4f6;
+        }
+        .nav-item.active {
+            border-bottom-color: #2563eb;
+            color: #2563eb;
+            font-weight: 600;
+        }
+        .view {
+            display: none;
+        }
+        .view.active {
+            display: block;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background-color: #2563eb;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+        .btn-secondary {
+            background-color: #6b7280;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #4b5563;
+        }
+        .btn-success {
+            background-color: #059669;
+            color: white;
+        }
+        .btn-success:hover {
+            background-color: #047857;
+        }
+        .btn-info {
+            background-color: #0891b2;
+            color: white;
+        }
+        .btn-info:hover {
+            background-color: #0e7490;
+        }
+        .btn-outline {
+            background-color: white;
+            border: 1px solid #d1d5db;
+            color: #374151;
+        }
+        .btn-outline:hover {
+            background-color: #f9fafb;
+        }
+        .btn-sm {
+            padding: 0.25rem 0.75rem;
+            font-size: 0.875rem;
+        }
+        .card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            overflow: auto;
+        }
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .loader {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #2563eb;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .grid {
+            display: grid;
+        }
+        .grid-cols-1 {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        .grid-cols-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .grid-cols-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        .grid-cols-4 {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+        @media (min-width: 768px) {
+            .md\:grid-cols-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        @media (min-width: 1024px) {
+            .lg\:grid-cols-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .lg\:grid-cols-3 {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .lg\:grid-cols-4 {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="container mx-auto px-4 py-4">
+            <h1 class="text-3xl font-bold text-gray-900">Alphatic</h1>
+            <p class="text-sm text-gray-600">Advanced Portfolio Analysis & Optimization</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex space-x-1">
+                <div class="nav-item active" onclick="showView('builder')">Portfolio Builder</div>
+                <div class="nav-item" onclick="showView('analysis')">Analysis</div>
+                <div class="nav-item" onclick="showView('backtest')">Backtest</div>
+                <div class="nav-item" onclick="showView('compare')">Compare</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-6">
+        <!-- Portfolio Builder View -->
+        <div id="builder-view" class="view active">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- ETF Selector -->
+                <div class="lg:col-span-2">
+                    <div class="card">
+                        <h2 class="text-xl font-bold mb-4">ETF Universe</h2>
+                        <div id="etf-selector"></div>
+                    </div>
+                </div>
+
+                <!-- Portfolio Holdings -->
+                <div>
+                    <div class="card mb-4">
+                        <h2 class="text-xl font-bold mb-4">Current Portfolio</h2>
+                        <div id="portfolio-holdings"></div>
+                    </div>
+
+                    <!-- Portfolio Actions -->
+                    <div class="card">
+                        <h3 class="font-semibold mb-3">Portfolio Actions</h3>
+                        <div class="space-y-2">
+                            <button onclick="savePortfolio()" class="btn btn-primary w-full">
+                                💾 Save Portfolio
+                            </button>
+                            <button onclick="showView('analysis')" class="btn btn-success w-full">
+                                📊 Analyze Portfolio
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Saved Portfolios -->
+                    <div class="card mt-4">
+                        <h3 class="font-semibold mb-3">Saved Portfolios</h3>
+                        <div id="saved-portfolios"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis View -->
+        <div id="analysis-view" class="view">
+            <div id="analysis-content"></div>
+        </div>
+
+        <!-- Backtest View -->
+        <div id="backtest-view" class="view">
+            <div class="card">
+                <h2 class="text-2xl font-bold mb-6">Historical Backtest</h2>
+                <div id="backtest-content"></div>
+            </div>
+        </div>
+
+        <!-- Compare View -->
+        <div id="compare-view" class="view">
+            <div class="card">
+                <h2 class="text-2xl font-bold mb-6">Portfolio Comparison</h2>
+                <div id="compare-content"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Optimizer Modal -->
+    <div id="optimizer-modal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-4">
+                <h2 class="text-2xl font-bold text-gray-900">Portfolio Optimizer</h2>
+                <button onclick="closeOptimizerModal()" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button>
+            </div>
+            <div id="optimizer-content"></div>
+        </div>
+    </div>
+
+    <!-- Smart Optimizer Modal -->
+    <div id="smart-optimizer-modal" class="modal">
+        <div class="modal-content" style="max-width: 1000px;">
+            <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-4">
+                <h2 class="text-2xl font-bold text-gray-900">🧠 Smart Optimizer</h2>
+                <button onclick="closeSmartOptimizerModal()" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button>
+            </div>
+            <div id="smart-optimizer-content"></div>
+        </div>
+    </div>
+
+    <!-- Factor Analysis Modal -->
+    <div id="factor-modal" class="modal">
+        <div class="modal-content" style="max-width: 1200px;">
+            <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-4">
+                <h2 class="text-2xl font-bold text-gray-900">📊 Factor Attribution Analysis</h2>
+                <button onclick="closeFactorModal()" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button>
+            </div>
+            <div id="factor-modal-content"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script src="portfolios.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
