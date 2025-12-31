@@ -109,6 +109,14 @@ function initializeApp() {
     
     console.log(`Loaded ${Object.keys(ETF_DATA).length} ETFs with real market data`);
     
+    // Initialize persistent storage
+    const storageInitialized = initializeStorage();
+    if (storageInitialized) {
+        console.log('✅ Persistent storage initialized - portfolios will be saved across sessions');
+    } else {
+        console.warn('⚠️ Persistent storage not available - portfolios will not persist');
+    }
+    
     renderETFSelector();
     renderPortfolioBuilder();
     loadSavedPortfolios();
@@ -352,26 +360,39 @@ function savePortfolio() {
         }))
     };
     
-    if (typeof SAVED_PORTFOLIOS === 'undefined') {
-        window.SAVED_PORTFOLIOS = [];
+    // Save to localStorage
+    if (addPortfolioToStorage(portfolio)) {
+        alert(`Portfolio "${name}" saved successfully!\n\n💾 Saved to browser storage (persists across sessions)`);
+        loadSavedPortfolios();
+    } else {
+        alert('Error saving portfolio. Check console for details.');
     }
-    
-    SAVED_PORTFOLIOS.push(portfolio);
-    alert(`Portfolio "${name}" saved successfully!`);
-    loadSavedPortfolios();
 }
 
 function loadSavedPortfolios() {
     const container = document.getElementById('saved-portfolios');
-    if (!container || typeof SAVED_PORTFOLIOS === 'undefined') return;
+    if (!container) return;
     
-    if (SAVED_PORTFOLIOS.length === 0) {
-        container.innerHTML = '<p class="text-gray-500 text-sm">No saved portfolios</p>';
+    // Get portfolios from localStorage
+    const portfolios = getCurrentPortfolios();
+    
+    if (portfolios.length === 0) {
+        container.innerHTML = `
+            <p class="text-gray-500 text-sm mb-3">No saved portfolios</p>
+            <div class="flex gap-2">
+                <button onclick="importPortfoliosFromFile()" class="btn-sm bg-blue-600 text-white flex-1">
+                    📥 Import
+                </button>
+                <button onclick="showStorageStats()" class="btn-sm bg-gray-600 text-white flex-1">
+                    📊 Stats
+                </button>
+            </div>
+        `;
         return;
     }
     
-    let html = '<div class="space-y-2">';
-    SAVED_PORTFOLIOS.forEach((portfolio, idx) => {
+    let html = '<div class="space-y-2 mb-3">';
+    portfolios.forEach((portfolio, idx) => {
         html += `
             <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
                 <div>
@@ -392,11 +413,34 @@ function loadSavedPortfolios() {
         `;
     });
     html += '</div>';
+    
+    // Add management buttons
+    html += `
+        <div class="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-gray-200">
+            <button onclick="exportPortfoliosToFile()" class="btn-sm bg-green-600 text-white text-xs">
+                📥 Export
+            </button>
+            <button onclick="importPortfoliosFromFile()" class="btn-sm bg-blue-600 text-white text-xs">
+                📤 Import
+            </button>
+            <button onclick="showStorageStats()" class="btn-sm bg-gray-600 text-white text-xs">
+                📊 Stats
+            </button>
+        </div>
+    `;
+    
     container.innerHTML = html;
 }
 
 function loadPortfolio(index) {
-    const portfolio = SAVED_PORTFOLIOS[index];
+    const portfolios = getCurrentPortfolios();
+    
+    if (index < 0 || index >= portfolios.length) {
+        alert('Invalid portfolio index');
+        return;
+    }
+    
+    const portfolio = portfolios[index];
     currentPortfolio = portfolio.holdings.map(h => ({
         ...ETF_LOOKUP[h.symbol],
         weight: h.weight
@@ -404,13 +448,26 @@ function loadPortfolio(index) {
     
     renderPortfolioBuilder();
     renderETFSelector();
-    alert(`Loaded portfolio: ${portfolio.name}`);
+    alert(`✅ Loaded portfolio: ${portfolio.name}\n\nHoldings: ${currentPortfolio.length}\nLast saved: ${new Date(portfolio.timestamp).toLocaleString()}`);
 }
 
 function deletePortfolio(index) {
-    if (confirm('Delete this portfolio?')) {
-        SAVED_PORTFOLIOS.splice(index, 1);
-        loadSavedPortfolios();
+    const portfolios = getCurrentPortfolios();
+    
+    if (index < 0 || index >= portfolios.length) {
+        alert('Invalid portfolio index');
+        return;
+    }
+    
+    const portfolio = portfolios[index];
+    
+    if (confirm(`Delete portfolio "${portfolio.name}"?\n\nThis cannot be undone.`)) {
+        if (deletePortfolioFromStorage(index)) {
+            alert(`Portfolio "${portfolio.name}" deleted successfully.`);
+            loadSavedPortfolios();
+        } else {
+            alert('Error deleting portfolio. Check console for details.');
+        }
     }
 }
 
@@ -2360,3 +2417,293 @@ function exportCompleteAnalysis() {
 
 console.log('Alphatic V1.1 Enhancement Module loaded successfully! 🚀');
 console.log('New features: Portfolio Optimizer, Regime Detection, Factor Attribution, Export');
+// ============================================================================
+// ALPHATIC V1.1 - PERSISTENT STORAGE MODULE
+// LocalStorage-based portfolio persistence
+// ============================================================================
+
+// ============================================================================
+// LOCALSTORAGE PORTFOLIO MANAGEMENT
+// ============================================================================
+
+const STORAGE_KEY = 'alphatic_saved_portfolios';
+const STORAGE_VERSION = '1.1';
+
+// Initialize storage on load
+function initializeStorage() {
+    try {
+        // Check if localStorage is available
+        if (typeof(Storage) === "undefined") {
+            console.warn('localStorage not available - portfolios will not persist');
+            return false;
+        }
+        
+        // Check if we have existing data
+        const existingData = localStorage.getItem(STORAGE_KEY);
+        
+        if (!existingData) {
+            // First time - load sample portfolios from portfolios.js
+            console.log('Initializing portfolio storage with sample portfolios...');
+            if (typeof SAVED_PORTFOLIOS !== 'undefined' && SAVED_PORTFOLIOS.length > 0) {
+                savePortfoliosToStorage(SAVED_PORTFOLIOS);
+            } else {
+                // No samples, initialize empty
+                savePortfoliosToStorage([]);
+            }
+        } else {
+            console.log('Loading saved portfolios from localStorage...');
+        }
+        
+        return true;
+    } catch (error) {
+        console.error('Error initializing storage:', error);
+        return false;
+    }
+}
+
+// Load portfolios from localStorage
+function loadPortfoliosFromStorage() {
+    try {
+        const data = localStorage.getItem(STORAGE_KEY);
+        
+        if (!data) {
+            return [];
+        }
+        
+        const parsed = JSON.parse(data);
+        
+        // Validate structure
+        if (!Array.isArray(parsed.portfolios)) {
+            console.error('Invalid portfolio data in storage');
+            return [];
+        }
+        
+        console.log(`Loaded ${parsed.portfolios.length} portfolios from storage`);
+        return parsed.portfolios;
+        
+    } catch (error) {
+        console.error('Error loading portfolios from storage:', error);
+        return [];
+    }
+}
+
+// Save portfolios to localStorage
+function savePortfoliosToStorage(portfolios) {
+    try {
+        const data = {
+            version: STORAGE_VERSION,
+            lastUpdated: new Date().toISOString(),
+            portfolios: portfolios
+        };
+        
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        console.log(`Saved ${portfolios.length} portfolios to storage`);
+        return true;
+        
+    } catch (error) {
+        if (error.name === 'QuotaExceededError') {
+            alert('Storage quota exceeded! Too many portfolios saved. Please delete some old portfolios.');
+        } else {
+            console.error('Error saving portfolios to storage:', error);
+        }
+        return false;
+    }
+}
+
+// Get current portfolios array
+function getCurrentPortfolios() {
+    return loadPortfoliosFromStorage();
+}
+
+// Add a new portfolio
+function addPortfolioToStorage(portfolio) {
+    const portfolios = getCurrentPortfolios();
+    portfolios.push(portfolio);
+    return savePortfoliosToStorage(portfolios);
+}
+
+// Update a portfolio by index
+function updatePortfolioInStorage(index, portfolio) {
+    const portfolios = getCurrentPortfolios();
+    
+    if (index < 0 || index >= portfolios.length) {
+        console.error('Invalid portfolio index');
+        return false;
+    }
+    
+    portfolios[index] = portfolio;
+    return savePortfoliosToStorage(portfolios);
+}
+
+// Delete a portfolio by index
+function deletePortfolioFromStorage(index) {
+    const portfolios = getCurrentPortfolios();
+    
+    if (index < 0 || index >= portfolios.length) {
+        console.error('Invalid portfolio index');
+        return false;
+    }
+    
+    portfolios.splice(index, 1);
+    return savePortfoliosToStorage(portfolios);
+}
+
+// Clear all portfolios (with confirmation)
+function clearAllPortfolios() {
+    if (!confirm('⚠️ This will delete ALL saved portfolios permanently. Are you sure?')) {
+        return false;
+    }
+    
+    if (!confirm('⚠️ FINAL WARNING: This cannot be undone. Continue?')) {
+        return false;
+    }
+    
+    try {
+        localStorage.removeItem(STORAGE_KEY);
+        console.log('All portfolios cleared from storage');
+        return true;
+    } catch (error) {
+        console.error('Error clearing portfolios:', error);
+        return false;
+    }
+}
+
+// Export portfolios to JSON file
+function exportPortfoliosToFile() {
+    const portfolios = getCurrentPortfolios();
+    
+    if (portfolios.length === 0) {
+        alert('No portfolios to export');
+        return;
+    }
+    
+    const exportData = {
+        version: STORAGE_VERSION,
+        exportDate: new Date().toISOString(),
+        portfolios: portfolios
+    };
+    
+    const dataStr = JSON.stringify(exportData, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `alphatic_portfolios_${new Date().toISOString().split('T')[0]}.json`;
+    link.click();
+    
+    URL.revokeObjectURL(url);
+    
+    console.log(`Exported ${portfolios.length} portfolios to file`);
+}
+
+// Import portfolios from JSON file
+function importPortfoliosFromFile() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    
+    input.onchange = (event) => {
+        const file = event.target.files[0];
+        
+        if (!file) return;
+        
+        const reader = new FileReader();
+        
+        reader.onload = (e) => {
+            try {
+                const importData = JSON.parse(e.target.result);
+                
+                // Validate structure
+                if (!importData.portfolios || !Array.isArray(importData.portfolios)) {
+                    alert('Invalid portfolio file format');
+                    return;
+                }
+                
+                // Ask user how to handle import
+                const action = confirm(
+                    `Import ${importData.portfolios.length} portfolios.\n\n` +
+                    'Click OK to MERGE with existing portfolios.\n' +
+                    'Click Cancel to REPLACE all existing portfolios.'
+                );
+                
+                if (action) {
+                    // Merge with existing
+                    const existing = getCurrentPortfolios();
+                    const merged = [...existing, ...importData.portfolios];
+                    savePortfoliosToStorage(merged);
+                    alert(`Imported ${importData.portfolios.length} portfolios (merged with ${existing.length} existing)`);
+                } else {
+                    // Replace all
+                    if (confirm('⚠️ This will replace ALL existing portfolios. Continue?')) {
+                        savePortfoliosToStorage(importData.portfolios);
+                        alert(`Replaced with ${importData.portfolios.length} imported portfolios`);
+                    }
+                }
+                
+                // Refresh display
+                loadSavedPortfolios();
+                
+            } catch (error) {
+                console.error('Error importing portfolios:', error);
+                alert('Error importing portfolios. Check file format.');
+            }
+        };
+        
+        reader.readAsText(file);
+    };
+    
+    input.click();
+}
+
+// Get storage statistics
+function getStorageStats() {
+    try {
+        const data = localStorage.getItem(STORAGE_KEY);
+        const portfolios = getCurrentPortfolios();
+        
+        const stats = {
+            portfolioCount: portfolios.length,
+            storageSize: data ? new Blob([data]).size : 0,
+            storageSizeKB: data ? (new Blob([data]).size / 1024).toFixed(2) : 0,
+            lastUpdated: null
+        };
+        
+        if (data) {
+            const parsed = JSON.parse(data);
+            stats.lastUpdated = parsed.lastUpdated;
+        }
+        
+        return stats;
+        
+    } catch (error) {
+        console.error('Error getting storage stats:', error);
+        return null;
+    }
+}
+
+// Display storage statistics
+function showStorageStats() {
+    const stats = getStorageStats();
+    
+    if (!stats) {
+        alert('Error getting storage statistics');
+        return;
+    }
+    
+    const message = `
+📊 PORTFOLIO STORAGE STATISTICS
+
+Saved Portfolios: ${stats.portfolioCount}
+Storage Used: ${stats.storageSizeKB} KB
+Last Updated: ${stats.lastUpdated ? new Date(stats.lastUpdated).toLocaleString() : 'Never'}
+
+Storage Location: Browser localStorage
+Persistence: Permanent (until manually cleared)
+`;
+    
+    alert(message);
+}
+
+console.log('Alphatic Persistent Storage Module loaded successfully! 💾');
+console.log('Your portfolios will now persist across browser sessions');
