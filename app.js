@@ -10,77 +10,77 @@
 
 const ETF_DATABASE = {
     'US Broad Market': [
-        { symbol: 'SPY', name: 'SPDR S&P 500 ETF', expense: 0.09, factor: 'Market', beta: 1.00 },
-        { symbol: 'VTI', name: 'Vanguard Total Stock Market', expense: 0.03, factor: 'Market', beta: 1.00 },
-        { symbol: 'VOO', name: 'Vanguard S&P 500', expense: 0.03, factor: 'Market', beta: 1.00 },
-        { symbol: 'QQQ', name: 'Invesco QQQ (Nasdaq-100)', expense: 0.20, factor: 'Tech/Growth', beta: 1.15 }
+        { symbol: 'SPY', name: 'SPDR S&P 500 ETF', expense: 0.09, factor: 'Market', beta: 1.00, inception: '1993-01-22' },
+        { symbol: 'VTI', name: 'Vanguard Total Stock Market', expense: 0.03, factor: 'Market', beta: 1.00, inception: '2001-05-31' },
+        { symbol: 'VOO', name: 'Vanguard S&P 500', expense: 0.03, factor: 'Market', beta: 1.00, inception: '2010-09-07' },
+        { symbol: 'QQQ', name: 'Invesco QQQ (Nasdaq-100)', expense: 0.20, factor: 'Tech/Growth', beta: 1.15, inception: '1999-03-10' }
     ],
     'US Growth': [
-        { symbol: 'VUG', name: 'Vanguard Growth ETF', expense: 0.04, factor: 'Growth', beta: 1.05 },
-        { symbol: 'SCHG', name: 'Schwab U.S. Large-Cap Growth', expense: 0.04, factor: 'Growth', beta: 1.05 },
-        { symbol: 'IVW', name: 'iShares S&P 500 Growth', expense: 0.18, factor: 'Growth', beta: 1.05 },
-        { symbol: 'IWF', name: 'iShares Russell 1000 Growth', expense: 0.19, factor: 'Growth', beta: 1.05 }
+        { symbol: 'VUG', name: 'Vanguard Growth ETF', expense: 0.04, factor: 'Growth', beta: 1.05, inception: '2004-01-26' },
+        { symbol: 'SCHG', name: 'Schwab U.S. Large-Cap Growth', expense: 0.04, factor: 'Growth', beta: 1.05, inception: '2009-12-11' },
+        { symbol: 'IVW', name: 'iShares S&P 500 Growth', expense: 0.18, factor: 'Growth', beta: 1.05, inception: '2000-05-22' },
+        { symbol: 'IWF', name: 'iShares Russell 1000 Growth', expense: 0.19, factor: 'Growth', beta: 1.05, inception: '2000-05-22' }
     ],
     'US Value': [
-        { symbol: 'VTV', name: 'Vanguard Value ETF', expense: 0.04, factor: 'Value', beta: 0.92 },
-        { symbol: 'SCHV', name: 'Schwab U.S. Large-Cap Value', expense: 0.04, factor: 'Value', beta: 0.92 },
-        { symbol: 'IVE', name: 'iShares S&P 500 Value', expense: 0.18, factor: 'Value', beta: 0.92 },
-        { symbol: 'AVUV', name: 'Avantis US Small Cap Value', expense: 0.25, factor: 'Value', beta: 1.05 },
-        { symbol: 'AVDV', name: 'Avantis International Small Cap Value', expense: 0.36, factor: 'Value', beta: 0.95 }
+        { symbol: 'VTV', name: 'Vanguard Value ETF', expense: 0.04, factor: 'Value', beta: 0.92, inception: '2004-01-26' },
+        { symbol: 'SCHV', name: 'Schwab U.S. Large-Cap Value', expense: 0.04, factor: 'Value', beta: 0.92, inception: '2009-12-11' },
+        { symbol: 'IVE', name: 'iShares S&P 500 Value', expense: 0.18, factor: 'Value', beta: 0.92, inception: '2000-05-22' },
+        { symbol: 'AVUV', name: 'Avantis US Small Cap Value', expense: 0.25, factor: 'Value', beta: 1.05, inception: '2019-09-24' },
+        { symbol: 'AVDV', name: 'Avantis International Small Cap Value', expense: 0.36, factor: 'Value', beta: 0.95, inception: '2019-09-24' }
     ],
     'US Small Cap': [
-        { symbol: 'VB', name: 'Vanguard Small-Cap ETF', expense: 0.05, factor: 'Size', beta: 1.10 },
-        { symbol: 'IJR', name: 'iShares Core S&P Small-Cap', expense: 0.06, factor: 'Size', beta: 1.10 },
-        { symbol: 'IWM', name: 'iShares Russell 2000', expense: 0.19, factor: 'Size', beta: 1.15 },
-        { symbol: 'SIZE', name: 'iShares MSCI USA Size Factor', expense: 0.15, factor: 'Size', beta: 1.12 }
+        { symbol: 'VB', name: 'Vanguard Small-Cap ETF', expense: 0.05, factor: 'Size', beta: 1.10, inception: '2004-01-26' },
+        { symbol: 'IJR', name: 'iShares Core S&P Small-Cap', expense: 0.06, factor: 'Size', beta: 1.10, inception: '2000-05-22' },
+        { symbol: 'IWM', name: 'iShares Russell 2000', expense: 0.19, factor: 'Size', beta: 1.15, inception: '2000-05-22' },
+        { symbol: 'SIZE', name: 'iShares MSCI USA Size Factor', expense: 0.15, factor: 'Size', beta: 1.12, inception: '2013-04-16' }
     ],
     'Factor ETFs': [
-        { symbol: 'MTUM', name: 'iShares MSCI USA Momentum', expense: 0.15, factor: 'Momentum', beta: 1.00 },
-        { symbol: 'QUAL', name: 'iShares MSCI USA Quality', expense: 0.15, factor: 'Quality', beta: 0.90 },
-        { symbol: 'USMV', name: 'iShares MSCI USA Min Vol', expense: 0.15, factor: 'Low Volatility', beta: 0.75 },
-        { symbol: 'IMOM', name: 'iShares MSCI Intl Momentum', expense: 0.30, factor: 'Momentum', beta: 0.95 }
+        { symbol: 'MTUM', name: 'iShares MSCI USA Momentum', expense: 0.15, factor: 'Momentum', beta: 1.00, inception: '2013-04-16' },
+        { symbol: 'QUAL', name: 'iShares MSCI USA Quality', expense: 0.15, factor: 'Quality', beta: 0.90, inception: '2013-07-16' },
+        { symbol: 'USMV', name: 'iShares MSCI USA Min Vol', expense: 0.15, factor: 'Low Volatility', beta: 0.75, inception: '2011-10-18' },
+        { symbol: 'IMOM', name: 'iShares MSCI Intl Momentum', expense: 0.30, factor: 'Momentum', beta: 0.95, inception: '2014-01-28' }
     ],
     'Dividend': [
-        { symbol: 'SCHD', name: 'Schwab U.S. Dividend Equity', expense: 0.06, factor: 'Dividend', beta: 0.95 },
-        { symbol: 'VYM', name: 'Vanguard High Dividend Yield', expense: 0.06, factor: 'Dividend', beta: 0.95 },
-        { symbol: 'VYMI', name: 'Vanguard International High Dividend', expense: 0.22, factor: 'Dividend', beta: 0.85 },
-        { symbol: 'HDV', name: 'iShares Core High Dividend', expense: 0.08, factor: 'Dividend', beta: 0.93 }
+        { symbol: 'SCHD', name: 'Schwab U.S. Dividend Equity', expense: 0.06, factor: 'Dividend', beta: 0.95, inception: '2011-10-20' },
+        { symbol: 'VYM', name: 'Vanguard High Dividend Yield', expense: 0.06, factor: 'Dividend', beta: 0.95, inception: '2006-11-10' },
+        { symbol: 'VYMI', name: 'Vanguard International High Dividend', expense: 0.22, factor: 'Dividend', beta: 0.85, inception: '2016-02-25' },
+        { symbol: 'HDV', name: 'iShares Core High Dividend', expense: 0.08, factor: 'Dividend', beta: 0.93, inception: '2011-03-29' }
     ],
     'International Equity': [
-        { symbol: 'VXUS', name: 'Vanguard Total International Stock', expense: 0.07, factor: 'International', beta: 0.85 },
-        { symbol: 'VEU', name: 'Vanguard FTSE All-World ex-US', expense: 0.07, factor: 'International', beta: 0.85 },
-        { symbol: 'VEA', name: 'Vanguard FTSE Developed Markets', expense: 0.05, factor: 'International', beta: 0.85 },
-        { symbol: 'VGK', name: 'Vanguard FTSE Europe', expense: 0.08, factor: 'International', beta: 0.90 },
-        { symbol: 'VWO', name: 'Vanguard FTSE Emerging Markets', expense: 0.08, factor: 'Emerging Markets', beta: 1.10 },
-        { symbol: 'IEMG', name: 'iShares Core MSCI Emerging Markets', expense: 0.11, factor: 'Emerging Markets', beta: 1.10 },
-        { symbol: 'EEM', name: 'iShares MSCI Emerging Markets', expense: 0.70, factor: 'Emerging Markets', beta: 1.15 }
+        { symbol: 'VXUS', name: 'Vanguard Total International Stock', expense: 0.07, factor: 'International', beta: 0.85, inception: '2011-01-26' },
+        { symbol: 'VEU', name: 'Vanguard FTSE All-World ex-US', expense: 0.07, factor: 'International', beta: 0.85, inception: '2007-03-02' },
+        { symbol: 'VEA', name: 'Vanguard FTSE Developed Markets', expense: 0.05, factor: 'International', beta: 0.85, inception: '2007-07-20' },
+        { symbol: 'VGK', name: 'Vanguard FTSE Europe', expense: 0.08, factor: 'International', beta: 0.90, inception: '2005-03-04' },
+        { symbol: 'VWO', name: 'Vanguard FTSE Emerging Markets', expense: 0.08, factor: 'Emerging Markets', beta: 1.10, inception: '2005-03-04' },
+        { symbol: 'IEMG', name: 'iShares Core MSCI Emerging Markets', expense: 0.11, factor: 'Emerging Markets', beta: 1.10, inception: '2012-10-18' },
+        { symbol: 'EEM', name: 'iShares MSCI Emerging Markets', expense: 0.70, factor: 'Emerging Markets', beta: 1.15, inception: '2003-04-07' }
     ],
     'Sector ETFs': [
-        { symbol: 'VGT', name: 'Vanguard Information Technology', expense: 0.10, factor: 'Tech', beta: 1.20 },
-        { symbol: 'XLK', name: 'Technology Select Sector SPDR', expense: 0.10, factor: 'Tech', beta: 1.20 },
-        { symbol: 'XLF', name: 'Financial Select Sector SPDR', expense: 0.10, factor: 'Financials', beta: 1.10 },
-        { symbol: 'XLE', name: 'Energy Select Sector SPDR', expense: 0.10, factor: 'Energy', beta: 1.15 },
-        { symbol: 'XLV', name: 'Health Care Select Sector SPDR', expense: 0.10, factor: 'Healthcare', beta: 0.85 },
-        { symbol: 'XLI', name: 'Industrial Select Sector SPDR', expense: 0.10, factor: 'Industrials', beta: 1.05 }
+        { symbol: 'VGT', name: 'Vanguard Information Technology', expense: 0.10, factor: 'Tech', beta: 1.20, inception: '2004-01-26' },
+        { symbol: 'XLK', name: 'Technology Select Sector SPDR', expense: 0.10, factor: 'Tech', beta: 1.20, inception: '1998-12-16' },
+        { symbol: 'XLF', name: 'Financial Select Sector SPDR', expense: 0.10, factor: 'Financials', beta: 1.10, inception: '1998-12-16' },
+        { symbol: 'XLE', name: 'Energy Select Sector SPDR', expense: 0.10, factor: 'Energy', beta: 1.15, inception: '1998-12-16' },
+        { symbol: 'XLV', name: 'Health Care Select Sector SPDR', expense: 0.10, factor: 'Healthcare', beta: 0.85, inception: '1998-12-16' },
+        { symbol: 'XLI', name: 'Industrial Select Sector SPDR', expense: 0.10, factor: 'Industrials', beta: 1.05, inception: '1998-12-16' }
     ],
     'Real Estate': [
-        { symbol: 'VNQ', name: 'Vanguard Real Estate ETF', expense: 0.12, factor: 'Real Estate', beta: 0.95 }
+        { symbol: 'VNQ', name: 'Vanguard Real Estate ETF', expense: 0.12, factor: 'Real Estate', beta: 0.95, inception: '2004-09-23' }
     ],
     'Fixed Income': [
-        { symbol: 'BND', name: 'Vanguard Total Bond Market', expense: 0.03, factor: 'Bonds', beta: 0.10 },
-        { symbol: 'BNDX', name: 'Vanguard Total International Bond', expense: 0.07, factor: 'Bonds', beta: 0.08 },
-        { symbol: 'AGG', name: 'iShares Core U.S. Aggregate Bond', expense: 0.03, factor: 'Bonds', beta: 0.10 },
-        { symbol: 'TLT', name: 'iShares 20+ Year Treasury Bond', expense: 0.15, factor: 'Long Bonds', beta: 0.15 },
-        { symbol: 'IEF', name: 'iShares 7-10 Year Treasury', expense: 0.15, factor: 'Intermediate Bonds', beta: 0.12 },
-        { symbol: 'TIP', name: 'iShares TIPS Bond ETF', expense: 0.19, factor: 'Inflation Protected', beta: 0.08 },
-        { symbol: 'SHY', name: 'iShares 1-3 Year Treasury Bond', expense: 0.15, factor: 'Short Bonds', beta: 0.05 }
+        { symbol: 'BND', name: 'Vanguard Total Bond Market', expense: 0.03, factor: 'Bonds', beta: 0.10, inception: '2007-04-03' },
+        { symbol: 'BNDX', name: 'Vanguard Total International Bond', expense: 0.07, factor: 'Bonds', beta: 0.08, inception: '2013-05-31' },
+        { symbol: 'AGG', name: 'iShares Core U.S. Aggregate Bond', expense: 0.03, factor: 'Bonds', beta: 0.10, inception: '2003-09-22' },
+        { symbol: 'TLT', name: 'iShares 20+ Year Treasury Bond', expense: 0.15, factor: 'Long Bonds', beta: 0.15, inception: '2002-07-22' },
+        { symbol: 'IEF', name: 'iShares 7-10 Year Treasury', expense: 0.15, factor: 'Intermediate Bonds', beta: 0.12, inception: '2002-07-22' },
+        { symbol: 'TIP', name: 'iShares TIPS Bond ETF', expense: 0.19, factor: 'Inflation Protected', beta: 0.08, inception: '2003-12-04' },
+        { symbol: 'SHY', name: 'iShares 1-3 Year Treasury Bond', expense: 0.15, factor: 'Short Bonds', beta: 0.05, inception: '2002-07-22' }
     ],
     'Alternatives': [
-        { symbol: 'GLD', name: 'SPDR Gold Shares', expense: 0.40, factor: 'Gold', beta: 0.00 },
-        { symbol: 'DBC', name: 'Invesco DB Commodity Index', expense: 0.87, factor: 'Commodities', beta: 0.10 }
+        { symbol: 'GLD', name: 'SPDR Gold Shares', expense: 0.40, factor: 'Gold', beta: 0.00, inception: '2004-11-18' },
+        { symbol: 'DBC', name: 'Invesco DB Commodity Index', expense: 0.87, factor: 'Commodities', beta: 0.10, inception: '2006-02-03' }
     ],
     'Aggressive Growth': [
-        { symbol: 'ARKK', name: 'ARK Innovation ETF', expense: 0.75, factor: 'Innovation', beta: 1.45 }
+        { symbol: 'ARKK', name: 'ARK Innovation ETF', expense: 0.75, factor: 'Innovation', beta: 1.45, inception: '2014-10-31' }
     ]
 };
 
@@ -202,11 +202,24 @@ function renderETFSelector() {
             const inPortfolio = currentPortfolio.find(p => p.symbol === etf.symbol);
             const hasData = ETF_DATA[etf.symbol] !== undefined;
             
+            // Calculate years of history
+            let yearsHistory = '';
+            if (etf.inception) {
+                const inceptionDate = new Date(etf.inception);
+                const today = new Date();
+                const years = Math.floor((today - inceptionDate) / (365.25 * 24 * 60 * 60 * 1000));
+                yearsHistory = `${years}y`;
+            }
+            
             html += `
                 <div class="flex justify-between items-center p-2 rounded hover:bg-gray-50 ${inPortfolio ? 'bg-blue-50' : ''}">
                     <div class="flex-1">
-                        <div class="font-medium text-sm">${etf.symbol}</div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-medium text-sm">${etf.symbol}</span>
+                            ${yearsHistory ? `<span class="text-xs text-gray-500 bg-gray-100 px-1 rounded">${yearsHistory}</span>` : ''}
+                        </div>
                         <div class="text-xs text-gray-500">${etf.factor}</div>
+                        ${etf.inception ? `<div class="text-xs text-gray-400">Since ${etf.inception}</div>` : ''}
                         ${!hasData ? '<div class="text-xs text-red-500">No data</div>' : ''}
                     </div>
                     <button 
@@ -270,11 +283,8 @@ function addToPortfolio(symbol) {
 function removeFromPortfolio(symbol) {
     currentPortfolio = currentPortfolio.filter(p => p.symbol !== symbol);
     
-    // Rebalance weights
-    if (currentPortfolio.length > 0) {
-        const newWeight = 100 / currentPortfolio.length;
-        currentPortfolio.forEach(p => p.weight = newWeight);
-    }
+    // Don't rebalance - keep existing weights
+    // User can manually adjust or use "Normalize to 100%" button
     
     renderPortfolioBuilder();
     renderETFSelector();
@@ -361,12 +371,18 @@ function renderPortfolioBuilder() {
                 ${total.toFixed(2)}%
             </span>
         </div>
-        <div class="flex gap-2 mt-4">
-            <button onclick="normalizeWeights()" class="btn btn-secondary flex-1">
+        <div class="grid grid-cols-2 gap-2 mt-4">
+            <button onclick="normalizeWeights()" class="btn btn-secondary">
                 Normalize to 100%
             </button>
-            <button onclick="clearPortfolio()" class="btn btn-outline flex-1">
+            <button onclick="clearPortfolio()" class="btn btn-outline">
                 Clear All
+            </button>
+            <button onclick="exportPortfolio()" class="btn btn-primary">
+                📥 Export Portfolio
+            </button>
+            <button onclick="importPortfolio()" class="btn btn-primary">
+                📤 Import Portfolio
             </button>
         </div>
     `;
@@ -376,6 +392,105 @@ function renderPortfolioBuilder() {
 
 function clearPortfolio() {
     clearPortfolioEnhanced();
+}
+
+function exportPortfolio() {
+    if (currentPortfolio.length === 0) {
+        alert('No portfolio to export');
+        return;
+    }
+    
+    const portfolioData = {
+        name: prompt('Enter portfolio name:', 'My Portfolio') || 'Untitled Portfolio',
+        created: new Date().toISOString(),
+        holdings: currentPortfolio.map(h => ({
+            symbol: h.symbol,
+            weight: h.weight,
+            name: h.name || (ETF_LOOKUP[h.symbol] ? ETF_LOOKUP[h.symbol].name : undefined),
+            factor: h.factor || (ETF_LOOKUP[h.symbol] ? ETF_LOOKUP[h.symbol].factor : undefined)
+        })),
+        totalAllocation: currentPortfolio.reduce((sum, h) => sum + h.weight, 0)
+    };
+    
+    // Convert to JSON
+    const json = JSON.stringify(portfolioData, null, 2);
+    
+    // Create download link
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${portfolioData.name.replace(/[^a-z0-9]/gi, '_')}_${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    alert(`Portfolio "${portfolioData.name}" exported successfully!`);
+}
+
+function importPortfolio() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    
+    input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            try {
+                const portfolioData = JSON.parse(event.target.result);
+                
+                // Validate structure
+                if (!portfolioData.holdings || !Array.isArray(portfolioData.holdings)) {
+                    throw new Error('Invalid portfolio format: missing holdings array');
+                }
+                
+                // Clear current portfolio
+                currentPortfolio = [];
+                
+                // Load holdings with metadata from ETF_LOOKUP
+                portfolioData.holdings.forEach(h => {
+                    if (!h.symbol || h.weight === undefined) {
+                        console.warn('Skipping invalid holding:', h);
+                        return;
+                    }
+                    
+                    const etfInfo = ETF_LOOKUP[h.symbol] || {};
+                    currentPortfolio.push({
+                        symbol: h.symbol,
+                        weight: h.weight,
+                        name: h.name || etfInfo.name || 'Unknown ETF',
+                        factor: h.factor || etfInfo.factor || 'Unknown',
+                        expense: etfInfo.expense,
+                        beta: etfInfo.beta,
+                        inception: etfInfo.inception
+                    });
+                });
+                
+                if (currentPortfolio.length === 0) {
+                    throw new Error('No valid holdings found in portfolio file');
+                }
+                
+                // Update display
+                renderPortfolioBuilder();
+                renderETFSelector();
+                
+                const total = currentPortfolio.reduce((sum, h) => sum + h.weight, 0);
+                alert(`Portfolio "${portfolioData.name || 'Imported'}" loaded successfully!\n${currentPortfolio.length} holdings, ${total.toFixed(2)}% total allocation`);
+                
+            } catch (error) {
+                console.error('Import error:', error);
+                alert(`Error importing portfolio: ${error.message}`);
+            }
+        };
+        
+        reader.readAsText(file);
+    };
+    
+    input.click();
 }
 
 // ============================================================================

@@ -55,29 +55,57 @@ ETFS = [
     'ARKK'
 ]
 
-# ETF metadata for educational context
+# ETF metadata including inception dates for historical data fetching
 ETF_METADATA = {
-    'SPY': {'category': 'Core', 'factor': 'Market', 'expense': 0.0945},
-    'VTI': {'category': 'Core', 'factor': 'Market', 'expense': 0.03},
-    'VOO': {'category': 'Core', 'factor': 'Market', 'expense': 0.03},
-    'QQQ': {'category': 'Core', 'factor': 'Tech/Growth', 'expense': 0.20},
-    'AVUV': {'category': 'Factor - Value/Small', 'factor': 'Value + Size', 'expense': 0.25},
-    'AVDV': {'category': 'Factor - Intl Value', 'factor': 'Intl Value + Size', 'expense': 0.36},
-    'MTUM': {'category': 'Factor - Momentum', 'factor': 'Momentum', 'expense': 0.15},
-    'IMOM': {'category': 'Factor - Intl Momentum', 'factor': 'Intl Momentum', 'expense': 0.30},
-    'QUAL': {'category': 'Factor - Quality', 'factor': 'Quality', 'expense': 0.15},
-    'USMV': {'category': 'Factor - Low Volatility', 'factor': 'Low Vol', 'expense': 0.15},
-    'SIZE': {'category': 'Factor - Size', 'factor': 'Size', 'expense': 0.15},
-    'VXUS': {'category': 'International', 'factor': 'International', 'expense': 0.07},
-    'VWO': {'category': 'Emerging Markets', 'factor': 'Emerging', 'expense': 0.08},
-    'BND': {'category': 'Defensive Ballast', 'factor': 'Bonds', 'expense': 0.03},
-    'BNDX': {'category': 'Defensive Ballast - Intl', 'factor': 'Intl Bonds', 'expense': 0.07},
-    'TLT': {'category': 'Defensive Ballast', 'factor': 'Long Bonds', 'expense': 0.15},
-    'IEF': {'category': 'Defensive Ballast', 'factor': 'Intermediate Bonds', 'expense': 0.15},
-    'TIP': {'category': 'Defensive Ballast', 'factor': 'Inflation Protection', 'expense': 0.19},
-    'GLD': {'category': 'Safe Haven', 'factor': 'Gold', 'expense': 0.40},
-    'DBC': {'category': 'Commodities', 'factor': 'Commodities', 'expense': 0.87},
-    'ARKK': {'category': 'Aggressive Growth', 'factor': 'Innovation', 'expense': 0.75},
+    'SPY': {'category': 'Core', 'factor': 'Market', 'expense': 0.0945, 'inception': '1993-01-22'},
+    'VTI': {'category': 'Core', 'factor': 'Market', 'expense': 0.03, 'inception': '2001-05-31'},
+    'VOO': {'category': 'Core', 'factor': 'Market', 'expense': 0.03, 'inception': '2010-09-07'},
+    'QQQ': {'category': 'Core', 'factor': 'Tech/Growth', 'expense': 0.20, 'inception': '1999-03-10'},
+    'VUG': {'category': 'Growth', 'factor': 'Growth', 'expense': 0.04, 'inception': '2004-01-26'},
+    'SCHG': {'category': 'Growth', 'factor': 'Growth', 'expense': 0.04, 'inception': '2009-12-11'},
+    'IVW': {'category': 'Growth', 'factor': 'Growth', 'expense': 0.18, 'inception': '2000-05-22'},
+    'IWF': {'category': 'Growth', 'factor': 'Growth', 'expense': 0.19, 'inception': '2000-05-22'},
+    'VTV': {'category': 'Value', 'factor': 'Value', 'expense': 0.04, 'inception': '2004-01-26'},
+    'SCHV': {'category': 'Value', 'factor': 'Value', 'expense': 0.04, 'inception': '2009-12-11'},
+    'IVE': {'category': 'Value', 'factor': 'Value', 'expense': 0.18, 'inception': '2000-05-22'},
+    'AVUV': {'category': 'Factor - Value/Small', 'factor': 'Value + Size', 'expense': 0.25, 'inception': '2019-09-24'},
+    'AVDV': {'category': 'Factor - Intl Value', 'factor': 'Intl Value + Size', 'expense': 0.36, 'inception': '2019-09-24'},
+    'VB': {'category': 'Small Cap', 'factor': 'Size', 'expense': 0.05, 'inception': '2004-01-26'},
+    'IJR': {'category': 'Small Cap', 'factor': 'Size', 'expense': 0.06, 'inception': '2000-05-22'},
+    'IWM': {'category': 'Small Cap', 'factor': 'Size', 'expense': 0.19, 'inception': '2000-05-22'},
+    'SIZE': {'category': 'Factor - Size', 'factor': 'Size', 'expense': 0.15, 'inception': '2013-04-16'},
+    'MTUM': {'category': 'Factor - Momentum', 'factor': 'Momentum', 'expense': 0.15, 'inception': '2013-04-16'},
+    'IMOM': {'category': 'Factor - Intl Momentum', 'factor': 'Intl Momentum', 'expense': 0.30, 'inception': '2014-01-28'},
+    'QUAL': {'category': 'Factor - Quality', 'factor': 'Quality', 'expense': 0.15, 'inception': '2013-07-16'},
+    'USMV': {'category': 'Factor - Low Volatility', 'factor': 'Low Vol', 'expense': 0.15, 'inception': '2011-10-18'},
+    'SCHD': {'category': 'Dividend', 'factor': 'Dividend', 'expense': 0.06, 'inception': '2011-10-20'},
+    'VYM': {'category': 'Dividend', 'factor': 'Dividend', 'expense': 0.06, 'inception': '2006-11-10'},
+    'VYMI': {'category': 'Dividend - Intl', 'factor': 'Intl Dividend', 'expense': 0.22, 'inception': '2016-02-25'},
+    'HDV': {'category': 'Dividend', 'factor': 'Dividend', 'expense': 0.08, 'inception': '2011-03-29'},
+    'VXUS': {'category': 'International', 'factor': 'International', 'expense': 0.07, 'inception': '2011-01-26'},
+    'VEU': {'category': 'International', 'factor': 'International', 'expense': 0.07, 'inception': '2007-03-02'},
+    'VEA': {'category': 'International', 'factor': 'International', 'expense': 0.05, 'inception': '2007-07-20'},
+    'VGK': {'category': 'International', 'factor': 'International', 'expense': 0.08, 'inception': '2005-03-04'},
+    'VWO': {'category': 'Emerging Markets', 'factor': 'Emerging', 'expense': 0.08, 'inception': '2005-03-04'},
+    'IEMG': {'category': 'Emerging Markets', 'factor': 'Emerging', 'expense': 0.11, 'inception': '2012-10-18'},
+    'EEM': {'category': 'Emerging Markets', 'factor': 'Emerging', 'expense': 0.70, 'inception': '2003-04-07'},
+    'VGT': {'category': 'Sector - Tech', 'factor': 'Tech', 'expense': 0.10, 'inception': '2004-01-26'},
+    'XLK': {'category': 'Sector - Tech', 'factor': 'Tech', 'expense': 0.10, 'inception': '1998-12-16'},
+    'XLF': {'category': 'Sector - Financials', 'factor': 'Financials', 'expense': 0.10, 'inception': '1998-12-16'},
+    'XLE': {'category': 'Sector - Energy', 'factor': 'Energy', 'expense': 0.10, 'inception': '1998-12-16'},
+    'XLV': {'category': 'Sector - Healthcare', 'factor': 'Healthcare', 'expense': 0.10, 'inception': '1998-12-16'},
+    'XLI': {'category': 'Sector - Industrials', 'factor': 'Industrials', 'expense': 0.10, 'inception': '1998-12-16'},
+    'VNQ': {'category': 'Real Estate', 'factor': 'Real Estate', 'expense': 0.12, 'inception': '2004-09-23'},
+    'BND': {'category': 'Defensive Ballast', 'factor': 'Bonds', 'expense': 0.03, 'inception': '2007-04-03'},
+    'BNDX': {'category': 'Defensive Ballast - Intl', 'factor': 'Intl Bonds', 'expense': 0.07, 'inception': '2013-05-31'},
+    'AGG': {'category': 'Defensive Ballast', 'factor': 'Bonds', 'expense': 0.03, 'inception': '2003-09-22'},
+    'TLT': {'category': 'Defensive Ballast', 'factor': 'Long Bonds', 'expense': 0.15, 'inception': '2002-07-22'},
+    'IEF': {'category': 'Defensive Ballast', 'factor': 'Intermediate Bonds', 'expense': 0.15, 'inception': '2002-07-22'},
+    'TIP': {'category': 'Defensive Ballast', 'factor': 'Inflation Protection', 'expense': 0.19, 'inception': '2003-12-04'},
+    'SHY': {'category': 'Defensive Ballast', 'factor': 'Short Bonds', 'expense': 0.15, 'inception': '2002-07-22'},
+    'GLD': {'category': 'Safe Haven', 'factor': 'Gold', 'expense': 0.40, 'inception': '2004-11-18'},
+    'DBC': {'category': 'Commodities', 'factor': 'Commodities', 'expense': 0.87, 'inception': '2006-02-03'},
+    'ARKK': {'category': 'Aggressive Growth', 'factor': 'Innovation', 'expense': 0.75, 'inception': '2014-10-31'},
     'XLF': {'category': 'Sector - Financials', 'factor': 'Financials', 'expense': 0.10},
     'XLE': {'category': 'Sector - Energy', 'factor': 'Energy', 'expense': 0.10},
     'XLI': {'category': 'Sector - Industrials', 'factor': 'Industrials', 'expense': 0.10},
@@ -93,18 +121,29 @@ def fetch_etf_data(max_retries=3):
     print("ALPHATIC EDUCATIONAL EDITION - ETF DATA FETCHER")
     print("=" * 80)
     print(f"Total ETFs to fetch: {len(ETFS)}")
-    print(f"Time range: 20 years (or maximum available)")
+    print(f"Time range: From inception to present (maximum available)")
     print(f"Data source: Yahoo Finance (real market data)")
     print("=" * 80)
     
     end_date = datetime.now()
-    start_date = end_date - timedelta(days=365*20)  # 20 years
     
     all_data = {}
     failed_etfs = []
     
     for idx, symbol in enumerate(ETFS, 1):
-        print(f"\n[{idx}/{len(ETFS)}] Fetching {symbol}...", end=" ")
+        # Get inception date for this ETF, or use 20 years ago as fallback
+        metadata = ETF_METADATA.get(symbol, {})
+        inception_str = metadata.get('inception', None)
+        
+        if inception_str:
+            start_date = datetime.strptime(inception_str, '%Y-%m-%d')
+        else:
+            # Fallback: 20 years ago
+            start_date = end_date - timedelta(days=365*20)
+        
+        years_of_data = (end_date - start_date).days / 365.25
+        
+        print(f"\n[{idx}/{len(ETFS)}] Fetching {symbol} ({years_of_data:.1f}y)...", end=" ")
         
         success = False
         for attempt in range(max_retries):
@@ -129,20 +168,22 @@ def fetch_etf_data(max_retries=3):
                     returns.append(daily_return)
                 
                 # Store in format expected by app.js
-                metadata = ETF_METADATA.get(symbol, {
-                    'category': 'Other',
-                    'factor': 'Unknown',
-                    'expense': 0.0
-                })
+                if not metadata:
+                    metadata = {
+                        'category': 'Other',
+                        'factor': 'Unknown',
+                        'expense': 0.0
+                    }
                 
                 all_data[symbol] = {
                     'symbol': symbol,
                     'dates': dates,
                     'prices': [round(p, 4) for p in prices],
                     'returns': [round(r, 6) for r in returns],
-                    'category': metadata['category'],
-                    'factor': metadata['factor'],
-                    'expense_ratio': metadata['expense']
+                    'category': metadata.get('category', 'Other'),
+                    'factor': metadata.get('factor', 'Unknown'),
+                    'expense_ratio': metadata.get('expense', 0.0),
+                    'inception': metadata.get('inception', 'Unknown')
                 }
                 
                 # Calculate and display statistics
