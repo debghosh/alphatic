@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alphatic - Advanced Portfolio Analysis</title>
+    <title>Alphatic Educational Edition - Portfolio Analysis & Learning</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .nav-item {
@@ -125,24 +125,72 @@
         .grid-cols-3 {
             grid-template-columns: repeat(3, minmax(0, 1fr));
         }
-        .grid-cols-4 {
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-        }
         @media (min-width: 768px) {
             .md\:grid-cols-2 {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
         @media (min-width: 1024px) {
-            .lg\:grid-cols-2 {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
             .lg\:grid-cols-3 {
                 grid-template-columns: repeat(3, minmax(0, 1fr));
             }
-            .lg\:grid-cols-4 {
-                grid-template-columns: repeat(4, minmax(0, 1fr));
-            }
+        }
+        .portfolio-card {
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .portfolio-card:hover {
+            border-color: #2563eb;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .portfolio-card.selected {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge-success {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        .badge-warning {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        .badge-info {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        .badge-error {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        .teaching-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0ea5e9;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0.25rem;
+        }
+        .teaching-box.success {
+            background: #f0fdf4;
+            border-left-color: #22c55e;
+        }
+        .teaching-box.warning {
+            background: #fffbeb;
+            border-left-color: #f59e0b;
+        }
+        .teaching-box.error {
+            background: #fef2f2;
+            border-left-color: #ef4444;
         }
     </style>
 </head>
@@ -150,8 +198,16 @@
     <!-- Header -->
     <header class="bg-white shadow-sm border-b border-gray-200">
         <div class="container mx-auto px-4 py-4">
-            <h1 class="text-3xl font-bold text-gray-900">Alphatic</h1>
-            <p class="text-sm text-gray-600">Advanced Portfolio Analysis & Optimization</p>
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-900">🎓 Alphatic Educational Edition</h1>
+                    <p class="text-sm text-gray-600">Advanced Portfolio Analysis & Learning Platform</p>
+                </div>
+                <div class="text-right">
+                    <div class="text-sm text-gray-500">Real Market Data + Educational Insights</div>
+                    <div class="text-xs text-gray-400">For Real Capital Allocation Decisions</div>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -159,18 +215,48 @@
     <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div class="container mx-auto px-4">
             <div class="flex space-x-1">
-                <div class="nav-item active" onclick="showView('builder')">Portfolio Builder</div>
-                <div class="nav-item" onclick="showView('analysis')">Analysis</div>
-                <div class="nav-item" onclick="showView('backtest')">Backtest</div>
-                <div class="nav-item" onclick="showView('compare')">Compare</div>
+                <div class="nav-item active" onclick="showView('learn')">📚 Learn</div>
+                <div class="nav-item" onclick="showView('builder')">🏗️ Build</div>
+                <div class="nav-item" onclick="showView('analysis')">📊 Analyze</div>
+                <div class="nav-item" onclick="showView('backtest')">📈 Backtest</div>
+                <div class="nav-item" onclick="showView('compare')">⚖️ Compare</div>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-6">
-        <!-- Portfolio Builder View -->
-        <div id="builder-view" class="view active">
+        
+        <!-- LEARN VIEW - Educational Portfolios -->
+        <div id="learn-view" class="view active">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Portfolio Construction Masterclass</h2>
+                <p class="text-gray-600">Learn by analyzing 10 educational portfolios - from best practices to common mistakes</p>
+            </div>
+
+            <div id="educational-portfolios"></div>
+        </div>
+
+        <!-- BUILD VIEW - Portfolio Builder -->
+        <div id="builder-view" class="view">
+            <div class="mb-6 flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Portfolio Builder</h2>
+                    <p class="text-gray-600">Build your custom portfolio or load educational examples</p>
+                </div>
+                <div class="space-x-2">
+                    <button onclick="showImportModal()" class="btn btn-outline">
+                        📥 Import
+                    </button>
+                    <button onclick="showExportModal()" class="btn btn-outline">
+                        📤 Export
+                    </button>
+                    <button onclick="showTemplatesModal()" class="btn btn-info">
+                        📋 Load Template
+                    </button>
+                </div>
+            </div>
+
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <!-- ETF Selector -->
                 <div class="lg:col-span-2">
@@ -197,6 +283,9 @@
                             <button onclick="showView('analysis')" class="btn btn-success w-full">
                                 📊 Analyze Portfolio
                             </button>
+                            <button onclick="compareToIdeal()" class="btn btn-info w-full">
+                                🎯 Compare to Ideal
+                            </button>
                         </div>
                     </div>
 
@@ -209,12 +298,12 @@
             </div>
         </div>
 
-        <!-- Analysis View -->
+        <!-- ANALYSIS VIEW -->
         <div id="analysis-view" class="view">
             <div id="analysis-content"></div>
         </div>
 
-        <!-- Backtest View -->
+        <!-- BACKTEST VIEW -->
         <div id="backtest-view" class="view">
             <div class="card">
                 <h2 class="text-2xl font-bold mb-6">Historical Backtest</h2>
@@ -222,7 +311,7 @@
             </div>
         </div>
 
-        <!-- Compare View -->
+        <!-- COMPARE VIEW -->
         <div id="compare-view" class="view">
             <div class="card">
                 <h2 class="text-2xl font-bold mb-6">Portfolio Comparison</h2>
@@ -231,7 +320,40 @@
         </div>
     </main>
 
-    <!-- Optimizer Modal -->
+    <!-- Modals -->
+    
+    <!-- Import/Export Modal -->
+    <div id="import-modal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-4">
+                <h2 class="text-2xl font-bold text-gray-900">📥 Import Portfolio</h2>
+                <button onclick="closeImportModal()" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button>
+            </div>
+            <div id="import-content"></div>
+        </div>
+    </div>
+
+    <div id="export-modal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-4">
+                <h2 class="text-2xl font-bold text-gray-900">📤 Export Portfolio</h2>
+                <button onclick="closeExportModal()" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button>
+            </div>
+            <div id="export-content"></div>
+        </div>
+    </div>
+
+    <div id="templates-modal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-4">
+                <h2 class="text-2xl font-bold text-gray-900">📋 Load Educational Template</h2>
+                <button onclick="closeTemplatesModal()" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button>
+            </div>
+            <div id="templates-content"></div>
+        </div>
+    </div>
+
+    <!-- Existing Alphatic Modals -->
     <div id="optimizer-modal" class="modal">
         <div class="modal-content">
             <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-4">
@@ -242,7 +364,6 @@
         </div>
     </div>
 
-    <!-- Smart Optimizer Modal -->
     <div id="smart-optimizer-modal" class="modal">
         <div class="modal-content" style="max-width: 1000px;">
             <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-4">
@@ -253,7 +374,6 @@
         </div>
     </div>
 
-    <!-- Factor Analysis Modal -->
     <div id="factor-modal" class="modal">
         <div class="modal-content" style="max-width: 1200px;">
             <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-4">
@@ -264,7 +384,6 @@
         </div>
     </div>
 
-    <!-- Regime Detection Modal (V1.1) -->
     <div id="regime-modal" class="modal">
         <div class="modal-content" style="max-width: 1000px;">
             <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-4">
@@ -278,6 +397,7 @@
     <!-- Scripts -->
     <script src="data.js"></script>
     <script src="portfolios.js"></script>
+    <script src="educational.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

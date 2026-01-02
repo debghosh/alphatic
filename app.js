@@ -24,23 +24,30 @@ const ETF_DATABASE = {
     'US Value': [
         { symbol: 'VTV', name: 'Vanguard Value ETF', expense: 0.04, factor: 'Value', beta: 0.92 },
         { symbol: 'SCHV', name: 'Schwab U.S. Large-Cap Value', expense: 0.04, factor: 'Value', beta: 0.92 },
-        { symbol: 'IVE', name: 'iShares S&P 500 Value', expense: 0.18, factor: 'Value', beta: 0.92 }
+        { symbol: 'IVE', name: 'iShares S&P 500 Value', expense: 0.18, factor: 'Value', beta: 0.92 },
+        { symbol: 'AVUV', name: 'Avantis US Small Cap Value', expense: 0.25, factor: 'Value', beta: 1.05 },
+        { symbol: 'AVDV', name: 'Avantis International Small Cap Value', expense: 0.36, factor: 'Value', beta: 0.95 }
     ],
     'US Small Cap': [
         { symbol: 'VB', name: 'Vanguard Small-Cap ETF', expense: 0.05, factor: 'Size', beta: 1.10 },
         { symbol: 'IJR', name: 'iShares Core S&P Small-Cap', expense: 0.06, factor: 'Size', beta: 1.10 },
-        { symbol: 'IWM', name: 'iShares Russell 2000', expense: 0.19, factor: 'Size', beta: 1.15 }
+        { symbol: 'IWM', name: 'iShares Russell 2000', expense: 0.19, factor: 'Size', beta: 1.15 },
+        { symbol: 'SIZE', name: 'iShares MSCI USA Size Factor', expense: 0.15, factor: 'Size', beta: 1.12 }
     ],
     'Factor ETFs': [
         { symbol: 'MTUM', name: 'iShares MSCI USA Momentum', expense: 0.15, factor: 'Momentum', beta: 1.00 },
         { symbol: 'QUAL', name: 'iShares MSCI USA Quality', expense: 0.15, factor: 'Quality', beta: 0.90 },
-        { symbol: 'USMV', name: 'iShares MSCI USA Min Vol', expense: 0.15, factor: 'Low Volatility', beta: 0.75 }
+        { symbol: 'USMV', name: 'iShares MSCI USA Min Vol', expense: 0.15, factor: 'Low Volatility', beta: 0.75 },
+        { symbol: 'IMOM', name: 'iShares MSCI Intl Momentum', expense: 0.30, factor: 'Momentum', beta: 0.95 }
     ],
     'Dividend': [
         { symbol: 'SCHD', name: 'Schwab U.S. Dividend Equity', expense: 0.06, factor: 'Dividend', beta: 0.95 },
-        { symbol: 'VYM', name: 'Vanguard High Dividend Yield', expense: 0.06, factor: 'Dividend', beta: 0.95 }
+        { symbol: 'VYM', name: 'Vanguard High Dividend Yield', expense: 0.06, factor: 'Dividend', beta: 0.95 },
+        { symbol: 'VYMI', name: 'Vanguard International High Dividend', expense: 0.22, factor: 'Dividend', beta: 0.85 },
+        { symbol: 'HDV', name: 'iShares Core High Dividend', expense: 0.08, factor: 'Dividend', beta: 0.93 }
     ],
     'International Equity': [
+        { symbol: 'VXUS', name: 'Vanguard Total International Stock', expense: 0.07, factor: 'International', beta: 0.85 },
         { symbol: 'VEU', name: 'Vanguard FTSE All-World ex-US', expense: 0.07, factor: 'International', beta: 0.85 },
         { symbol: 'VEA', name: 'Vanguard FTSE Developed Markets', expense: 0.05, factor: 'International', beta: 0.85 },
         { symbol: 'VGK', name: 'Vanguard FTSE Europe', expense: 0.08, factor: 'International', beta: 0.90 },
@@ -53,19 +60,27 @@ const ETF_DATABASE = {
         { symbol: 'XLK', name: 'Technology Select Sector SPDR', expense: 0.10, factor: 'Tech', beta: 1.20 },
         { symbol: 'XLF', name: 'Financial Select Sector SPDR', expense: 0.10, factor: 'Financials', beta: 1.10 },
         { symbol: 'XLE', name: 'Energy Select Sector SPDR', expense: 0.10, factor: 'Energy', beta: 1.15 },
-        { symbol: 'XLV', name: 'Health Care Select Sector SPDR', expense: 0.10, factor: 'Healthcare', beta: 0.85 }
+        { symbol: 'XLV', name: 'Health Care Select Sector SPDR', expense: 0.10, factor: 'Healthcare', beta: 0.85 },
+        { symbol: 'XLI', name: 'Industrial Select Sector SPDR', expense: 0.10, factor: 'Industrials', beta: 1.05 }
     ],
     'Real Estate': [
         { symbol: 'VNQ', name: 'Vanguard Real Estate ETF', expense: 0.12, factor: 'Real Estate', beta: 0.95 }
     ],
     'Fixed Income': [
         { symbol: 'BND', name: 'Vanguard Total Bond Market', expense: 0.03, factor: 'Bonds', beta: 0.10 },
+        { symbol: 'BNDX', name: 'Vanguard Total International Bond', expense: 0.07, factor: 'Bonds', beta: 0.08 },
         { symbol: 'AGG', name: 'iShares Core U.S. Aggregate Bond', expense: 0.03, factor: 'Bonds', beta: 0.10 },
         { symbol: 'TLT', name: 'iShares 20+ Year Treasury Bond', expense: 0.15, factor: 'Long Bonds', beta: 0.15 },
+        { symbol: 'IEF', name: 'iShares 7-10 Year Treasury', expense: 0.15, factor: 'Intermediate Bonds', beta: 0.12 },
+        { symbol: 'TIP', name: 'iShares TIPS Bond ETF', expense: 0.19, factor: 'Inflation Protected', beta: 0.08 },
         { symbol: 'SHY', name: 'iShares 1-3 Year Treasury Bond', expense: 0.15, factor: 'Short Bonds', beta: 0.05 }
     ],
     'Alternatives': [
-        { symbol: 'GLD', name: 'SPDR Gold Shares', expense: 0.40, factor: 'Gold', beta: 0.00 }
+        { symbol: 'GLD', name: 'SPDR Gold Shares', expense: 0.40, factor: 'Gold', beta: 0.00 },
+        { symbol: 'DBC', name: 'Invesco DB Commodity Index', expense: 0.87, factor: 'Commodities', beta: 0.10 }
+    ],
+    'Aggressive Growth': [
+        { symbol: 'ARKK', name: 'ARK Innovation ETF', expense: 0.75, factor: 'Innovation', beta: 1.45 }
     ]
 };
 
@@ -74,6 +89,14 @@ const ALL_ETFS = Object.values(ETF_DATABASE).flat();
 const ETF_LOOKUP = {};
 ALL_ETFS.forEach(etf => {
     ETF_LOOKUP[etf.symbol] = etf;
+});
+
+// Log for debugging
+console.log(`ETF Database loaded: ${ALL_ETFS.length} ETFs`);
+console.log('Sample ETF_LOOKUP entries:', { 
+    VTI: ETF_LOOKUP['VTI'], 
+    VXUS: ETF_LOOKUP['VXUS'],
+    AVUV: ETF_LOOKUP['AVUV']
 });
 
 // ============================================================================
@@ -214,7 +237,16 @@ function addToPortfolio(symbol) {
     }
     
     const etf = ETF_LOOKUP[symbol];
-    if (!etf || !ETF_DATA[symbol]) {
+    console.log(`Adding ${symbol} to portfolio. ETF lookup result:`, etf);
+    
+    if (!etf) {
+        alert(`ETF metadata not found for ${symbol}. Check ETF_LOOKUP.`);
+        console.error(`ETF_LOOKUP missing entry for ${symbol}`);
+        console.log('Available symbols:', Object.keys(ETF_LOOKUP));
+        return;
+    }
+    
+    if (!ETF_DATA[symbol]) {
         alert(`No data available for ${symbol}`);
         return;
     }
@@ -228,6 +260,8 @@ function addToPortfolio(symbol) {
         weight: newWeight,
         ...etf
     });
+    
+    console.log('Portfolio after adding:', currentPortfolio[currentPortfolio.length - 1]);
     
     renderPortfolioBuilder();
     renderETFSelector();
@@ -281,12 +315,17 @@ function renderPortfolioBuilder() {
     `;
     
     currentPortfolio.forEach(holding => {
+        // Look up ETF info if not already in holding
+        const etfInfo = ETF_LOOKUP[holding.symbol] || {};
+        const name = holding.name || etfInfo.name || 'Unknown ETF';
+        const factor = holding.factor || etfInfo.factor || 'Unknown';
+        
         html += `
             <div class="flex items-center gap-4 p-3 bg-white rounded-lg shadow-sm">
                 <div class="flex-1">
                     <div class="font-semibold">${holding.symbol}</div>
-                    <div class="text-xs text-gray-500">${holding.name}</div>
-                    <div class="text-xs text-blue-600">${holding.factor}</div>
+                    <div class="text-xs text-gray-500">${name}</div>
+                    <div class="text-xs text-blue-600">${factor}</div>
                 </div>
                 <div class="w-32">
                     <input 
@@ -866,15 +905,24 @@ function renderFactorExposureChart() {
     // Calculate factor exposures
     const factorExposures = {};
     currentPortfolio.forEach(holding => {
-        const factor = holding.factor;
+        // Try to get factor from holding, or look it up
+        let factor = holding.factor;
+        if (!factor || factor === 'undefined') {
+            const etfInfo = ETF_LOOKUP[holding.symbol];
+            factor = etfInfo ? etfInfo.factor : 'Unknown';
+        }
+        
         if (!factorExposures[factor]) {
             factorExposures[factor] = 0;
         }
         factorExposures[factor] += holding.weight;
     });
     
+    // Sort factors by exposure (descending)
+    const sortedFactors = Object.entries(factorExposures).sort((a, b) => b[1] - a[1]);
+    
     let html = '<div class="space-y-2">';
-    for (const [factor, exposure] of Object.entries(factorExposures)) {
+    sortedFactors.forEach(([factor, exposure]) => {
         html += `
             <div>
                 <div class="flex justify-between text-sm mb-1">
@@ -886,7 +934,7 @@ function renderFactorExposureChart() {
                 </div>
             </div>
         `;
-    }
+    });
     html += '</div>';
     container.innerHTML = html;
 }
@@ -938,35 +986,33 @@ function renderRiskContribution() {
     const container = document.getElementById('risk-contribution');
     if (!container) return;
     
-    const metrics = calculatePortfolioMetrics();
-    const portfolioVol = metrics.volatility;
+    if (currentPortfolio.length === 0) {
+        container.innerHTML = '<p class="text-gray-500 text-sm">No portfolio to analyze</p>';
+        return;
+    }
     
-    // Approximate risk contribution (weighted by volatility)
-    const riskContributions = currentPortfolio.map(holding => {
-        const contrib = (holding.weight / 100) * portfolioVol;
-        return {
-            symbol: holding.symbol,
-            contribution: contrib,
-            percentage: (contrib / portfolioVol) * 100
-        };
-    });
-    
-    let html = '<div class="space-y-2">';
-    riskContributions.forEach(rc => {
-        html += `
-            <div>
-                <div class="flex justify-between text-sm mb-1">
-                    <span>${rc.symbol}</span>
-                    <span class="font-medium">${rc.percentage.toFixed(1)}%</span>
-                </div>
-                <div class="w-full bg-gray-200 rounded-full h-2">
-                    <div class="bg-red-600 h-2 rounded-full" style="width: ${rc.percentage}%"></div>
-                </div>
-            </div>
+    try {
+        // Check if function exists
+        if (typeof calculateEnhancedRiskContribution !== 'function') {
+            throw new Error('calculateEnhancedRiskContribution function not found');
+        }
+        
+        const riskData = calculateEnhancedRiskContribution();
+        
+        if (!riskData || !riskData.holdings) {
+            throw new Error('Risk data calculation returned invalid result');
+        }
+        
+        container.innerHTML = renderEnhancedRiskContribution(riskData);
+    } catch (error) {
+        console.error('Error calculating risk contribution:', error);
+        console.error('Error stack:', error.stack);
+        container.innerHTML = `
+            <p class="text-red-500 text-sm">Error calculating risk contribution</p>
+            <p class="text-xs text-gray-600 mt-2">${error.message}</p>
+            <p class="text-xs text-gray-500 mt-1">Check console for details</p>
         `;
-    });
-    html += '</div>';
-    container.innerHTML = html;
+    }
 }
 
 // ============================================================================
@@ -1774,8 +1820,8 @@ function openRegimeModal() {
     setTimeout(async () => {
         try {
             await fetchPortfolioData();
-            const regimeAnalysis = await detectMarketRegime();
-            renderRegimeResults(regimeAnalysis);
+            const regimeAnalysis = analyzeMarketRegimesComprehensive();
+            content.innerHTML = renderEnhancedRegimeAnalysis(regimeAnalysis);
         } catch (error) {
             console.error('Regime detection error:', error);
             content.innerHTML = `
@@ -3536,6 +3582,650 @@ function exportComparisonToCSV() {
     csv += 'Factor Diversification,' + portfolios.map(p => p.fundamentals.factorDiversification.toFixed(2)).join(',') + '\n';
     
     downloadCSV(csv, 'portfolio_comparison.csv');
+}
+
+// ============================================================================
+// ENHANCED RISK CONTRIBUTION ANALYSIS
+// ============================================================================
+
+function calculateCovariance(returns1, returns2) {
+    if (!returns1 || !returns2 || returns1.length !== returns2.length) {
+        return 0;
+    }
+    
+    const mean1 = returns1.reduce((sum, r) => sum + r, 0) / returns1.length;
+    const mean2 = returns2.reduce((sum, r) => sum + r, 0) / returns2.length;
+    
+    let covariance = 0;
+    for (let i = 0; i < returns1.length; i++) {
+        covariance += (returns1[i] - mean1) * (returns2[i] - mean2);
+    }
+    
+    return covariance / (returns1.length - 1);
+}
+
+function calculatePortfolioReturnArray() {
+    /**
+     * Calculate array of portfolio returns for each date
+     * Returns: array of daily returns
+     */
+    if (!currentPortfolio || currentPortfolio.length === 0) {
+        return [];
+    }
+    
+    const alignedData = alignDataArrays();
+    
+    // Find a holding that has data
+    let referenceSymbol = null;
+    for (const holding of currentPortfolio) {
+        if (alignedData[holding.symbol] && alignedData[holding.symbol].dates) {
+            referenceSymbol = holding.symbol;
+            break;
+        }
+    }
+    
+    if (!referenceSymbol) {
+        return [];
+    }
+    
+    const dates = alignedData[referenceSymbol].dates;
+    const portfolioReturns = [];
+    
+    // For each date, calculate weighted portfolio return
+    for (let i = 0; i < dates.length; i++) {
+        let dailyReturn = 0;
+        currentPortfolio.forEach(holding => {
+            if (alignedData[holding.symbol] && alignedData[holding.symbol].returns[i] !== undefined) {
+                const weight = holding.weight / 100;
+                const assetReturn = alignedData[holding.symbol].returns[i];
+                dailyReturn += weight * assetReturn;
+            }
+        });
+        portfolioReturns.push(dailyReturn);
+    }
+    
+    return portfolioReturns;
+}
+
+function calculateEnhancedRiskContribution() {
+    // Get aligned data
+    const alignedData = alignDataArrays();
+    const portfolioReturn = calculatePortfolioReturnArray();
+    const portfolioVol = stdDev(portfolioReturn) * Math.sqrt(252);
+    
+    // Calculate covariance matrix
+    const symbols = currentPortfolio.map(h => h.symbol);
+    const covMatrix = {};
+    
+    symbols.forEach(sym1 => {
+        covMatrix[sym1] = {};
+        const returns1 = alignedData[sym1] ? alignedData[sym1].returns : [];
+        
+        symbols.forEach(sym2 => {
+            const returns2 = alignedData[sym2] ? alignedData[sym2].returns : [];
+            covMatrix[sym1][sym2] = calculateCovariance(returns1, returns2);
+        });
+    });
+    
+    // Calculate marginal contribution to risk for each holding
+    const riskContributions = currentPortfolio.map(holding => {
+        const weight = holding.weight / 100;
+        
+        // Calculate marginal contribution
+        let marginalContribution = 0;
+        currentPortfolio.forEach(other => {
+            const otherWeight = other.weight / 100;
+            const cov = covMatrix[holding.symbol] && covMatrix[holding.symbol][other.symbol] 
+                ? covMatrix[holding.symbol][other.symbol] 
+                : 0;
+            marginalContribution += otherWeight * cov;
+        });
+        
+        // Risk contribution = weight × marginal contribution / portfolio volatility
+        const riskContribution = portfolioVol > 0 ? (weight * marginalContribution) / portfolioVol : 0;
+        
+        // Component VaR (95% confidence)
+        const componentVaR = riskContribution * 1.645;
+        
+        // Get ETF info
+        const etfInfo = ETF_LOOKUP[holding.symbol] || {};
+        
+        return {
+            symbol: holding.symbol,
+            name: etfInfo.name || holding.symbol,
+            allocation: holding.weight,
+            riskContribution: riskContribution * 100,
+            componentVaR: componentVaR * 100,
+            marginalRisk: marginalContribution * Math.sqrt(252) * 100,
+            riskMultiplier: weight > 0 ? (riskContribution / weight) : 0
+        };
+    });
+    
+    // Sort by risk contribution
+    riskContributions.sort((a, b) => b.riskContribution - a.riskContribution);
+    
+    // Calculate diversification ratio
+    let weightedAvgVol = 0;
+    currentPortfolio.forEach(holding => {
+        const holdingReturns = alignedData[holding.symbol] ? alignedData[holding.symbol].returns : [];
+        if (holdingReturns.length > 0) {
+            const vol = stdDev(holdingReturns) * Math.sqrt(252);
+            weightedAvgVol += (holding.weight / 100) * vol;
+        }
+    });
+    const diversificationRatio = portfolioVol > 0 ? weightedAvgVol / portfolioVol : 1;
+    
+    return {
+        holdings: riskContributions,
+        totalRisk: portfolioVol * 100,
+        diversificationRatio: diversificationRatio
+    };
+}
+
+function renderEnhancedRiskContribution(riskData) {
+    if (!riskData || !riskData.holdings || riskData.holdings.length === 0) {
+        return '<p class="text-gray-500 text-sm">Risk contribution data not available</p>';
+    }
+    
+    const maxRisk = Math.max(...riskData.holdings.map(h => h.riskContribution));
+    
+    let html = `
+        <div class="mb-3">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-xs font-semibold text-gray-700">Risk Contribution Analysis</span>
+                <span class="text-xs text-gray-600">
+                    Diversification Ratio: <strong>${riskData.diversificationRatio.toFixed(2)}</strong>
+                    ${riskData.diversificationRatio > 1.2 ? ' (Good)' : ' (Low)'}
+                </span>
+            </div>
+            <p class="text-xs text-gray-600 mb-3">
+                Shows how much each holding contributes to total portfolio risk
+            </p>
+        </div>
+        
+        <div class="space-y-3">
+    `;
+    
+    riskData.holdings.forEach(holding => {
+        const riskWidth = maxRisk > 0 ? (holding.riskContribution / maxRisk) * 100 : 0;
+        const allocWidth = holding.allocation;
+        
+        let barColor = 'bg-blue-500';
+        let riskLabel = 'Balanced';
+        if (holding.riskMultiplier > 1.2) {
+            barColor = 'bg-red-500';
+            riskLabel = 'High Risk';
+        } else if (holding.riskMultiplier < 0.8) {
+            barColor = 'bg-green-500';
+            riskLabel = 'Low Risk';
+        }
+        
+        html += `
+            <div class="border border-gray-200 rounded p-2 text-xs">
+                <div class="flex justify-between items-start mb-2">
+                    <div>
+                        <div class="font-semibold">${holding.symbol}</div>
+                        <div class="text-gray-600">${holding.name}</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="font-semibold">${holding.riskContribution.toFixed(1)}% Risk</div>
+                        <div class="text-gray-500">${holding.allocation.toFixed(1)}% Alloc</div>
+                    </div>
+                </div>
+                
+                <div class="mb-1">
+                    <div class="flex justify-between text-gray-500 mb-1">
+                        <span>Allocation</span>
+                        <span>${holding.allocation.toFixed(1)}%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-gray-400 h-2 rounded-full" style="width: ${allocWidth}%"></div>
+                    </div>
+                </div>
+                
+                <div class="mb-2">
+                    <div class="flex justify-between text-gray-500 mb-1">
+                        <span>Risk Contribution</span>
+                        <span>${holding.riskContribution.toFixed(1)}%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div class="${barColor} h-3 rounded-full" style="width: ${riskWidth}%"></div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <div class="text-gray-500">Risk Multiplier</div>
+                        <div class="font-semibold ${holding.riskMultiplier > 1.1 ? 'text-red-600' : 'text-green-600'}">
+                            ${holding.riskMultiplier.toFixed(2)}x
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="px-2 py-1 rounded text-xs ${
+                            holding.riskMultiplier > 1.2 ? 'bg-red-100 text-red-800' :
+                            holding.riskMultiplier < 0.8 ? 'bg-green-100 text-green-800' :
+                            'bg-blue-100 text-blue-800'
+                        }">
+                            ${riskLabel}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    html += '</div>';
+    
+    html += `
+        <div class="mt-3 p-2 bg-blue-50 rounded text-xs">
+            <strong>Key:</strong> Risk Multiplier >1 = contributes more risk than allocation. 
+            Diversification Ratio >1.2 indicates good risk diversification.
+        </div>
+    `;
+    
+    return html;
+}
+
+// ============================================================================
+// ENHANCED MARKET REGIME ANALYSIS  
+// ============================================================================
+
+function detectHistoricalRegimes(returns) {
+    const windowSize = 63; // ~3 months
+    const regimes = [];
+    
+    for (let i = windowSize; i < returns.length; i++) {
+        const window = returns.slice(i - windowSize, i);
+        
+        const avgReturn = window.reduce((sum, r) => sum + r, 0) / window.length;
+        const annualizedReturn = avgReturn * 252;
+        const volatility = stdDev(window) * Math.sqrt(252);
+        
+        let regime;
+        if (annualizedReturn > 0.15 && volatility >= 0.18 && volatility <= 0.30) {
+            regime = 'recovery';
+        } else if (annualizedReturn > 0.10 && volatility < 0.18) {
+            regime = 'bull';
+        } else if (annualizedReturn < -0.05 || volatility > 0.25) {
+            regime = 'bear';
+        } else {
+            regime = 'stagnation';
+        }
+        
+        regimes.push({
+            index: i,
+            regime: regime,
+            return: annualizedReturn,
+            volatility: volatility
+        });
+    }
+    
+    return regimes;
+}
+
+function calculateRegimePerformance(portfolioReturns, benchmarkReturns, regimes, regimeType) {
+    const regimePeriods = regimes.filter(r => r.regime === regimeType);
+    
+    if (regimePeriods.length === 0) {
+        return {
+            portfolioReturn: 0,
+            benchmarkReturn: 0,
+            relativeReturn: 0,
+            count: 0,
+            rating: 'Insufficient Data',
+            winRate: 0
+        };
+    }
+    
+    const portfolioRegimeReturns = regimePeriods.map(r => portfolioReturns[r.index] || 0);
+    const benchmarkRegimeReturns = regimePeriods.map(r => benchmarkReturns[r.index] || 0);
+    
+    const portfolioAvg = portfolioRegimeReturns.reduce((sum, r) => sum + r, 0) / portfolioRegimeReturns.length;
+    const benchmarkAvg = benchmarkRegimeReturns.reduce((sum, r) => sum + r, 0) / benchmarkRegimeReturns.length;
+    
+    const relativeReturn = (portfolioAvg - benchmarkAvg) * 252 * 100;
+    const portfolioAnnualized = portfolioAvg * 252 * 100;
+    const benchmarkAnnualized = benchmarkAvg * 252 * 100;
+    
+    let rating;
+    if (relativeReturn > 3) rating = 'Excellent';
+    else if (relativeReturn > 1) rating = 'Strong';
+    else if (relativeReturn > -1) rating = 'Good';
+    else if (relativeReturn > -3) rating = 'Moderate';
+    else if (relativeReturn > -5) rating = 'Poor';
+    else rating = 'Very Poor';
+    
+    const winRate = (portfolioRegimeReturns.filter(r => r > 0).length / portfolioRegimeReturns.length) * 100;
+    
+    return {
+        portfolioReturn: portfolioAnnualized,
+        benchmarkReturn: benchmarkAnnualized,
+        relativeReturn: relativeReturn,
+        count: regimePeriods.length,
+        rating: rating,
+        winRate: winRate
+    };
+}
+
+function detectCurrentRegime(returns) {
+    const recentWindow = 63;
+    const recentReturns = returns.slice(-recentWindow);
+    
+    const avgReturn = recentReturns.reduce((sum, r) => sum + r, 0) / recentReturns.length;
+    const annualizedReturn = avgReturn * 252;
+    const volatility = stdDev(recentReturns) * Math.sqrt(252);
+    
+    let regime, confidence;
+    
+    if (annualizedReturn > 0.15 && volatility >= 0.18 && volatility <= 0.30) {
+        regime = 'recovery';
+        confidence = 'High';
+    } else if (annualizedReturn > 0.10 && volatility < 0.18) {
+        regime = 'bull';
+        confidence = 'High';
+    } else if (annualizedReturn < -0.05 || volatility > 0.25) {
+        regime = 'bear';
+        confidence = 'High';
+    } else {
+        regime = 'stagnation';
+        confidence = 'Moderate';
+    }
+    
+    return {
+        regime: regime,
+        confidence: confidence,
+        return: annualizedReturn * 100,
+        volatility: volatility * 100
+    };
+}
+
+function analyzeFactorExposure() {
+    const exposure = {
+        market: 0,
+        value: 0,
+        growth: 0,
+        momentum: 0,
+        quality: 0,
+        lowVol: 0,
+        size: 0,
+        dividend: 0,
+        international: 0,
+        defensive: 0
+    };
+    
+    currentPortfolio.forEach(holding => {
+        const etf = ETF_LOOKUP[holding.symbol];
+        if (!etf) return;
+        
+        const weight = holding.weight / 100;
+        const factor = etf.factor.toLowerCase();
+        
+        if (factor.includes('market')) exposure.market += weight;
+        if (factor.includes('value')) exposure.value += weight;
+        if (factor.includes('growth') || factor.includes('tech')) exposure.growth += weight;
+        if (factor.includes('momentum')) exposure.momentum += weight;
+        if (factor.includes('quality')) exposure.quality += weight;
+        if (factor.includes('low vol') || factor.includes('min vol')) exposure.lowVol += weight;
+        if (factor.includes('size') || factor.includes('small')) exposure.size += weight;
+        if (factor.includes('dividend')) exposure.dividend += weight;
+        if (factor.includes('international') || factor.includes('emerging')) exposure.international += weight;
+        if (factor.includes('bond') || factor.includes('gold')) exposure.defensive += weight;
+    });
+    
+    return exposure;
+}
+
+function generateRegimeExplanations(exposure) {
+    return {
+        bull: generateBullExplanation(exposure),
+        bear: generateBearExplanation(exposure),
+        recovery: generateRecoveryExplanation(exposure),
+        stagnation: generateStagnationExplanation(exposure)
+    };
+}
+
+function generateBullExplanation(exposure) {
+    const positive = [];
+    const negative = [];
+    
+    if (exposure.growth > 0.2) positive.push(`${(exposure.growth * 100).toFixed(0)}% Growth exposure benefits from strong uptrends`);
+    if (exposure.momentum > 0.1) positive.push(`${(exposure.momentum * 100).toFixed(0)}% Momentum captures rising trends`);
+    if (exposure.market > 0.3) positive.push(`${(exposure.market * 100).toFixed(0)}% Core market exposure participates fully`);
+    
+    if (exposure.defensive > 0.3) negative.push(`${(exposure.defensive * 100).toFixed(0)}% Defensive holdings lag in strong markets`);
+    if (exposure.value > 0.2) negative.push(`${(exposure.value * 100).toFixed(0)}% Value can underperform growth in bull runs`);
+    if (exposure.lowVol > 0.1) negative.push(`${(exposure.lowVol * 100).toFixed(0)}% Low volatility caps upside`);
+    
+    return { positive, negative };
+}
+
+function generateBearExplanation(exposure) {
+    const positive = [];
+    const negative = [];
+    
+    if (exposure.defensive > 0.2) positive.push(`${(exposure.defensive * 100).toFixed(0)}% Defensive positions protect capital`);
+    if (exposure.lowVol > 0.1) positive.push(`${(exposure.lowVol * 100).toFixed(0)}% Low volatility reduces drawdowns`);
+    if (exposure.quality > 0.1) positive.push(`${(exposure.quality * 100).toFixed(0)}% Quality companies weather storms`);
+    
+    if (exposure.growth > 0.3) negative.push(`${(exposure.growth * 100).toFixed(0)}% Growth stocks fall hardest in crashes`);
+    if (exposure.momentum > 0.2) negative.push(`${(exposure.momentum * 100).toFixed(0)}% Momentum reverses sharply`);
+    if (exposure.defensive < 0.2) negative.push(`Only ${(exposure.defensive * 100).toFixed(0)}% defensive - insufficient protection`);
+    
+    return { positive, negative };
+}
+
+function generateRecoveryExplanation(exposure) {
+    const positive = [];
+    const negative = [];
+    
+    if (exposure.value > 0.15) positive.push(`${(exposure.value * 100).toFixed(0)}% Value leads in early recoveries`);
+    if (exposure.size > 0.1) positive.push(`${(exposure.size * 100).toFixed(0)}% Small caps bounce strongest`);
+    if (exposure.momentum > 0.1) positive.push(`${(exposure.momentum * 100).toFixed(0)}% Momentum catches new trends`);
+    
+    if (exposure.defensive > 0.35) negative.push(`${(exposure.defensive * 100).toFixed(0)}% Defensive excessive for rebounds`);
+    if (exposure.lowVol > 0.15) negative.push(`${(exposure.lowVol * 100).toFixed(0)}% Low vol misses recovery rallies`);
+    
+    return { positive, negative };
+}
+
+function generateStagnationExplanation(exposure) {
+    const positive = [];
+    const negative = [];
+    
+    if (exposure.dividend > 0.2) positive.push(`${(exposure.dividend * 100).toFixed(0)}% Dividend provides income when prices flat`);
+    if (exposure.quality > 0.1) positive.push(`${(exposure.quality * 100).toFixed(0)}% Quality generates steady returns`);
+    if (exposure.lowVol > 0.1) positive.push(`${(exposure.lowVol * 100).toFixed(0)}% Low vol reduces churn`);
+    
+    if (exposure.momentum > 0.2) negative.push(`${(exposure.momentum * 100).toFixed(0)}% Momentum whipsaws in choppy markets`);
+    if (exposure.growth > 0.4) negative.push(`${(exposure.growth * 100).toFixed(0)}% Growth heavy allocation struggles without trends`);
+    
+    return { positive, negative };
+}
+
+function analyzeMarketRegimesComprehensive() {
+    const alignedData = alignDataArrays();
+    const benchmarkReturns = alignedData['SPY'] ? alignedData['SPY'].returns : [];
+    const portfolioReturns = calculatePortfolioReturnArray();
+    
+    const regimes = detectHistoricalRegimes(benchmarkReturns);
+    
+    const regimePerformance = {
+        bull: calculateRegimePerformance(portfolioReturns, benchmarkReturns, regimes, 'bull'),
+        bear: calculateRegimePerformance(portfolioReturns, benchmarkReturns, regimes, 'bear'),
+        recovery: calculateRegimePerformance(portfolioReturns, benchmarkReturns, regimes, 'recovery'),
+        stagnation: calculateRegimePerformance(portfolioReturns, benchmarkReturns, regimes, 'stagnation')
+    };
+    
+    const currentRegime = detectCurrentRegime(benchmarkReturns);
+    const factorExposure = analyzeFactorExposure();
+    const explanations = generateRegimeExplanations(factorExposure);
+    
+    return {
+        historical: regimePerformance,
+        current: currentRegime,
+        factorExposure: factorExposure,
+        explanations: explanations
+    };
+}
+
+function renderRegimeCard(regimeKey, regimeName, emoji, performance, explanation, isCurrent) {
+    const ratingColors = {
+        'Excellent': 'bg-green-500',
+        'Strong': 'bg-green-400',
+        'Good': 'bg-blue-400',
+        'Moderate': 'bg-yellow-400',
+        'Poor': 'bg-orange-400',
+        'Very Poor': 'bg-red-500',
+        'Insufficient Data': 'bg-gray-400'
+    };
+    
+    const bgColor = ratingColors[performance.rating] || 'bg-gray-400';
+    const borderColor = isCurrent ? 'border-4 border-purple-600' : 'border border-gray-200';
+    
+    return `
+        <div class="bg-white rounded-lg shadow-sm p-4 ${borderColor} ${isCurrent ? 'ring-2 ring-purple-300' : ''}">
+            ${isCurrent ? `
+                <div class="mb-2">
+                    <span class="bg-purple-600 text-white text-xs px-2 py-1 rounded-full font-bold">
+                        CURRENT REGIME
+                    </span>
+                </div>
+            ` : ''}
+            
+            <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center">
+                    <span class="text-3xl mr-2">${emoji}</span>
+                    <div>
+                        <h4 class="font-bold text-lg">${regimeName}</h4>
+                        <div class="text-sm text-gray-600">${performance.count} periods</div>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div class="${bgColor} text-white px-3 py-1 rounded-full text-sm font-bold">
+                        ${performance.rating}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-2 mb-3 text-sm">
+                <div class="bg-gray-50 p-2 rounded">
+                    <div class="text-xs text-gray-600">Portfolio</div>
+                    <div class="font-bold ${performance.portfolioReturn >= 0 ? 'text-green-600' : 'text-red-600'}">
+                        ${performance.portfolioReturn >= 0 ? '+' : ''}${performance.portfolioReturn.toFixed(2)}%
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-2 rounded">
+                    <div class="text-xs text-gray-600">Benchmark</div>
+                    <div class="font-bold">
+                        ${performance.benchmarkReturn >= 0 ? '+' : ''}${performance.benchmarkReturn.toFixed(2)}%
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-2 rounded">
+                    <div class="text-xs text-gray-600">Relative</div>
+                    <div class="font-bold ${performance.relativeReturn >= 0 ? 'text-green-600' : 'text-red-600'}">
+                        ${performance.relativeReturn >= 0 ? '+' : ''}${performance.relativeReturn.toFixed(2)}%
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <div class="flex justify-between text-xs text-gray-600 mb-1">
+                    <span>Win Rate</span>
+                    <span>${performance.winRate.toFixed(1)}%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-blue-500 h-2 rounded-full" style="width: ${performance.winRate}%"></div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 pt-3">
+                <div class="text-xs font-semibold text-gray-700 mb-2">Why This Performance?</div>
+                
+                ${explanation.positive.length > 0 ? `
+                    <div class="mb-2">
+                        <div class="text-xs font-semibold text-green-700 mb-1">Positive Factors:</div>
+                        <ul class="text-xs text-green-800 space-y-1">
+                            ${explanation.positive.map(p => `<li>• ${p}</li>`).join('')}
+                        </ul>
+                    </div>
+                ` : ''}
+                
+                ${explanation.negative.length > 0 ? `
+                    <div>
+                        <div class="text-xs font-semibold text-red-700 mb-1">Negative Factors:</div>
+                        <ul class="text-xs text-red-800 space-y-1">
+                            ${explanation.negative.map(n => `<li>• ${n}</li>`).join('')}
+                        </ul>
+                    </div>
+                ` : ''}
+            </div>
+        </div>
+    `;
+}
+
+function renderEnhancedRegimeAnalysis(regimeData) {
+    if (!regimeData) {
+        return '<p class="text-gray-500">Regime analysis data not available</p>';
+    }
+    
+    const { historical, current, explanations } = regimeData;
+    const currentPerformance = historical[current.regime];
+    
+    let html = `
+        <div class="space-y-6">
+            <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg p-6">
+                <h3 class="text-2xl font-bold mb-2">Current Market Regime</h3>
+                <div class="grid grid-cols-2 gap-4 mt-4">
+                    <div>
+                        <div class="text-sm opacity-90">Detected Regime</div>
+                        <div class="text-3xl font-bold capitalize">${current.regime}</div>
+                        <div class="text-sm mt-1">Confidence: ${current.confidence}</div>
+                    </div>
+                    <div>
+                        <div class="text-sm opacity-90">Expected Performance</div>
+                        <div class="text-2xl font-bold">${currentPerformance.rating}</div>
+                        <div class="text-sm mt-1">Based on historical patterns</div>
+                    </div>
+                </div>
+                <div class="mt-4 grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <div class="opacity-90">Recent Return</div>
+                        <div class="font-semibold">${current.return.toFixed(2)}% annualized</div>
+                    </div>
+                    <div>
+                        <div class="opacity-90">Recent Volatility</div>
+                        <div class="font-semibold">${current.volatility.toFixed(2)}%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold mb-4">Historical Performance by Market Regime</h3>
+                <p class="text-sm text-gray-600 mb-4">
+                    How your portfolio has performed historically in different market conditions
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    ${renderRegimeCard('bull', 'Bull Market', '📈', historical.bull, explanations.bull, current.regime === 'bull')}
+                    ${renderRegimeCard('bear', 'Bear Market', '📉', historical.bear, explanations.bear, current.regime === 'bear')}
+                    ${renderRegimeCard('recovery', 'Recovery', '🚀', historical.recovery, explanations.recovery, current.regime === 'recovery')}
+                    ${renderRegimeCard('stagnation', 'Stagnation', '📊', historical.stagnation, explanations.stagnation, current.regime === 'stagnation')}
+                </div>
+            </div>
+
+            <div class="bg-blue-50 rounded-lg p-4">
+                <h4 class="font-bold text-blue-900 mb-2">Understanding Market Regimes</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-blue-800">
+                    <div><strong>Bull Market:</strong> Strong uptrend with low volatility</div>
+                    <div><strong>Bear Market:</strong> Downtrend or high volatility</div>
+                    <div><strong>Recovery:</strong> Strong rebound phase</div>
+                    <div><strong>Stagnation:</strong> Sideways, choppy market</div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    return html;
 }
 
 console.log('Alphatic Compare Portfolios feature loaded! 📊');

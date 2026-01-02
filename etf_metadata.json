@@ -1,0 +1,142 @@
+{
+  "SPY": {
+    "category": "Core",
+    "factor": "Market",
+    "expense": 0.0945
+  },
+  "VTI": {
+    "category": "Core",
+    "factor": "Market",
+    "expense": 0.03
+  },
+  "VOO": {
+    "category": "Core",
+    "factor": "Market",
+    "expense": 0.03
+  },
+  "QQQ": {
+    "category": "Core",
+    "factor": "Tech/Growth",
+    "expense": 0.2
+  },
+  "AVUV": {
+    "category": "Factor - Value/Small",
+    "factor": "Value + Size",
+    "expense": 0.25
+  },
+  "AVDV": {
+    "category": "Factor - Intl Value",
+    "factor": "Intl Value + Size",
+    "expense": 0.36
+  },
+  "MTUM": {
+    "category": "Factor - Momentum",
+    "factor": "Momentum",
+    "expense": 0.15
+  },
+  "IMOM": {
+    "category": "Factor - Intl Momentum",
+    "factor": "Intl Momentum",
+    "expense": 0.3
+  },
+  "QUAL": {
+    "category": "Factor - Quality",
+    "factor": "Quality",
+    "expense": 0.15
+  },
+  "USMV": {
+    "category": "Factor - Low Volatility",
+    "factor": "Low Vol",
+    "expense": 0.15
+  },
+  "SIZE": {
+    "category": "Factor - Size",
+    "factor": "Size",
+    "expense": 0.15
+  },
+  "VXUS": {
+    "category": "International",
+    "factor": "International",
+    "expense": 0.07
+  },
+  "VWO": {
+    "category": "Emerging Markets",
+    "factor": "Emerging",
+    "expense": 0.08
+  },
+  "BND": {
+    "category": "Defensive Ballast",
+    "factor": "Bonds",
+    "expense": 0.03
+  },
+  "BNDX": {
+    "category": "Defensive Ballast - Intl",
+    "factor": "Intl Bonds",
+    "expense": 0.07
+  },
+  "TLT": {
+    "category": "Defensive Ballast",
+    "factor": "Long Bonds",
+    "expense": 0.15
+  },
+  "IEF": {
+    "category": "Defensive Ballast",
+    "factor": "Intermediate Bonds",
+    "expense": 0.15
+  },
+  "TIP": {
+    "category": "Defensive Ballast",
+    "factor": "Inflation Protection",
+    "expense": 0.19
+  },
+  "GLD": {
+    "category": "Safe Haven",
+    "factor": "Gold",
+    "expense": 0.4
+  },
+  "DBC": {
+    "category": "Commodities",
+    "factor": "Commodities",
+    "expense": 0.87
+  },
+  "ARKK": {
+    "category": "Aggressive Growth",
+    "factor": "Innovation",
+    "expense": 0.75
+  },
+  "XLF": {
+    "category": "Sector - Financials",
+    "factor": "Financials",
+    "expense": 0.1
+  },
+  "XLE": {
+    "category": "Sector - Energy",
+    "factor": "Energy",
+    "expense": 0.1
+  },
+  "XLI": {
+    "category": "Sector - Industrials",
+    "factor": "Industrials",
+    "expense": 0.1
+  },
+  "VNQ": {
+    "category": "Real Estate",
+    "factor": "Real Estate",
+    "expense": 0.12
+  },
+  "SCHD": {
+    "category": "High Dividend Yield",
+    "factor": "Dividend",
+    "expense": 0.06
+  },
+  "VYM": {
+    "category": "High Dividend Yield",
+    "factor": "Dividend",
+    "expense": 0.06
+  },
+  "VYMI": {
+    "category": "International Dividend",
+    "factor": "Intl Dividend",
+    "expense": 0.22
+  }
+}
