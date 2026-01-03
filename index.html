@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alphatic Educational Edition - Portfolio Analysis & Learning</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Load scripts with defer to ensure they're available when page renders -->
+    <script defer src="data.js"></script>
+    <script defer src="portfolios.js"></script>
+    <script defer src="educational.js"></script>
+    <script defer src="app.js"></script>
+    
     <style>
         .nav-item {
             padding: 0.75rem 1.5rem;
@@ -220,6 +227,7 @@
                 <div class="nav-item" onclick="showView('analysis')">📊 Analyze</div>
                 <div class="nav-item" onclick="showView('backtest')">📈 Backtest</div>
                 <div class="nav-item" onclick="showView('compare')">⚖️ Compare</div>
+                <div class="nav-item" onclick="showView('institutional')">🏛️ Institutional</div>
             </div>
         </div>
     </nav>
@@ -318,6 +326,11 @@
                 <div id="compare-content"></div>
             </div>
         </div>
+
+        <!-- INSTITUTIONAL HOLDINGS VIEW -->
+        <div id="institutional-view" class="view">
+            <div id="institutional-view-content"></div>
+        </div>
     </main>
 
     <!-- Modals -->
@@ -394,10 +407,27 @@
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="data.js"></script>
-    <script src="portfolios.js"></script>
-    <script src="educational.js"></script>
-    <script src="app.js"></script>
+    <!-- ETF Detail Modal -->
+    <div id="etf-detail-modal" class="modal">
+        <div class="modal-content" style="max-width: 1200px;">
+            <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-4">
+                <h2 class="text-2xl font-bold text-gray-900" id="etf-detail-title">ETF Details</h2>
+                <button onclick="closeETFDetailModal()" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button>
+            </div>
+            <div id="etf-detail-content"></div>
+        </div>
+    </div>
+
+    <!-- Institutional Holdings Modal -->
+    <div id="institutional-modal" class="modal">
+        <div class="modal-content" style="max-width: 1400px;">
+            <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-4">
+                <h2 class="text-2xl font-bold text-gray-900">🏛️ Institutional Holdings Analysis</h2>
+                <button onclick="closeInstitutionalModal()" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button>
+            </div>
+            <div id="institutional-content"></div>
+        </div>
+    </div>
+
 </body>
 </html>

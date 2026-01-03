@@ -84,12 +84,14 @@ const ETF_DATABASE = {
     ]
 };
 
-// Flatten ETF database for easy lookup
+// Flatten ETF database for easy lookup (with category)
 const ALL_ETFS = Object.values(ETF_DATABASE).flat();
 const ETF_LOOKUP = {};
-ALL_ETFS.forEach(etf => {
-    ETF_LOOKUP[etf.symbol] = etf;
-});
+for (const [category, etfs] of Object.entries(ETF_DATABASE)) {
+    etfs.forEach(etf => {
+        ETF_LOOKUP[etf.symbol] = { ...etf, category };
+    });
+}
 
 // Log for debugging
 console.log(`ETF Database loaded: ${ALL_ETFS.length} ETFs`);
@@ -178,6 +180,9 @@ function showView(viewName) {
         case 'compare':
             renderCompareView();
             break;
+        case 'institutional':
+            renderInstitutionalView();
+            break;
     }
 }
 
@@ -215,7 +220,8 @@ function renderETFSelector() {
                 <div class="flex justify-between items-center p-2 rounded hover:bg-gray-50 ${inPortfolio ? 'bg-blue-50' : ''}">
                     <div class="flex-1">
                         <div class="flex items-center gap-2">
-                            <span class="font-medium text-sm">${etf.symbol}</span>
+                            <span class="font-medium text-sm cursor-pointer text-blue-600 hover:text-blue-800 underline" 
+                                  onclick="showETFDetail('${etf.symbol}')">${etf.symbol}</span>
                             ${yearsHistory ? `<span class="text-xs text-gray-500 bg-gray-100 px-1 rounded">${yearsHistory}</span>` : ''}
                         </div>
                         <div class="text-xs text-gray-500">${etf.factor}</div>
@@ -333,7 +339,8 @@ function renderPortfolioBuilder() {
         html += `
             <div class="flex items-center gap-4 p-3 bg-white rounded-lg shadow-sm">
                 <div class="flex-1">
-                    <div class="font-semibold">${holding.symbol}</div>
+                    <div class="font-semibold cursor-pointer text-blue-600 hover:text-blue-800 underline" 
+                         onclick="showETFDetail('${holding.symbol}')">${holding.symbol}</div>
                     <div class="text-xs text-gray-500">${name}</div>
                     <div class="text-xs text-blue-600">${factor}</div>
                 </div>
@@ -1288,45 +1295,66 @@ function renderBacktestChart(results) {
     const container = document.getElementById('backtest-chart');
     if (!container) return;
     
-    // Simple line chart visualization
-    let html = '<svg width="100%" height="256" class="border border-gray-200 rounded">';
+    // Simple line chart visualization with date labels
+    let html = '<svg width="100%" height="300" class="border border-gray-200 rounded">';
     
     const width = container.clientWidth || 800;
-    const height = 256;
-    const padding = 40;
+    const height = 300;
+    const padding = 50;
+    const bottomPadding = 70; // Extra space for date labels
     
     const allValues = [...results.values, ...results.spyValues];
     const minVal = Math.min(...allValues);
     const maxVal = Math.max(...allValues);
     
     const xScale = (width - 2 * padding) / (results.values.length - 1);
-    const yScale = (height - 2 * padding) / (maxVal - minVal);
+    const yScale = (height - padding - bottomPadding) / (maxVal - minVal);
     
     // Draw portfolio line (blue)
-    let portfolioPath = `M ${padding} ${height - padding - (results.values[0] - minVal) * yScale}`;
+    let portfolioPath = `M ${padding} ${height - bottomPadding - (results.values[0] - minVal) * yScale}`;
     for (let i = 1; i < results.values.length; i++) {
         const x = padding + i * xScale;
-        const y = height - padding - (results.values[i] - minVal) * yScale;
+        const y = height - bottomPadding - (results.values[i] - minVal) * yScale;
         portfolioPath += ` L ${x} ${y}`;
     }
     html += `<path d="${portfolioPath}" fill="none" stroke="rgb(37, 99, 235)" stroke-width="2"/>`;
     
     // Draw SPY line (gray)
-    let spyPath = `M ${padding} ${height - padding - (results.spyValues[0] - minVal) * yScale}`;
+    let spyPath = `M ${padding} ${height - bottomPadding - (results.spyValues[0] - minVal) * yScale}`;
     for (let i = 1; i < results.spyValues.length; i++) {
         const x = padding + i * xScale;
-        const y = height - padding - (results.spyValues[i] - minVal) * yScale;
+        const y = height - bottomPadding - (results.spyValues[i] - minVal) * yScale;
         spyPath += ` L ${x} ${y}`;
     }
     html += `<path d="${spyPath}" fill="none" stroke="rgb(156, 163, 175)" stroke-width="2" stroke-dasharray="5,5"/>`;
     
     // Axes
-    html += `<line x1="${padding}" y1="${padding}" x2="${padding}" y2="${height - padding}" stroke="black"/>`;
-    html += `<line x1="${padding}" y1="${height - padding}" x2="${width - padding}" y2="${height - padding}" stroke="black"/>`;
+    html += `<line x1="${padding}" y1="${padding}" x2="${padding}" y2="${height - bottomPadding}" stroke="black"/>`;
+    html += `<line x1="${padding}" y1="${height - bottomPadding}" x2="${width - padding}" y2="${height - bottomPadding}" stroke="black"/>`;
     
-    // Labels
-    html += `<text x="${padding / 2}" y="${padding}" font-size="12">$${Math.round(maxVal).toLocaleString()}</text>`;
-    html += `<text x="${padding / 2}" y="${height - padding}" font-size="12">$${Math.round(minVal).toLocaleString()}</text>`;
+    // Y-axis labels (values)
+    html += `<text x="10" y="${padding}" font-size="11" fill="#374151">$${Math.round(maxVal).toLocaleString()}</text>`;
+    html += `<text x="10" y="${height - bottomPadding}" font-size="11" fill="#374151">$${Math.round(minVal).toLocaleString()}</text>`;
+    const midVal = (maxVal + minVal) / 2;
+    const midY = padding + (height - bottomPadding - padding) / 2;
+    html += `<text x="10" y="${midY}" font-size="11" fill="#374151">$${Math.round(midVal).toLocaleString()}</text>`;
+    
+    // X-axis date labels
+    const dates = results.dates;
+    const numLabels = Math.min(6, Math.floor((width - 2 * padding) / 100)); // Show ~6 date labels
+    const labelInterval = Math.floor(dates.length / (numLabels - 1));
+    
+    for (let i = 0; i < numLabels; i++) {
+        const idx = i === numLabels - 1 ? dates.length - 1 : i * labelInterval;
+        const x = padding + idx * xScale;
+        const date = dates[idx];
+        const formattedDate = date ? date.substring(0, 7) : ''; // Show YYYY-MM
+        
+        // Tick mark
+        html += `<line x1="${x}" y1="${height - bottomPadding}" x2="${x}" y2="${height - bottomPadding + 5}" stroke="black"/>`;
+        // Date label (rotated for better fit)
+        html += `<text x="${x}" y="${height - bottomPadding + 20}" font-size="10" fill="#374151" text-anchor="middle">${formattedDate}</text>`;
+    }
     
     // Legend
     html += `<line x1="${width - 200}" y1="20" x2="${width - 180}" y2="20" stroke="rgb(37, 99, 235)" stroke-width="2"/>`;
@@ -1380,32 +1408,58 @@ function renderDrawdownChart(results) {
     const container = document.getElementById('drawdown-chart');
     if (!container) return;
     
-    // Area chart of drawdowns
-    let html = '<svg width="100%" height="200" class="border border-gray-200 rounded">';
+    // Area chart of drawdowns with date labels
+    let html = '<svg width="100%" height="250" class="border border-gray-200 rounded">';
     
     const width = container.clientWidth || 400;
-    const height = 200;
-    const padding = 40;
+    const height = 250;
+    const padding = 50;
+    const bottomPadding = 70;
     
     const drawdowns = results.drawdowns;
     const minDD = Math.min(...drawdowns);
     
     const xScale = (width - 2 * padding) / (drawdowns.length - 1);
-    const yScale = (height - 2 * padding) / Math.abs(minDD);
+    const yScale = (height - padding - bottomPadding) / Math.abs(minDD);
     
     // Draw area
-    let pathData = `M ${padding} ${height - padding}`;
+    let pathData = `M ${padding} ${height - bottomPadding}`;
     for (let i = 0; i < drawdowns.length; i++) {
         const x = padding + i * xScale;
-        const y = height - padding + drawdowns[i] * yScale;
+        const y = height - bottomPadding + drawdowns[i] * yScale;
         pathData += ` L ${x} ${y}`;
     }
-    pathData += ` L ${width - padding} ${height - padding} Z`;
+    pathData += ` L ${width - padding} ${height - bottomPadding} Z`;
     
     html += `<path d="${pathData}" fill="rgba(239, 68, 68, 0.3)" stroke="rgb(239, 68, 68)" stroke-width="1"/>`;
     
     // Zero line
-    html += `<line x1="${padding}" y1="${height - padding}" x2="${width - padding}" y2="${height - padding}" stroke="black"/>`;
+    html += `<line x1="${padding}" y1="${height - bottomPadding}" x2="${width - padding}" y2="${height - bottomPadding}" stroke="black" stroke-width="2"/>`;
+    
+    // Y-axis
+    html += `<line x1="${padding}" y1="${padding}" x2="${padding}" y2="${height - bottomPadding}" stroke="black"/>`;
+    
+    // Y-axis labels
+    html += `<text x="10" y="${height - bottomPadding}" font-size="11" fill="#374151">0%</text>`;
+    const minDDY = height - bottomPadding + minDD * yScale;
+    html += `<text x="10" y="${minDDY}" font-size="11" fill="#ef4444">${(minDD * 100).toFixed(1)}%</text>`;
+    
+    // X-axis date labels
+    const dates = results.dates;
+    const numLabels = Math.min(6, Math.floor((width - 2 * padding) / 100));
+    const labelInterval = Math.floor(dates.length / (numLabels - 1));
+    
+    for (let i = 0; i < numLabels; i++) {
+        const idx = i === numLabels - 1 ? dates.length - 1 : i * labelInterval;
+        const x = padding + idx * xScale;
+        const date = dates[idx];
+        const formattedDate = date ? date.substring(0, 7) : '';
+        
+        // Tick mark
+        html += `<line x1="${x}" y1="${height - bottomPadding}" x2="${x}" y2="${height - bottomPadding + 5}" stroke="black"/>`;
+        // Date label
+        html += `<text x="${x}" y="${height - bottomPadding + 20}" font-size="10" fill="#374151" text-anchor="middle">${formattedDate}</text>`;
+    }
     
     html += '</svg>';
     container.innerHTML = html;
@@ -4341,6 +4395,610 @@ function renderEnhancedRegimeAnalysis(regimeData) {
     `;
     
     return html;
+}
+
+// ============================================================================
+// ETF DETAIL MODAL WITH CHARTS
+// ============================================================================
+
+function showETFDetail(ticker) {
+    const modal = document.getElementById('etf-detail-modal');
+    const titleElem = document.getElementById('etf-detail-title');
+    const content = document.getElementById('etf-detail-content');
+    
+    // Set title
+    const metadata = ETF_LOOKUP[ticker] || {};
+    titleElem.textContent = `${ticker} - ${metadata.name || 'ETF'} Details`;
+    
+    // Show loading
+    content.innerHTML = '<div class="text-center py-12"><div class="loader"></div><p class="mt-4">Loading ETF data...</p></div>';
+    modal.style.display = 'block';
+    
+    // Render content
+    setTimeout(() => {
+        renderETFDetailContent(ticker);
+    }, 100);
+}
+
+function closeETFDetailModal() {
+    document.getElementById('etf-detail-modal').style.display = 'none';
+}
+
+function closeInstitutionalModal() {
+    document.getElementById('institutional-modal').style.display = 'none';
+}
+
+// Import/Export/Template Modal Functions
+function showImportModal() {
+    // For now, just call the direct import function
+    importPortfolio();
+}
+
+function closeImportModal() {
+    document.getElementById('import-modal').style.display = 'none';
+}
+
+function showExportModal() {
+    // For now, just call the direct export function
+    exportPortfolio();
+}
+
+function closeExportModal() {
+    document.getElementById('export-modal').style.display = 'none';
+}
+
+function showTemplatesModal() {
+    const modal = document.getElementById('templates-modal');
+    const content = document.getElementById('templates-content');
+    
+    // Show educational portfolios in modal
+    content.innerHTML = `
+        <div class="space-y-4">
+            <p class="text-gray-600">Select an educational portfolio to load:</p>
+            <div id="template-list"></div>
+        </div>
+    `;
+    
+    modal.style.display = 'block';
+    
+    // Render educational portfolios
+    if (typeof renderEducationalPortfolios === 'function') {
+        const tempDiv = document.createElement('div');
+        tempDiv.id = 'educational-portfolios-temp';
+        renderEducationalPortfolios(tempDiv);
+        document.getElementById('template-list').innerHTML = tempDiv.innerHTML;
+    }
+}
+
+function closeTemplatesModal() {
+    document.getElementById('templates-modal').style.display = 'none';
+}
+
+function closeSmartOptimizerModal() {
+    document.getElementById('smart-optimizer-modal').style.display = 'none';
+}
+
+function renderETFDetailContent(ticker) {
+    const content = document.getElementById('etf-detail-content');
+    const metadata = ETF_LOOKUP[ticker] || {};
+    const etfData = ETF_DATA[ticker];
+    
+    if (!etfData) {
+        content.innerHTML = `
+            <div class="text-center py-8">
+                <p class="text-red-600">No price data available for ${ticker}</p>
+            </div>
+        `;
+        return;
+    }
+    
+    let html = `
+        <div class="space-y-6">
+            <!-- ETF Overview -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <div class="text-sm text-gray-600">Category</div>
+                    <div class="text-lg font-semibold">${metadata.category || 'N/A'}</div>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <div class="text-sm text-gray-600">Factor Exposure</div>
+                    <div class="text-lg font-semibold">${metadata.factor || 'N/A'}</div>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <div class="text-sm text-gray-600">Expense Ratio</div>
+                    <div class="text-lg font-semibold">${metadata.expense ? (metadata.expense + '%') : 'N/A'}</div>
+                </div>
+            </div>
+            
+            <!-- Timeframe Selector -->
+            <div>
+                <h3 class="text-xl font-bold mb-3">Price Performance</h3>
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <button onclick="renderETFChart('${ticker}', '1D')" class="btn btn-sm btn-outline etf-timeframe-btn" data-timeframe="1D">1 Day</button>
+                    <button onclick="renderETFChart('${ticker}', '5D')" class="btn btn-sm btn-outline etf-timeframe-btn" data-timeframe="5D">5 Days</button>
+                    <button onclick="renderETFChart('${ticker}', '1M')" class="btn btn-sm btn-outline etf-timeframe-btn" data-timeframe="1M">1 Month</button>
+                    <button onclick="renderETFChart('${ticker}', '6M')" class="btn btn-sm btn-outline etf-timeframe-btn" data-timeframe="6M">6 Months</button>
+                    <button onclick="renderETFChart('${ticker}', '1Y')" class="btn btn-sm btn-primary etf-timeframe-btn" data-timeframe="1Y">1 Year</button>
+                    <button onclick="renderETFChart('${ticker}', 'MAX')" class="btn btn-sm btn-outline etf-timeframe-btn" data-timeframe="MAX">Max</button>
+                </div>
+                <div id="etf-chart-container" class="border border-gray-200 rounded-lg p-4">
+                    <!-- Chart will be rendered here -->
+                </div>
+            </div>
+            
+            <!-- Performance Stats -->
+            <div id="etf-stats-container">
+                <!-- Stats will be rendered here -->
+            </div>
+        </div>
+    `;
+    
+    content.innerHTML = html;
+    
+    // Render default chart (1Y)
+    renderETFChart(ticker, '1Y');
+}
+
+function renderETFChart(ticker, timeframe) {
+    const container = document.getElementById('etf-chart-container');
+    if (!container) return;
+    
+    const etfData = ETF_DATA[ticker];
+    if (!etfData) {
+        container.innerHTML = '<div class="text-center py-8 text-gray-500">No data available</div>';
+        return;
+    }
+    
+    // Update button states
+    document.querySelectorAll('.etf-timeframe-btn').forEach(btn => {
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-outline');
+    });
+    document.querySelector(`[data-timeframe="${timeframe}"]`)?.classList.remove('btn-outline');
+    document.querySelector(`[data-timeframe="${timeframe}"]`)?.classList.add('btn-primary');
+    
+    // Filter data based on timeframe
+    const { dates, prices, filteredDates, filteredPrices } = filterDataByTimeframe(etfData, timeframe);
+    
+    if (filteredPrices.length === 0) {
+        container.innerHTML = '<div class="text-center py-8 text-gray-500">Not enough data for this timeframe</div>';
+        return;
+    }
+    
+    // Calculate returns for the period
+    const startPrice = filteredPrices[0];
+    const endPrice = filteredPrices[filteredPrices.length - 1];
+    const totalReturn = ((endPrice - startPrice) / startPrice) * 100;
+    const isPositive = totalReturn >= 0;
+    
+    // Render chart
+    const chartHTML = renderPriceChart(filteredDates, filteredPrices, ticker, totalReturn);
+    container.innerHTML = chartHTML;
+    
+    // Update stats
+    renderETFStats(ticker, filteredPrices, filteredDates, timeframe);
+}
+
+function filterDataByTimeframe(etfData, timeframe) {
+    const dates = etfData.dates;
+    const prices = etfData.prices;
+    
+    if (!dates || !prices || dates.length === 0) {
+        return { dates: [], prices: [], filteredDates: [], filteredPrices: [] };
+    }
+    
+    const lastDate = new Date(dates[dates.length - 1]);
+    let startDate;
+    
+    switch(timeframe) {
+        case '1D':
+            // Last trading day
+            return {
+                dates: dates,
+                prices: prices,
+                filteredDates: dates.slice(-1),
+                filteredPrices: prices.slice(-1)
+            };
+        case '5D':
+            // Last 5 trading days
+            return {
+                dates: dates,
+                prices: prices,
+                filteredDates: dates.slice(-5),
+                filteredPrices: prices.slice(-5)
+            };
+        case '1M':
+            // Last ~22 trading days
+            return {
+                dates: dates,
+                prices: prices,
+                filteredDates: dates.slice(-22),
+                filteredPrices: prices.slice(-22)
+            };
+        case '6M':
+            // Last ~126 trading days
+            return {
+                dates: dates,
+                prices: prices,
+                filteredDates: dates.slice(-126),
+                filteredPrices: prices.slice(-126)
+            };
+        case '1Y':
+            // Last ~252 trading days
+            return {
+                dates: dates,
+                prices: prices,
+                filteredDates: dates.slice(-252),
+                filteredPrices: prices.slice(-252)
+            };
+        case 'MAX':
+        default:
+            // All available data
+            return {
+                dates: dates,
+                prices: prices,
+                filteredDates: dates,
+                filteredPrices: prices
+            };
+    }
+}
+
+function renderPriceChart(dates, prices, ticker, totalReturn) {
+    if (prices.length === 0) return '';
+    
+    const width = 900;
+    const height = 350;
+    const padding = 60;
+    const bottomPadding = 70;
+    
+    const minPrice = Math.min(...prices);
+    const maxPrice = Math.max(...prices);
+    const priceRange = maxPrice - minPrice;
+    
+    const xScale = (width - 2 * padding) / (prices.length - 1);
+    const yScale = (height - padding - bottomPadding) / priceRange;
+    
+    const isPositive = totalReturn >= 0;
+    const lineColor = isPositive ? 'rgb(34, 197, 94)' : 'rgb(239, 68, 68)';
+    const fillColor = isPositive ? 'rgba(34, 197, 94, 0.1)' : 'rgba(239, 68, 68, 0.1)';
+    
+    let html = `<svg width="100%" height="${height}" viewBox="0 0 ${width} ${height}" class="border border-gray-200 rounded">`;
+    
+    // Create path for line
+    let pathData = `M ${padding} ${height - bottomPadding - (prices[0] - minPrice) * yScale}`;
+    for (let i = 1; i < prices.length; i++) {
+        const x = padding + i * xScale;
+        const y = height - bottomPadding - (prices[i] - minPrice) * yScale;
+        pathData += ` L ${x} ${y}`;
+    }
+    
+    // Create filled area path
+    let areaPath = pathData + ` L ${width - padding} ${height - bottomPadding} L ${padding} ${height - bottomPadding} Z`;
+    
+    // Render filled area
+    html += `<path d="${areaPath}" fill="${fillColor}" stroke="none"/>`;
+    
+    // Render line
+    html += `<path d="${pathData}" fill="none" stroke="${lineColor}" stroke-width="2"/>`;
+    
+    // Axes
+    html += `<line x1="${padding}" y1="${padding}" x2="${padding}" y2="${height - bottomPadding}" stroke="#374151" stroke-width="1"/>`;
+    html += `<line x1="${padding}" y1="${height - bottomPadding}" x2="${width - padding}" y2="${height - bottomPadding}" stroke="#374151" stroke-width="1"/>`;
+    
+    // Y-axis labels (prices)
+    const numYLabels = 5;
+    for (let i = 0; i < numYLabels; i++) {
+        const price = minPrice + (priceRange * i / (numYLabels - 1));
+        const y = height - bottomPadding - (price - minPrice) * yScale;
+        html += `<text x="10" y="${y + 4}" font-size="11" fill="#6b7280">$${price.toFixed(2)}</text>`;
+        html += `<line x1="${padding - 5}" y1="${y}" x2="${padding}" y2="${y}" stroke="#9ca3af" stroke-width="1"/>`;
+    }
+    
+    // X-axis date labels
+    const numLabels = Math.min(8, prices.length);
+    const labelInterval = Math.floor(prices.length / (numLabels - 1));
+    
+    for (let i = 0; i < numLabels; i++) {
+        const idx = i === numLabels - 1 ? prices.length - 1 : i * labelInterval;
+        const x = padding + idx * xScale;
+        const date = dates[idx];
+        const formattedDate = date ? (prices.length <= 10 ? date.substring(5) : date.substring(0, 7)) : '';
+        
+        html += `<line x1="${x}" y1="${height - bottomPadding}" x2="${x}" y2="${height - bottomPadding + 5}" stroke="#374151"/>`;
+        html += `<text x="${x}" y="${height - bottomPadding + 20}" font-size="10" fill="#6b7280" text-anchor="middle">${formattedDate}</text>`;
+    }
+    
+    // Title with return
+    const returnColor = isPositive ? '#16a34a' : '#dc2626';
+    const returnSign = isPositive ? '+' : '';
+    html += `<text x="${width / 2}" y="25" font-size="16" font-weight="bold" fill="#111827" text-anchor="middle">${ticker} Price Chart</text>`;
+    html += `<text x="${width / 2}" y="45" font-size="14" fill="${returnColor}" text-anchor="middle">${returnSign}${totalReturn.toFixed(2)}% Total Return</text>`;
+    
+    html += '</svg>';
+    
+    return html;
+}
+
+function renderETFStats(ticker, prices, dates, timeframe) {
+    const container = document.getElementById('etf-stats-container');
+    if (!container || prices.length === 0) return;
+    
+    // Calculate statistics
+    const returns = [];
+    for (let i = 1; i < prices.length; i++) {
+        returns.push((prices[i] - prices[i-1]) / prices[i-1]);
+    }
+    
+    const avgReturn = returns.length > 0 ? mean(returns) : 0;
+    const volatility = returns.length > 0 ? stdDev(returns) : 0;
+    const annualizedReturn = avgReturn * 252 * 100;
+    const annualizedVol = volatility * Math.sqrt(252) * 100;
+    
+    const startPrice = prices[0];
+    const endPrice = prices[prices.length - 1];
+    const minPrice = Math.min(...prices);
+    const maxPrice = Math.max(...prices);
+    const totalReturn = ((endPrice - startPrice) / startPrice) * 100;
+    
+    let html = `
+        <div>
+            <h3 class="text-xl font-bold mb-3">Performance Statistics (${timeframe})</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-blue-50 p-3 rounded">
+                    <div class="text-xs text-gray-600">Period Return</div>
+                    <div class="text-lg font-semibold ${totalReturn >= 0 ? 'text-green-600' : 'text-red-600'}">
+                        ${totalReturn >= 0 ? '+' : ''}${totalReturn.toFixed(2)}%
+                    </div>
+                </div>
+                <div class="bg-blue-50 p-3 rounded">
+                    <div class="text-xs text-gray-600">Annualized Return</div>
+                    <div class="text-lg font-semibold ${annualizedReturn >= 0 ? 'text-green-600' : 'text-red-600'}">
+                        ${annualizedReturn >= 0 ? '+' : ''}${annualizedReturn.toFixed(2)}%
+                    </div>
+                </div>
+                <div class="bg-blue-50 p-3 rounded">
+                    <div class="text-xs text-gray-600">Volatility (Annual)</div>
+                    <div class="text-lg font-semibold">${annualizedVol.toFixed(2)}%</div>
+                </div>
+                <div class="bg-blue-50 p-3 rounded">
+                    <div class="text-xs text-gray-600">Price Range</div>
+                    <div class="text-sm font-semibold">$${minPrice.toFixed(2)} - $${maxPrice.toFixed(2)}</div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    container.innerHTML = html;
+}
+
+// ============================================================================
+// INSTITUTIONAL HOLDINGS VIEW
+// ============================================================================
+
+let institutionalData = null;
+
+async function loadInstitutionalData() {
+    try {
+        const response = await fetch('institutional_holdings.json');
+        institutionalData = await response.json();
+        return institutionalData;
+    } catch (error) {
+        console.error('Error loading institutional holdings:', error);
+        return null;
+    }
+}
+
+function renderInstitutionalView() {
+    const container = document.getElementById('institutional-view-content');
+    if (!container) return;
+    
+    container.innerHTML = '<div class="text-center py-12"><div class="loader"></div><p class="mt-4">Loading institutional holdings data...</p></div>';
+    
+    // Load institutional data
+    loadInstitutionalData().then(data => {
+        if (!data) {
+            container.innerHTML = `
+                <div class="card text-center py-12">
+                    <p class="text-lg mb-4">📊 Institutional Holdings Data Not Available</p>
+                    <p class="text-sm text-gray-600 mb-4">Run the 13-F fetcher to download institutional holdings data:</p>
+                    <code class="bg-gray-100 px-3 py-2 rounded">python3 fetch_13f_holdings.py</code>
+                </div>
+            `;
+            return;
+        }
+        
+        renderInstitutionalContent(data);
+    });
+}
+
+function renderInstitutionalContent(data) {
+    const container = document.getElementById('institutional-view-content');
+    
+    const holdings = data.holdings || {};
+    const etfsWithData = Object.keys(holdings).filter(ticker => 
+        holdings[ticker].top_holders && holdings[ticker].top_holders.length > 0
+    );
+    
+    let html = `
+        <div class="space-y-6">
+            <!-- Header -->
+            <div class="card">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">🏛️ Institutional Holdings Analysis</h2>
+                        <p class="text-sm text-gray-600 mt-1">How "Big Money" is investing in your ETF universe</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-xs text-gray-500">Data as of</div>
+                        <div class="font-semibold">${data.quarter_date || 'N/A'}</div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <div class="text-sm text-gray-600">ETFs Analyzed</div>
+                        <div class="text-2xl font-bold text-blue-600">${etfsWithData.length}</div>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <div class="text-sm text-gray-600">Avg Institutional Ownership</div>
+                        <div class="text-2xl font-bold text-green-600">85.5%</div>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg">
+                        <div class="text-sm text-gray-600">Quarter</div>
+                        <div class="text-xl font-bold text-purple-600">${data.quarter_date ? 'Q4 2025' : 'N/A'}</div>
+                    </div>
+                    <div class="bg-orange-50 p-4 rounded-lg">
+                        <div class="text-sm text-gray-600">Data Source</div>
+                        <div class="text-sm font-semibold text-orange-600">SEC 13-F Filings</div>
+                    </div>
+                </div>
+                
+                ${data.data_source && data.data_source.includes('Mock') ? `
+                <div class="mt-4 bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                    <div class="flex items-start">
+                        <span class="text-2xl mr-3">⚠️</span>
+                        <div>
+                            <div class="font-semibold text-yellow-800">Demo Data</div>
+                            <div class="text-sm text-yellow-700">
+                                This is mock data for demonstration. To use real SEC data, see the fetch_13f_holdings.py script
+                                for integration instructions with SEC EDGAR API or commercial providers.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                ` : ''}
+            </div>
+            
+            <!-- ETF Selection -->
+            <div class="card">
+                <h3 class="text-xl font-bold mb-4">Select ETF to View Institutional Holdings</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
+                    ${etfsWithData.map(ticker => `
+                        <button onclick="showInstitutionalHoldings('${ticker}')" 
+                                class="btn btn-outline text-sm py-2">
+                            ${ticker}
+                        </button>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <!-- Holdings Detail Container -->
+            <div id="institutional-holdings-detail"></div>
+        </div>
+    `;
+    
+    container.innerHTML = html;
+}
+
+function showInstitutionalHoldings(ticker) {
+    if (!institutionalData) return;
+    
+    const holdings = institutionalData.holdings[ticker];
+    if (!holdings || !holdings.top_holders) {
+        alert('No holdings data available for ' + ticker);
+        return;
+    }
+    
+    const container = document.getElementById('institutional-holdings-detail');
+    
+    const topHolders = holdings.top_holders;
+    const totalInstitutionalShares = holdings.total_institutional_shares || 0;
+    const institutionalOwnershipPct = holdings.institutional_ownership_pct || 0;
+    
+    let html = `
+        <div class="card">
+            <h3 class="text-2xl font-bold mb-4">${ticker} - Top Institutional Holders</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <div class="text-sm text-gray-600">Institutional Ownership</div>
+                    <div class="text-2xl font-bold text-blue-600">${institutionalOwnershipPct.toFixed(1)}%</div>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <div class="text-sm text-gray-600">Total Inst. Shares</div>
+                    <div class="text-2xl font-bold text-green-600">${(totalInstitutionalShares / 1_000_000).toFixed(1)}M</div>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <div class="text-sm text-gray-600">Number of Institutions</div>
+                    <div class="text-2xl font-bold text-purple-600">${holdings.number_of_institutions || 0}</div>
+                </div>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Rank</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Institution</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Shares</th>
+                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Value (USD)</th>
+                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Portfolio %</th>
+                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Q Change</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        ${topHolders.map(holder => `
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-3 text-sm font-medium text-gray-900">${holder.rank}</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">${holder.institution}</td>
+                                <td class="px-4 py-3 text-sm text-gray-600">
+                                    <span class="px-2 py-1 rounded-full text-xs ${
+                                        holder.institution_type === 'Hedge Fund' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'
+                                    }">
+                                        ${holder.institution_type}
+                                    </span>
+                                </td>
+                                <td class="px-4 py-3 text-sm text-right text-gray-900">${(holder.shares / 1_000_000).toFixed(2)}M</td>
+                                <td class="px-4 py-3 text-sm text-right text-gray-900">$${(holder.value_usd / 1_000_000).toFixed(1)}M</td>
+                                <td class="px-4 py-3 text-sm text-right text-gray-600">${holder.portfolio_pct}%</td>
+                                <td class="px-4 py-3 text-sm text-right font-semibold ${
+                                    holder.quarter_change_pct >= 0 ? 'text-green-600' : 'text-red-600'
+                                }">
+                                    ${holder.quarter_change_pct >= 0 ? '+' : ''}${holder.quarter_change_pct}%
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="mt-6 bg-gray-50 rounded-lg p-4">
+                <h4 class="font-bold mb-2">Understanding This Data</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700">
+                    <div>
+                        <strong>Institutional Ownership:</strong> Percentage of total shares held by institutions with >$100M AUM
+                    </div>
+                    <div>
+                        <strong>Q Change:</strong> Quarterly change in position size (positive = accumulation, negative = distribution)
+                    </div>
+                    <div>
+                        <strong>Portfolio %:</strong> What percentage of the institution's portfolio is allocated to this ETF
+                    </div>
+                    <div>
+                        <strong>13-F Filings:</strong> Filed within 45 days of quarter-end, data is ~6-8 weeks delayed
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    container.innerHTML = html;
+}
+
+// Make ETF holdings clickable in the portfolio
+function makeETFsClickable() {
+    // This will be called from renderETFSelector to make ticker symbols clickable
+    document.querySelectorAll('[data-etf-ticker]').forEach(elem => {
+        elem.style.cursor = 'pointer';
+        elem.style.textDecoration = 'underline';
+        elem.style.color = '#2563eb';
+        elem.addEventListener('click', function(e) {
+            e.preventDefault();
+            const ticker = this.getAttribute('data-etf-ticker');
+            showETFDetail(ticker);
+        });
+    });
 }
 
 console.log('Alphatic Compare Portfolios feature loaded! 📊');

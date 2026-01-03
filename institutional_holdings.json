@@ -1,0 +1,5157 @@
+{
+  "generated_at": "2026-01-03T14:25:26.710896",
+  "quarter_date": "2025-12-31",
+  "data_source": "SEC EDGAR 13-F Filings (Mock Data - Replace with actual SEC parsing)",
+  "note": "This is mock data for demonstration. Production version would parse actual SEC EDGAR 13-F XML/HTML filings",
+  "etf_count": 49,
+  "holdings": {
+    "SPY": {
+      "ticker": "SPY",
+      "cusip": "78462F103",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 57456616,
+          "value_usd": 20854466059,
+          "portfolio_pct": 0.71,
+          "quarter_change_pct": 21.28,
+          "shares_change": 12227539
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 42388533,
+          "value_usd": 10681057693,
+          "portfolio_pct": 4.71,
+          "quarter_change_pct": -6.18,
+          "shares_change": -2621290
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 43558789,
+          "value_usd": 4653650419,
+          "portfolio_pct": 1.39,
+          "quarter_change_pct": 11.99,
+          "shares_change": 5223571
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 44597582,
+          "value_usd": 6752000226,
+          "portfolio_pct": 0.61,
+          "quarter_change_pct": 0.28,
+          "shares_change": 125239
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 43448129,
+          "value_usd": 14417513208,
+          "portfolio_pct": 3.2,
+          "quarter_change_pct": 9.75,
+          "shares_change": 4237394
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 39812572,
+          "value_usd": 11269945018,
+          "portfolio_pct": 0.53,
+          "quarter_change_pct": 10.06,
+          "shares_change": 4004441
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 40173069,
+          "value_usd": 13760211227,
+          "portfolio_pct": 4.62,
+          "quarter_change_pct": -6.97,
+          "shares_change": -2799790
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 33822233,
+          "value_usd": 8433894984,
+          "portfolio_pct": 4.66,
+          "quarter_change_pct": 15.38,
+          "shares_change": 5202741
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 35213557,
+          "value_usd": 4478983063,
+          "portfolio_pct": 4.85,
+          "quarter_change_pct": 22.31,
+          "shares_change": 7854987
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 26985011,
+          "value_usd": 13074891610,
+          "portfolio_pct": 0.73,
+          "quarter_change_pct": -12.74,
+          "shares_change": -3437133
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 32020492,
+          "value_usd": 13257350224,
+          "portfolio_pct": 0.46,
+          "quarter_change_pct": -14.91,
+          "shares_change": -4772932
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 23868379,
+          "value_usd": 11456946342,
+          "portfolio_pct": 2.66,
+          "quarter_change_pct": 19.55,
+          "shares_change": 4667084
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 32212440,
+          "value_usd": 6641860779,
+          "portfolio_pct": 0.91,
+          "quarter_change_pct": -0.06,
+          "shares_change": -19924
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 29850416,
+          "value_usd": 9881079450,
+          "portfolio_pct": 2.33,
+          "quarter_change_pct": -9.8,
+          "shares_change": -2924267
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 23845968,
+          "value_usd": 2974450987,
+          "portfolio_pct": 4.82,
+          "quarter_change_pct": 0.97,
+          "shares_change": 232340
+        }
+      ],
+      "total_institutional_shares": 549253786,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "VTI": {
+      "ticker": "VTI",
+      "cusip": "922906866",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 42238130,
+          "value_usd": 14419514421,
+          "portfolio_pct": 4.69,
+          "quarter_change_pct": 5.51,
+          "shares_change": 2329067
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 41538045,
+          "value_usd": 19071431701,
+          "portfolio_pct": 0.16,
+          "quarter_change_pct": 18.6,
+          "shares_change": 7728134
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 47742495,
+          "value_usd": 6889351109,
+          "portfolio_pct": 1.37,
+          "quarter_change_pct": -11.9,
+          "shares_change": -5680059
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 46051555,
+          "value_usd": 17156436358,
+          "portfolio_pct": 1.67,
+          "quarter_change_pct": -6.02,
+          "shares_change": -2773855
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 34459279,
+          "value_usd": 11734909731,
+          "portfolio_pct": 3.22,
+          "quarter_change_pct": 12.09,
+          "shares_change": 4166381
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 43618671,
+          "value_usd": 5586662652,
+          "portfolio_pct": 3.08,
+          "quarter_change_pct": 20.44,
+          "shares_change": 8916012
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 30162816,
+          "value_usd": 9358317094,
+          "portfolio_pct": 0.44,
+          "quarter_change_pct": -9.34,
+          "shares_change": -2816970
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 31664521,
+          "value_usd": 9929491202,
+          "portfolio_pct": 2.2,
+          "quarter_change_pct": -1.03,
+          "shares_change": -325340
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 37247584,
+          "value_usd": 15528187062,
+          "portfolio_pct": 4.41,
+          "quarter_change_pct": -9.62,
+          "shares_change": -3581765
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 25217083,
+          "value_usd": 3148348120,
+          "portfolio_pct": 0.87,
+          "quarter_change_pct": -3.34,
+          "shares_change": -841529
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 27364094,
+          "value_usd": 11776971630,
+          "portfolio_pct": 4.91,
+          "quarter_change_pct": 22.16,
+          "shares_change": 6062802
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 27799988,
+          "value_usd": 13242971693,
+          "portfolio_pct": 3.81,
+          "quarter_change_pct": -13.5,
+          "shares_change": -3752455
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 27516864,
+          "value_usd": 12458472755,
+          "portfolio_pct": 4.43,
+          "quarter_change_pct": 15.46,
+          "shares_change": 4255468
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 24790221,
+          "value_usd": 7188650427,
+          "portfolio_pct": 1.91,
+          "quarter_change_pct": 9.64,
+          "shares_change": 2389113
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 24709144,
+          "value_usd": 10370642020,
+          "portfolio_pct": 4.0,
+          "quarter_change_pct": 12.35,
+          "shares_change": 3050912
+        }
+      ],
+      "total_institutional_shares": 512120490,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "VOO": {
+      "ticker": "VOO",
+      "cusip": "922908769",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 44212308,
+          "value_usd": 11640194468,
+          "portfolio_pct": 0.54,
+          "quarter_change_pct": -5.62,
+          "shares_change": -2486238
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 43744688,
+          "value_usd": 19369640911,
+          "portfolio_pct": 4.14,
+          "quarter_change_pct": -4.52,
+          "shares_change": -1975089
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 40584376,
+          "value_usd": 17704854623,
+          "portfolio_pct": 2.87,
+          "quarter_change_pct": 3.03,
+          "shares_change": 1231345
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 48651629,
+          "value_usd": 7349691712,
+          "portfolio_pct": 0.89,
+          "quarter_change_pct": 1.84,
+          "shares_change": 893162
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 34856452,
+          "value_usd": 9458874872,
+          "portfolio_pct": 3.6,
+          "quarter_change_pct": 4.97,
+          "shares_change": 1731117
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 35630931,
+          "value_usd": 5014026563,
+          "portfolio_pct": 1.21,
+          "quarter_change_pct": 19.77,
+          "shares_change": 7045346
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 40948270,
+          "value_usd": 16627568237,
+          "portfolio_pct": 0.68,
+          "quarter_change_pct": 19.47,
+          "shares_change": 7971917
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 30994475,
+          "value_usd": 8226033787,
+          "portfolio_pct": 4.71,
+          "quarter_change_pct": 14.32,
+          "shares_change": 4439139
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 26963454,
+          "value_usd": 12088915741,
+          "portfolio_pct": 2.26,
+          "quarter_change_pct": -13.01,
+          "shares_change": -3506768
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 27626971,
+          "value_usd": 12057657469,
+          "portfolio_pct": 2.36,
+          "quarter_change_pct": 3.19,
+          "shares_change": 879962
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 33589099,
+          "value_usd": 10423959374,
+          "portfolio_pct": 1.45,
+          "quarter_change_pct": -11.38,
+          "shares_change": -3823205
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 27863629,
+          "value_usd": 9952036448,
+          "portfolio_pct": 3.77,
+          "quarter_change_pct": -7.91,
+          "shares_change": -2203800
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 24085982,
+          "value_usd": 12005756196,
+          "portfolio_pct": 0.77,
+          "quarter_change_pct": 22.49,
+          "shares_change": 5416556
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 21074074,
+          "value_usd": 5928033596,
+          "portfolio_pct": 0.21,
+          "quarter_change_pct": 15.72,
+          "shares_change": 3312041
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 27710140,
+          "value_usd": 9826644958,
+          "portfolio_pct": 2.56,
+          "quarter_change_pct": 5.74,
+          "shares_change": 1591849
+        }
+      ],
+      "total_institutional_shares": 508536478,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "QQQ": {
+      "ticker": "QQQ",
+      "cusip": "73935A104",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4386246,
+          "value_usd": 722934004,
+          "portfolio_pct": 2.54,
+          "quarter_change_pct": 20.89,
+          "shares_change": 916365
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4641586,
+          "value_usd": 1882072580,
+          "portfolio_pct": 4.43,
+          "quarter_change_pct": 3.43,
+          "shares_change": 159035
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4126314,
+          "value_usd": 812715464,
+          "portfolio_pct": 4.7,
+          "quarter_change_pct": -9.56,
+          "shares_change": -394436
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 4501179,
+          "value_usd": 1177051136,
+          "portfolio_pct": 4.87,
+          "quarter_change_pct": -3.43,
+          "shares_change": -154355
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4350388,
+          "value_usd": 756471826,
+          "portfolio_pct": 0.45,
+          "quarter_change_pct": 10.27,
+          "shares_change": 446576
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 3666693,
+          "value_usd": 1364263654,
+          "portfolio_pct": 2.9,
+          "quarter_change_pct": -4.06,
+          "shares_change": -148747
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3178721,
+          "value_usd": 676762504,
+          "portfolio_pct": 3.42,
+          "quarter_change_pct": 10.42,
+          "shares_change": 331301
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3609252,
+          "value_usd": 1790654431,
+          "portfolio_pct": 4.77,
+          "quarter_change_pct": -6.85,
+          "shares_change": -247264
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3825350,
+          "value_usd": 1221415517,
+          "portfolio_pct": 3.75,
+          "quarter_change_pct": 20.56,
+          "shares_change": 786465
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 2816808,
+          "value_usd": 685531801,
+          "portfolio_pct": 3.5,
+          "quarter_change_pct": 0.51,
+          "shares_change": 14501
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 2591595,
+          "value_usd": 610087773,
+          "portfolio_pct": 2.09,
+          "quarter_change_pct": 15.63,
+          "shares_change": 405157
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 2599817,
+          "value_usd": 1041963372,
+          "portfolio_pct": 3.79,
+          "quarter_change_pct": 10.19,
+          "shares_change": 264900
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2251181,
+          "value_usd": 438788118,
+          "portfolio_pct": 0.87,
+          "quarter_change_pct": -7.95,
+          "shares_change": -178949
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2451171,
+          "value_usd": 723145072,
+          "portfolio_pct": 3.96,
+          "quarter_change_pct": -14.71,
+          "shares_change": -360666
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2734540,
+          "value_usd": 1147348451,
+          "portfolio_pct": 2.99,
+          "quarter_change_pct": 15.19,
+          "shares_change": 415268
+        }
+      ],
+      "total_institutional_shares": 51730841,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "VUG": {
+      "ticker": "VUG",
+      "cusip": "922908835",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 5770295,
+          "value_usd": 954761182,
+          "portfolio_pct": 2.04,
+          "quarter_change_pct": -6.55,
+          "shares_change": -377848
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4053127,
+          "value_usd": 773568699,
+          "portfolio_pct": 3.48,
+          "quarter_change_pct": 7.76,
+          "shares_change": 314398
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4843699,
+          "value_usd": 788444543,
+          "portfolio_pct": 4.19,
+          "quarter_change_pct": -0.32,
+          "shares_change": -15303
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 4066294,
+          "value_usd": 981113181,
+          "portfolio_pct": 2.86,
+          "quarter_change_pct": 20.72,
+          "shares_change": 842400
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4615498,
+          "value_usd": 2124665585,
+          "portfolio_pct": 2.43,
+          "quarter_change_pct": 12.27,
+          "shares_change": 566510
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 4170300,
+          "value_usd": 815489086,
+          "portfolio_pct": 4.05,
+          "quarter_change_pct": 23.3,
+          "shares_change": 971848
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4157807,
+          "value_usd": 1485607424,
+          "portfolio_pct": 2.12,
+          "quarter_change_pct": 15.36,
+          "shares_change": 638534
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 4135072,
+          "value_usd": 608824673,
+          "portfolio_pct": 2.42,
+          "quarter_change_pct": 16.94,
+          "shares_change": 700504
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3585120,
+          "value_usd": 662046758,
+          "portfolio_pct": 0.21,
+          "quarter_change_pct": 17.49,
+          "shares_change": 626895
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 2684475,
+          "value_usd": 485954030,
+          "portfolio_pct": 3.17,
+          "quarter_change_pct": 17.2,
+          "shares_change": 461736
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 2897819,
+          "value_usd": 793697710,
+          "portfolio_pct": 0.3,
+          "quarter_change_pct": 21.88,
+          "shares_change": 634024
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 3339693,
+          "value_usd": 1666768360,
+          "portfolio_pct": 1.44,
+          "quarter_change_pct": -13.58,
+          "shares_change": -453690
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 3180687,
+          "value_usd": 1357221880,
+          "portfolio_pct": 4.1,
+          "quarter_change_pct": 17.16,
+          "shares_change": 545765
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2246110,
+          "value_usd": 441061416,
+          "portfolio_pct": 3.4,
+          "quarter_change_pct": -11.35,
+          "shares_change": -255025
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2438742,
+          "value_usd": 637568226,
+          "portfolio_pct": 1.35,
+          "quarter_change_pct": 6.71,
+          "shares_change": 163708
+        }
+      ],
+      "total_institutional_shares": 56184738,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "SCHG": {
+      "ticker": "SCHG",
+      "cusip": "80810D105",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 5851462,
+          "value_usd": 2356747948,
+          "portfolio_pct": 1.1,
+          "quarter_change_pct": -7.33,
+          "shares_change": -428955
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 5630137,
+          "value_usd": 2448536911,
+          "portfolio_pct": 2.97,
+          "quarter_change_pct": 22.35,
+          "shares_change": 1258310
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 5372311,
+          "value_usd": 1694688255,
+          "portfolio_pct": 0.11,
+          "quarter_change_pct": 12.94,
+          "shares_change": 695331
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 4894123,
+          "value_usd": 1945968074,
+          "portfolio_pct": 2.12,
+          "quarter_change_pct": -3.7,
+          "shares_change": -180986
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4629925,
+          "value_usd": 1742779570,
+          "portfolio_pct": 2.39,
+          "quarter_change_pct": 15.68,
+          "shares_change": 725948
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 4505530,
+          "value_usd": 1199523073,
+          "portfolio_pct": 2.0,
+          "quarter_change_pct": 2.62,
+          "shares_change": 117952
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3273663,
+          "value_usd": 1408671036,
+          "portfolio_pct": 3.99,
+          "quarter_change_pct": -11.07,
+          "shares_change": -362428
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3291508,
+          "value_usd": 1019180508,
+          "portfolio_pct": 4.77,
+          "quarter_change_pct": -4.86,
+          "shares_change": -159850
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3743333,
+          "value_usd": 1306044768,
+          "portfolio_pct": 4.32,
+          "quarter_change_pct": 15.15,
+          "shares_change": 567021
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 2836141,
+          "value_usd": 538091613,
+          "portfolio_pct": 4.37,
+          "quarter_change_pct": 14.14,
+          "shares_change": 401014
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 2800366,
+          "value_usd": 837249003,
+          "portfolio_pct": 3.16,
+          "quarter_change_pct": 5.08,
+          "shares_change": 142371
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 2595805,
+          "value_usd": 1128606852,
+          "portfolio_pct": 0.23,
+          "quarter_change_pct": 21.24,
+          "shares_change": 551374
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2937262,
+          "value_usd": 691200587,
+          "portfolio_pct": 0.99,
+          "quarter_change_pct": -9.08,
+          "shares_change": -266715
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 3074659,
+          "value_usd": 359623738,
+          "portfolio_pct": 2.12,
+          "quarter_change_pct": 17.98,
+          "shares_change": 552868
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2320158,
+          "value_usd": 280277560,
+          "portfolio_pct": 2.97,
+          "quarter_change_pct": 12.55,
+          "shares_change": 291180
+        }
+      ],
+      "total_institutional_shares": 57756383,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "IVW": {
+      "ticker": "IVW",
+      "error": "CUSIP not found",
+      "top_holders": [],
+      "total_shares_held": 0,
+      "institutional_ownership_pct": 0
+    },
+    "IWF": {
+      "ticker": "IWF",
+      "error": "CUSIP not found",
+      "top_holders": [],
+      "total_shares_held": 0,
+      "institutional_ownership_pct": 0
+    },
+    "VTV": {
+      "ticker": "VTV",
+      "cusip": "922908850",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4242273,
+          "value_usd": 1444985411,
+          "portfolio_pct": 0.26,
+          "quarter_change_pct": -5.85,
+          "shares_change": -248279
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 5653524,
+          "value_usd": 1276614985,
+          "portfolio_pct": 1.06,
+          "quarter_change_pct": 0.96,
+          "shares_change": 54127
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4826235,
+          "value_usd": 1585883920,
+          "portfolio_pct": 1.97,
+          "quarter_change_pct": 10.63,
+          "shares_change": 512880
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 4833018,
+          "value_usd": 1168966777,
+          "portfolio_pct": 2.22,
+          "quarter_change_pct": 3.6,
+          "shares_change": 174073
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3721698,
+          "value_usd": 1321735938,
+          "portfolio_pct": 1.25,
+          "quarter_change_pct": -13.04,
+          "shares_change": -485455
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 3426140,
+          "value_usd": 1243581957,
+          "portfolio_pct": 2.66,
+          "quarter_change_pct": 15.36,
+          "shares_change": 526175
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3489932,
+          "value_usd": 1697651497,
+          "portfolio_pct": 4.44,
+          "quarter_change_pct": -9.13,
+          "shares_change": -318795
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3027280,
+          "value_usd": 1083548355,
+          "portfolio_pct": 4.64,
+          "quarter_change_pct": 22.26,
+          "shares_change": 673761
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3237458,
+          "value_usd": 1426481112,
+          "portfolio_pct": 3.96,
+          "quarter_change_pct": 0.12,
+          "shares_change": 4017
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 2864374,
+          "value_usd": 1426265485,
+          "portfolio_pct": 4.39,
+          "quarter_change_pct": 22.85,
+          "shares_change": 654631
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 3063041,
+          "value_usd": 438029317,
+          "portfolio_pct": 2.02,
+          "quarter_change_pct": -13.66,
+          "shares_change": -418304
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 3076611,
+          "value_usd": 1061799563,
+          "portfolio_pct": 0.77,
+          "quarter_change_pct": 11.79,
+          "shares_change": 362760
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2212773,
+          "value_usd": 623710922,
+          "portfolio_pct": 2.52,
+          "quarter_change_pct": -11.35,
+          "shares_change": -251176
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 3064160,
+          "value_usd": 750488882,
+          "portfolio_pct": 3.57,
+          "quarter_change_pct": 10.4,
+          "shares_change": 318651
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2183968,
+          "value_usd": 1091555056,
+          "portfolio_pct": 1.07,
+          "quarter_change_pct": 12.21,
+          "shares_change": 266707
+        }
+      ],
+      "total_institutional_shares": 52922485,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "SCHV": {
+      "ticker": "SCHV",
+      "cusip": "80810D204",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 5121879,
+          "value_usd": 755527445,
+          "portfolio_pct": 1.23,
+          "quarter_change_pct": -3.57,
+          "shares_change": -183001
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4209610,
+          "value_usd": 1645669481,
+          "portfolio_pct": 3.29,
+          "quarter_change_pct": 21.54,
+          "shares_change": 906742
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4478674,
+          "value_usd": 1813807319,
+          "portfolio_pct": 2.06,
+          "quarter_change_pct": -14.78,
+          "shares_change": -661911
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 3625709,
+          "value_usd": 371705868,
+          "portfolio_pct": 0.12,
+          "quarter_change_pct": 11.08,
+          "shares_change": 401887
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4614132,
+          "value_usd": 1829506865,
+          "portfolio_pct": 2.54,
+          "quarter_change_pct": 16.64,
+          "shares_change": 768016
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 4316678,
+          "value_usd": 1772818425,
+          "portfolio_pct": 3.92,
+          "quarter_change_pct": -11.75,
+          "shares_change": -507250
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4330405,
+          "value_usd": 696070695,
+          "portfolio_pct": 3.84,
+          "quarter_change_pct": 11.17,
+          "shares_change": 483894
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3913984,
+          "value_usd": 724198421,
+          "portfolio_pct": 0.65,
+          "quarter_change_pct": 21.87,
+          "shares_change": 856036
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3512347,
+          "value_usd": 868779241,
+          "portfolio_pct": 0.56,
+          "quarter_change_pct": -0.15,
+          "shares_change": -5093
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 3019731,
+          "value_usd": 549965850,
+          "portfolio_pct": 4.59,
+          "quarter_change_pct": -14.8,
+          "shares_change": -446817
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 2670358,
+          "value_usd": 403996742,
+          "portfolio_pct": 2.02,
+          "quarter_change_pct": -11.13,
+          "shares_change": -297291
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 3380962,
+          "value_usd": 945041898,
+          "portfolio_pct": 3.55,
+          "quarter_change_pct": -14.22,
+          "shares_change": -480690
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2864548,
+          "value_usd": 497969408,
+          "portfolio_pct": 2.1,
+          "quarter_change_pct": 5.19,
+          "shares_change": 148623
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2930239,
+          "value_usd": 1240920989,
+          "portfolio_pct": 4.07,
+          "quarter_change_pct": 4.66,
+          "shares_change": 136633
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2523048,
+          "value_usd": 595774300,
+          "portfolio_pct": 2.91,
+          "quarter_change_pct": 19.62,
+          "shares_change": 494929
+        }
+      ],
+      "total_institutional_shares": 55512304,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "IVE": {
+      "ticker": "IVE",
+      "error": "CUSIP not found",
+      "top_holders": [],
+      "total_shares_held": 0,
+      "institutional_ownership_pct": 0
+    },
+    "AVUV": {
+      "ticker": "AVUV",
+      "error": "CUSIP not found",
+      "top_holders": [],
+      "total_shares_held": 0,
+      "institutional_ownership_pct": 0
+    },
+    "AVDV": {
+      "ticker": "AVDV",
+      "error": "CUSIP not found",
+      "top_holders": [],
+      "total_shares_held": 0,
+      "institutional_ownership_pct": 0
+    },
+    "VB": {
+      "ticker": "VB",
+      "cusip": "922908736",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4682625,
+          "value_usd": 679576618,
+          "portfolio_pct": 0.76,
+          "quarter_change_pct": 3.69,
+          "shares_change": 172894
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4479099,
+          "value_usd": 746031876,
+          "portfolio_pct": 4.32,
+          "quarter_change_pct": 16.02,
+          "shares_change": 717771
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 5299848,
+          "value_usd": 1048471668,
+          "portfolio_pct": 4.24,
+          "quarter_change_pct": 12.18,
+          "shares_change": 645352
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 4510091,
+          "value_usd": 2163751211,
+          "portfolio_pct": 1.01,
+          "quarter_change_pct": 23.23,
+          "shares_change": 1047914
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4229549,
+          "value_usd": 959322474,
+          "portfolio_pct": 2.49,
+          "quarter_change_pct": -8.79,
+          "shares_change": -371795
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 4517233,
+          "value_usd": 947772517,
+          "portfolio_pct": 0.39,
+          "quarter_change_pct": 2.37,
+          "shares_change": 106890
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3672890,
+          "value_usd": 1810690917,
+          "portfolio_pct": 3.56,
+          "quarter_change_pct": -8.68,
+          "shares_change": -318987
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3814129,
+          "value_usd": 1852292850,
+          "portfolio_pct": 3.32,
+          "quarter_change_pct": -1.98,
+          "shares_change": -75449
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3013490,
+          "value_usd": 350771802,
+          "portfolio_pct": 0.73,
+          "quarter_change_pct": 22.12,
+          "shares_change": 666657
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 3031206,
+          "value_usd": 423530203,
+          "portfolio_pct": 1.31,
+          "quarter_change_pct": 3.85,
+          "shares_change": 116697
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 2969646,
+          "value_usd": 1232364400,
+          "portfolio_pct": 4.61,
+          "quarter_change_pct": 8.48,
+          "shares_change": 251762
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 2519123,
+          "value_usd": 600661733,
+          "portfolio_pct": 3.75,
+          "quarter_change_pct": -4.26,
+          "shares_change": -107256
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2291060,
+          "value_usd": 826968500,
+          "portfolio_pct": 3.71,
+          "quarter_change_pct": 5.12,
+          "shares_change": 117383
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2840502,
+          "value_usd": 421026328,
+          "portfolio_pct": 0.99,
+          "quarter_change_pct": 24.98,
+          "shares_change": 709675
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2087510,
+          "value_usd": 1002633137,
+          "portfolio_pct": 3.11,
+          "quarter_change_pct": -12.27,
+          "shares_change": -256236
+        }
+      ],
+      "total_institutional_shares": 53958001,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "IJR": {
+      "ticker": "IJR",
+      "error": "CUSIP not found",
+      "top_holders": [],
+      "total_shares_held": 0,
+      "institutional_ownership_pct": 0
+    },
+    "IWM": {
+      "ticker": "IWM",
+      "cusip": "464287655",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4911875,
+          "value_usd": 888690326,
+          "portfolio_pct": 0.69,
+          "quarter_change_pct": 1.95,
+          "shares_change": 95858
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3921910,
+          "value_usd": 1821533222,
+          "portfolio_pct": 3.03,
+          "quarter_change_pct": 15.28,
+          "shares_change": 599217
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 5020561,
+          "value_usd": 1012549186,
+          "portfolio_pct": 4.67,
+          "quarter_change_pct": 8.11,
+          "shares_change": 407203
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 4605435,
+          "value_usd": 1949173384,
+          "portfolio_pct": 0.69,
+          "quarter_change_pct": 15.89,
+          "shares_change": 731932
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4834252,
+          "value_usd": 628685879,
+          "portfolio_pct": 0.36,
+          "quarter_change_pct": -3.34,
+          "shares_change": -161269
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 3263001,
+          "value_usd": 1071976238,
+          "portfolio_pct": 3.95,
+          "quarter_change_pct": -13.17,
+          "shares_change": -429611
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3375875,
+          "value_usd": 636650679,
+          "portfolio_pct": 4.4,
+          "quarter_change_pct": 24.11,
+          "shares_change": 813937
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3247647,
+          "value_usd": 1208175149,
+          "portfolio_pct": 3.39,
+          "quarter_change_pct": -10.3,
+          "shares_change": -334596
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3261787,
+          "value_usd": 373068098,
+          "portfolio_pct": 1.25,
+          "quarter_change_pct": -5.84,
+          "shares_change": -190460
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 3295603,
+          "value_usd": 1475497338,
+          "portfolio_pct": 1.01,
+          "quarter_change_pct": 21.37,
+          "shares_change": 704431
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 3470046,
+          "value_usd": 604014433,
+          "portfolio_pct": 1.3,
+          "quarter_change_pct": -11.97,
+          "shares_change": -415346
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 2843480,
+          "value_usd": 1075379768,
+          "portfolio_pct": 1.22,
+          "quarter_change_pct": 10.37,
+          "shares_change": 294862
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2400969,
+          "value_usd": 535436449,
+          "portfolio_pct": 1.04,
+          "quarter_change_pct": -7.65,
+          "shares_change": -183644
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2595081,
+          "value_usd": 852256711,
+          "portfolio_pct": 2.99,
+          "quarter_change_pct": 7.02,
+          "shares_change": 182195
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 1996670,
+          "value_usd": 868816731,
+          "portfolio_pct": 1.61,
+          "quarter_change_pct": -1.57,
+          "shares_change": -31307
+        }
+      ],
+      "total_institutional_shares": 53044192,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "SIZE": {
+      "ticker": "SIZE",
+      "error": "CUSIP not found",
+      "top_holders": [],
+      "total_shares_held": 0,
+      "institutional_ownership_pct": 0
+    },
+    "MTUM": {
+      "ticker": "MTUM",
+      "cusip": "464286731",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 5918815,
+          "value_usd": 2661942619,
+          "portfolio_pct": 0.78,
+          "quarter_change_pct": 1.29,
+          "shares_change": 76448
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4760825,
+          "value_usd": 597293052,
+          "portfolio_pct": 4.0,
+          "quarter_change_pct": -11.17,
+          "shares_change": -531592
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4568147,
+          "value_usd": 1327299986,
+          "portfolio_pct": 0.52,
+          "quarter_change_pct": 20.69,
+          "shares_change": 945074
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 4772323,
+          "value_usd": 1922043207,
+          "portfolio_pct": 0.87,
+          "quarter_change_pct": 13.19,
+          "shares_change": 629522
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3661531,
+          "value_usd": 596588805,
+          "portfolio_pct": 4.18,
+          "quarter_change_pct": 5.31,
+          "shares_change": 194596
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 4601670,
+          "value_usd": 1823676981,
+          "portfolio_pct": 3.89,
+          "quarter_change_pct": -14.96,
+          "shares_change": -688234
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3852199,
+          "value_usd": 1649437623,
+          "portfolio_pct": 3.66,
+          "quarter_change_pct": 2.21,
+          "shares_change": 85151
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 4145761,
+          "value_usd": 810702598,
+          "portfolio_pct": 0.79,
+          "quarter_change_pct": 13.61,
+          "shares_change": 564237
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3413162,
+          "value_usd": 1366226870,
+          "portfolio_pct": 3.05,
+          "quarter_change_pct": 3.64,
+          "shares_change": 124307
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 3067216,
+          "value_usd": 548233815,
+          "portfolio_pct": 0.31,
+          "quarter_change_pct": -1.64,
+          "shares_change": -50388
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 3552182,
+          "value_usd": 1687854402,
+          "portfolio_pct": 2.51,
+          "quarter_change_pct": -1.92,
+          "shares_change": -68183
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 2801907,
+          "value_usd": 602289878,
+          "portfolio_pct": 1.38,
+          "quarter_change_pct": -8.33,
+          "shares_change": -233284
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2588520,
+          "value_usd": 1120771690,
+          "portfolio_pct": 4.32,
+          "quarter_change_pct": 19.38,
+          "shares_change": 501569
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2305011,
+          "value_usd": 801750360,
+          "portfolio_pct": 2.85,
+          "quarter_change_pct": -10.23,
+          "shares_change": -235849
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2907395,
+          "value_usd": 400019452,
+          "portfolio_pct": 3.83,
+          "quarter_change_pct": 13.34,
+          "shares_change": 387975
+        }
+      ],
+      "total_institutional_shares": 56916664,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "IMOM": {
+      "ticker": "IMOM",
+      "error": "CUSIP not found",
+      "top_holders": [],
+      "total_shares_held": 0,
+      "institutional_ownership_pct": 0
+    },
+    "QUAL": {
+      "ticker": "QUAL",
+      "cusip": "464286822",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4999399,
+          "value_usd": 2315302081,
+          "portfolio_pct": 3.4,
+          "quarter_change_pct": 10.02,
+          "shares_change": 501006
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4206543,
+          "value_usd": 1490712147,
+          "portfolio_pct": 2.17,
+          "quarter_change_pct": 23.42,
+          "shares_change": 985306
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4687842,
+          "value_usd": 1716955539,
+          "portfolio_pct": 2.2,
+          "quarter_change_pct": -7.62,
+          "shares_change": -357120
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 4389586,
+          "value_usd": 1197703031,
+          "portfolio_pct": 0.12,
+          "quarter_change_pct": 7.98,
+          "shares_change": 350239
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3490294,
+          "value_usd": 905576253,
+          "portfolio_pct": 2.28,
+          "quarter_change_pct": -13.56,
+          "shares_change": -473214
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 4572813,
+          "value_usd": 562951928,
+          "portfolio_pct": 4.78,
+          "quarter_change_pct": 12.55,
+          "shares_change": 573812
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3544849,
+          "value_usd": 1141468694,
+          "portfolio_pct": 3.73,
+          "quarter_change_pct": 2.19,
+          "shares_change": 77748
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3772532,
+          "value_usd": 732404229,
+          "portfolio_pct": 1.45,
+          "quarter_change_pct": -14.09,
+          "shares_change": -531623
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3007758,
+          "value_usd": 560963504,
+          "portfolio_pct": 4.34,
+          "quarter_change_pct": 18.02,
+          "shares_change": 542118
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 3071552,
+          "value_usd": 1503403712,
+          "portfolio_pct": 0.95,
+          "quarter_change_pct": -0.15,
+          "shares_change": -4697
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 3056340,
+          "value_usd": 829359352,
+          "portfolio_pct": 4.41,
+          "quarter_change_pct": 2.72,
+          "shares_change": 82998
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 3371100,
+          "value_usd": 1022130860,
+          "portfolio_pct": 2.33,
+          "quarter_change_pct": 12.59,
+          "shares_change": 424465
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2857022,
+          "value_usd": 488916868,
+          "portfolio_pct": 4.44,
+          "quarter_change_pct": 14.03,
+          "shares_change": 400804
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2372946,
+          "value_usd": 587535551,
+          "portfolio_pct": 1.26,
+          "quarter_change_pct": -1.89,
+          "shares_change": -44900
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2711393,
+          "value_usd": 1047339459,
+          "portfolio_pct": 0.86,
+          "quarter_change_pct": -3.92,
+          "shares_change": -106247
+        }
+      ],
+      "total_institutional_shares": 54111969,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "USMV": {
+      "ticker": "USMV",
+      "cusip": "464286590",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4031760,
+          "value_usd": 827329927,
+          "portfolio_pct": 1.52,
+          "quarter_change_pct": 8.46,
+          "shares_change": 340944
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3874883,
+          "value_usd": 559048895,
+          "portfolio_pct": 0.42,
+          "quarter_change_pct": 19.52,
+          "shares_change": 756389
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4153632,
+          "value_usd": 1654165801,
+          "portfolio_pct": 2.87,
+          "quarter_change_pct": 17.95,
+          "shares_change": 745667
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 4844022,
+          "value_usd": 2040316398,
+          "portfolio_pct": 4.6,
+          "quarter_change_pct": 2.47,
+          "shares_change": 119867
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3856823,
+          "value_usd": 1872130084,
+          "portfolio_pct": 2.66,
+          "quarter_change_pct": 15.18,
+          "shares_change": 585428
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 4110760,
+          "value_usd": 702323947,
+          "portfolio_pct": 3.58,
+          "quarter_change_pct": 22.59,
+          "shares_change": 928640
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 2982495,
+          "value_usd": 508281172,
+          "portfolio_pct": 0.99,
+          "quarter_change_pct": 16.28,
+          "shares_change": 485515
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 2984354,
+          "value_usd": 1450077231,
+          "portfolio_pct": 4.3,
+          "quarter_change_pct": -10.23,
+          "shares_change": -305178
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 2685698,
+          "value_usd": 305236351,
+          "portfolio_pct": 1.52,
+          "quarter_change_pct": 1.58,
+          "shares_change": 42325
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 2786921,
+          "value_usd": 1296320436,
+          "portfolio_pct": 1.86,
+          "quarter_change_pct": 6.33,
+          "shares_change": 176417
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 2603153,
+          "value_usd": 438893464,
+          "portfolio_pct": 1.84,
+          "quarter_change_pct": -0.05,
+          "shares_change": -1221
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 2678095,
+          "value_usd": 568346327,
+          "portfolio_pct": 3.42,
+          "quarter_change_pct": 18.38,
+          "shares_change": 492153
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2276572,
+          "value_usd": 1032289868,
+          "portfolio_pct": 2.05,
+          "quarter_change_pct": -5.83,
+          "shares_change": -132680
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2936611,
+          "value_usd": 680625340,
+          "portfolio_pct": 4.63,
+          "quarter_change_pct": 8.51,
+          "shares_change": 249984
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2202708,
+          "value_usd": 475249001,
+          "portfolio_pct": 0.93,
+          "quarter_change_pct": -14.31,
+          "shares_change": -315213
+        }
+      ],
+      "total_institutional_shares": 49008487,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "SCHD": {
+      "ticker": "SCHD",
+      "cusip": "80810D501",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4691497,
+          "value_usd": 1228833812,
+          "portfolio_pct": 1.8,
+          "quarter_change_pct": -2.08,
+          "shares_change": -97512
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 5376197,
+          "value_usd": 1273579829,
+          "portfolio_pct": 1.57,
+          "quarter_change_pct": 12.21,
+          "shares_change": 656289
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4089806,
+          "value_usd": 1538527306,
+          "portfolio_pct": 3.26,
+          "quarter_change_pct": 9.51,
+          "shares_change": 388968
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 3913363,
+          "value_usd": 1901549624,
+          "portfolio_pct": 2.96,
+          "quarter_change_pct": 19.36,
+          "shares_change": 757702
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3721381,
+          "value_usd": 1136108079,
+          "portfolio_pct": 1.86,
+          "quarter_change_pct": 2.98,
+          "shares_change": 110996
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 4112340,
+          "value_usd": 715344329,
+          "portfolio_pct": 2.83,
+          "quarter_change_pct": 10.96,
+          "shares_change": 450776
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3570469,
+          "value_usd": 1282791953,
+          "portfolio_pct": 3.82,
+          "quarter_change_pct": 16.84,
+          "shares_change": 601246
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3460807,
+          "value_usd": 1699513339,
+          "portfolio_pct": 4.11,
+          "quarter_change_pct": 3.92,
+          "shares_change": 135727
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 2977636,
+          "value_usd": 837729653,
+          "portfolio_pct": 4.72,
+          "quarter_change_pct": 2.79,
+          "shares_change": 82983
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 2773237,
+          "value_usd": 1379948534,
+          "portfolio_pct": 0.23,
+          "quarter_change_pct": -0.55,
+          "shares_change": -15248
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 3529676,
+          "value_usd": 1186477910,
+          "portfolio_pct": 3.07,
+          "quarter_change_pct": 20.7,
+          "shares_change": 730482
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 2731877,
+          "value_usd": 806515176,
+          "portfolio_pct": 3.4,
+          "quarter_change_pct": 19.62,
+          "shares_change": 535952
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2168201,
+          "value_usd": 237117309,
+          "portfolio_pct": 3.09,
+          "quarter_change_pct": 1.88,
+          "shares_change": 40855
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2573158,
+          "value_usd": 447555702,
+          "portfolio_pct": 0.98,
+          "quarter_change_pct": 9.78,
+          "shares_change": 251594
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2031077,
+          "value_usd": 316625917,
+          "portfolio_pct": 3.95,
+          "quarter_change_pct": -3.29,
+          "shares_change": -66877
+        }
+      ],
+      "total_institutional_shares": 51720722,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "VYM": {
+      "ticker": "VYM",
+      "cusip": "922908769",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 5609086,
+          "value_usd": 630491418,
+          "portfolio_pct": 2.04,
+          "quarter_change_pct": 4.64,
+          "shares_change": 260401
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4916938,
+          "value_usd": 2056606020,
+          "portfolio_pct": 0.29,
+          "quarter_change_pct": 12.67,
+          "shares_change": 623167
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4905780,
+          "value_usd": 1302299419,
+          "portfolio_pct": 2.3,
+          "quarter_change_pct": 10.41,
+          "shares_change": 510531
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 4501263,
+          "value_usd": 463603266,
+          "portfolio_pct": 0.72,
+          "quarter_change_pct": -4.04,
+          "shares_change": -181792
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3644388,
+          "value_usd": 1454270238,
+          "portfolio_pct": 2.54,
+          "quarter_change_pct": 0.23,
+          "shares_change": 8299
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 3107196,
+          "value_usd": 975558989,
+          "portfolio_pct": 1.6,
+          "quarter_change_pct": 20.36,
+          "shares_change": 632507
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3258626,
+          "value_usd": 1523420325,
+          "portfolio_pct": 1.41,
+          "quarter_change_pct": -5.03,
+          "shares_change": -163965
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3611607,
+          "value_usd": 1018695220,
+          "portfolio_pct": 2.52,
+          "quarter_change_pct": -2.46,
+          "shares_change": -88860
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3404880,
+          "value_usd": 494011011,
+          "portfolio_pct": 2.18,
+          "quarter_change_pct": -12.75,
+          "shares_change": -433971
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 3452669,
+          "value_usd": 701119330,
+          "portfolio_pct": 0.25,
+          "quarter_change_pct": -13.12,
+          "shares_change": -452900
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 2593045,
+          "value_usd": 944000267,
+          "portfolio_pct": 1.69,
+          "quarter_change_pct": 15.38,
+          "shares_change": 398717
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 3237684,
+          "value_usd": 1079691655,
+          "portfolio_pct": 0.22,
+          "quarter_change_pct": -5.09,
+          "shares_change": -164652
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2639411,
+          "value_usd": 1052264433,
+          "portfolio_pct": 1.94,
+          "quarter_change_pct": -2.31,
+          "shares_change": -61063
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2197398,
+          "value_usd": 449006641,
+          "portfolio_pct": 3.93,
+          "quarter_change_pct": -14.58,
+          "shares_change": -320432
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 1961383,
+          "value_usd": 709100150,
+          "portfolio_pct": 2.97,
+          "quarter_change_pct": -6.63,
+          "shares_change": -130130
+        }
+      ],
+      "total_institutional_shares": 53041354,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "VYMI": {
+      "ticker": "VYMI",
+      "error": "CUSIP not found",
+      "top_holders": [],
+      "total_shares_held": 0,
+      "institutional_ownership_pct": 0
+    },
+    "HDV": {
+      "ticker": "HDV",
+      "error": "CUSIP not found",
+      "top_holders": [],
+      "total_shares_held": 0,
+      "institutional_ownership_pct": 0
+    },
+    "VXUS": {
+      "ticker": "VXUS",
+      "cusip": "92203J407",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4696154,
+          "value_usd": 2098347836,
+          "portfolio_pct": 1.91,
+          "quarter_change_pct": -5.68,
+          "shares_change": -266681
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4118046,
+          "value_usd": 1082234571,
+          "portfolio_pct": 2.31,
+          "quarter_change_pct": -7.5,
+          "shares_change": -308978
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 5185064,
+          "value_usd": 1144855735,
+          "portfolio_pct": 3.92,
+          "quarter_change_pct": 14.42,
+          "shares_change": 747883
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 4752225,
+          "value_usd": 1130648759,
+          "portfolio_pct": 2.4,
+          "quarter_change_pct": 7.51,
+          "shares_change": 357022
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3500461,
+          "value_usd": 535966334,
+          "portfolio_pct": 0.97,
+          "quarter_change_pct": 23.72,
+          "shares_change": 830256
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 4005323,
+          "value_usd": 1260195550,
+          "portfolio_pct": 4.77,
+          "quarter_change_pct": 2.5,
+          "shares_change": 100303
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4335106,
+          "value_usd": 467010038,
+          "portfolio_pct": 1.95,
+          "quarter_change_pct": 23.33,
+          "shares_change": 1011495
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3336527,
+          "value_usd": 861321485,
+          "portfolio_pct": 4.72,
+          "quarter_change_pct": 11.23,
+          "shares_change": 374550
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3227969,
+          "value_usd": 1068377277,
+          "portfolio_pct": 4.26,
+          "quarter_change_pct": 9.85,
+          "shares_change": 318070
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 3078694,
+          "value_usd": 356177514,
+          "portfolio_pct": 3.08,
+          "quarter_change_pct": 3.55,
+          "shares_change": 109211
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 2462529,
+          "value_usd": 825242665,
+          "portfolio_pct": 4.88,
+          "quarter_change_pct": 17.96,
+          "shares_change": 442377
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 3044662,
+          "value_usd": 379514018,
+          "portfolio_pct": 3.79,
+          "quarter_change_pct": 8.24,
+          "shares_change": 250793
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 3151941,
+          "value_usd": 1281885664,
+          "portfolio_pct": 2.19,
+          "quarter_change_pct": 0.57,
+          "shares_change": 18056
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 3019983,
+          "value_usd": 1500114244,
+          "portfolio_pct": 3.88,
+          "quarter_change_pct": 3.35,
+          "shares_change": 101221
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2840689,
+          "value_usd": 1330997403,
+          "portfolio_pct": 3.18,
+          "quarter_change_pct": -5.6,
+          "shares_change": -159194
+        }
+      ],
+      "total_institutional_shares": 54755373,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "VEU": {
+      "ticker": "VEU",
+      "error": "CUSIP not found",
+      "top_holders": [],
+      "total_shares_held": 0,
+      "institutional_ownership_pct": 0
+    },
+    "VEA": {
+      "ticker": "VEA",
+      "cusip": "921909763",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4257456,
+          "value_usd": 1529942093,
+          "portfolio_pct": 3.08,
+          "quarter_change_pct": -3.67,
+          "shares_change": -156246
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4110706,
+          "value_usd": 1427411901,
+          "portfolio_pct": 1.6,
+          "quarter_change_pct": -13.88,
+          "shares_change": -570476
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 5399728,
+          "value_usd": 2023990018,
+          "portfolio_pct": 4.94,
+          "quarter_change_pct": 2.81,
+          "shares_change": 151760
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 3772117,
+          "value_usd": 1612791690,
+          "portfolio_pct": 4.73,
+          "quarter_change_pct": -9.14,
+          "shares_change": -344932
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4414560,
+          "value_usd": 906846207,
+          "portfolio_pct": 4.13,
+          "quarter_change_pct": 9.83,
+          "shares_change": 433768
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 3347913,
+          "value_usd": 661701723,
+          "portfolio_pct": 2.33,
+          "quarter_change_pct": 21.01,
+          "shares_change": 703441
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3111334,
+          "value_usd": 1420657368,
+          "portfolio_pct": 2.95,
+          "quarter_change_pct": 17.24,
+          "shares_change": 536459
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3071996,
+          "value_usd": 611135455,
+          "portfolio_pct": 3.32,
+          "quarter_change_pct": 5.69,
+          "shares_change": 174746
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3876032,
+          "value_usd": 1788395582,
+          "portfolio_pct": 2.76,
+          "quarter_change_pct": 16.49,
+          "shares_change": 639103
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 3536350,
+          "value_usd": 647847154,
+          "portfolio_pct": 2.43,
+          "quarter_change_pct": 19.74,
+          "shares_change": 698017
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 3587599,
+          "value_usd": 598389380,
+          "portfolio_pct": 3.37,
+          "quarter_change_pct": -6.6,
+          "shares_change": -236813
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 3276442,
+          "value_usd": 1113869100,
+          "portfolio_pct": 2.08,
+          "quarter_change_pct": 14.41,
+          "shares_change": 472112
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2547138,
+          "value_usd": 501673720,
+          "portfolio_pct": 4.16,
+          "quarter_change_pct": -7.32,
+          "shares_change": -186569
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2952984,
+          "value_usd": 1443755872,
+          "portfolio_pct": 4.19,
+          "quarter_change_pct": 23.57,
+          "shares_change": 696089
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2249309,
+          "value_usd": 970321069,
+          "portfolio_pct": 4.07,
+          "quarter_change_pct": 20.22,
+          "shares_change": 454816
+        }
+      ],
+      "total_institutional_shares": 53511664,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "VGK": {
+      "ticker": "VGK",
+      "error": "CUSIP not found",
+      "top_holders": [],
+      "total_shares_held": 0,
+      "institutional_ownership_pct": 0
+    },
+    "VWO": {
+      "ticker": "VWO",
+      "cusip": "922042858",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4553267,
+          "value_usd": 1948053479,
+          "portfolio_pct": 4.81,
+          "quarter_change_pct": 23.12,
+          "shares_change": 1052926
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3820945,
+          "value_usd": 1608172638,
+          "portfolio_pct": 4.97,
+          "quarter_change_pct": 5.05,
+          "shares_change": 193034
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4206078,
+          "value_usd": 1558401548,
+          "portfolio_pct": 2.07,
+          "quarter_change_pct": 20.69,
+          "shares_change": 870039
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 3782986,
+          "value_usd": 1221446412,
+          "portfolio_pct": 1.38,
+          "quarter_change_pct": 12.16,
+          "shares_change": 460047
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4167367,
+          "value_usd": 2055980774,
+          "portfolio_pct": 1.41,
+          "quarter_change_pct": 22.32,
+          "shares_change": 930070
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 3298167,
+          "value_usd": 476604061,
+          "portfolio_pct": 2.73,
+          "quarter_change_pct": -9.6,
+          "shares_change": -316778
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3532773,
+          "value_usd": 402927292,
+          "portfolio_pct": 3.2,
+          "quarter_change_pct": 5.01,
+          "shares_change": 177048
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3850761,
+          "value_usd": 1642776774,
+          "portfolio_pct": 2.82,
+          "quarter_change_pct": 14.4,
+          "shares_change": 554322
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3153783,
+          "value_usd": 1176959497,
+          "portfolio_pct": 4.15,
+          "quarter_change_pct": 13.28,
+          "shares_change": 418926
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 3171433,
+          "value_usd": 1000178122,
+          "portfolio_pct": 3.91,
+          "quarter_change_pct": -4.83,
+          "shares_change": -153037
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 2738260,
+          "value_usd": 1221109989,
+          "portfolio_pct": 1.93,
+          "quarter_change_pct": 6.41,
+          "shares_change": 175581
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 2680913,
+          "value_usd": 576961885,
+          "portfolio_pct": 2.98,
+          "quarter_change_pct": 8.95,
+          "shares_change": 239830
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2734104,
+          "value_usd": 502270835,
+          "portfolio_pct": 4.42,
+          "quarter_change_pct": 10.12,
+          "shares_change": 276752
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 3043401,
+          "value_usd": 1403318843,
+          "portfolio_pct": 4.18,
+          "quarter_change_pct": 3.47,
+          "shares_change": 105701
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2119369,
+          "value_usd": 557151188,
+          "portfolio_pct": 1.79,
+          "quarter_change_pct": 20.89,
+          "shares_change": 442696
+        }
+      ],
+      "total_institutional_shares": 50853607,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "IEMG": {
+      "ticker": "IEMG",
+      "error": "CUSIP not found",
+      "top_holders": [],
+      "total_shares_held": 0,
+      "institutional_ownership_pct": 0
+    },
+    "EEM": {
+      "ticker": "EEM",
+      "error": "CUSIP not found",
+      "top_holders": [],
+      "total_shares_held": 0,
+      "institutional_ownership_pct": 0
+    },
+    "VGT": {
+      "ticker": "VGT",
+      "cusip": "92204A819",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4133637,
+          "value_usd": 1798577471,
+          "portfolio_pct": 3.47,
+          "quarter_change_pct": 1.22,
+          "shares_change": 50238
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4167415,
+          "value_usd": 576332905,
+          "portfolio_pct": 4.62,
+          "quarter_change_pct": -4.58,
+          "shares_change": -190763
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3705449,
+          "value_usd": 492619189,
+          "portfolio_pct": 2.65,
+          "quarter_change_pct": -8.68,
+          "shares_change": -321502
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 3956866,
+          "value_usd": 482871417,
+          "portfolio_pct": 4.22,
+          "quarter_change_pct": -5.98,
+          "shares_change": -236633
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3630694,
+          "value_usd": 904191649,
+          "portfolio_pct": 2.65,
+          "quarter_change_pct": 10.54,
+          "shares_change": 382600
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 3732786,
+          "value_usd": 756134669,
+          "portfolio_pct": 1.87,
+          "quarter_change_pct": -3.87,
+          "shares_change": -144339
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3169723,
+          "value_usd": 680618532,
+          "portfolio_pct": 1.27,
+          "quarter_change_pct": 7.72,
+          "shares_change": 244576
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3206956,
+          "value_usd": 738001226,
+          "portfolio_pct": 2.0,
+          "quarter_change_pct": 23.29,
+          "shares_change": 746838
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3021919,
+          "value_usd": 1265361728,
+          "portfolio_pct": 1.37,
+          "quarter_change_pct": -2.14,
+          "shares_change": -64533
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 3183931,
+          "value_usd": 772409597,
+          "portfolio_pct": 4.74,
+          "quarter_change_pct": 5.31,
+          "shares_change": 168978
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 3212561,
+          "value_usd": 1216038533,
+          "portfolio_pct": 2.69,
+          "quarter_change_pct": 11.7,
+          "shares_change": 375768
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 2710639,
+          "value_usd": 1207152705,
+          "portfolio_pct": 2.5,
+          "quarter_change_pct": -8.11,
+          "shares_change": -219947
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2615115,
+          "value_usd": 489224667,
+          "portfolio_pct": 2.56,
+          "quarter_change_pct": -2.37,
+          "shares_change": -62030
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2141646,
+          "value_usd": 430141483,
+          "portfolio_pct": 3.81,
+          "quarter_change_pct": 6.2,
+          "shares_change": 132751
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2812060,
+          "value_usd": 394245690,
+          "portfolio_pct": 3.63,
+          "quarter_change_pct": 21.13,
+          "shares_change": 594143
+        }
+      ],
+      "total_institutional_shares": 49401397,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "XLK": {
+      "ticker": "XLK",
+      "cusip": "81369Y605",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 5327497,
+          "value_usd": 1458162436,
+          "portfolio_pct": 1.6,
+          "quarter_change_pct": 18.18,
+          "shares_change": 968657
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4413232,
+          "value_usd": 789031901,
+          "portfolio_pct": 0.12,
+          "quarter_change_pct": 8.77,
+          "shares_change": 387126
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3786663,
+          "value_usd": 655385986,
+          "portfolio_pct": 1.13,
+          "quarter_change_pct": -1.9,
+          "shares_change": -71763
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 3549430,
+          "value_usd": 457292403,
+          "portfolio_pct": 4.99,
+          "quarter_change_pct": -7.66,
+          "shares_change": -271996
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3638460,
+          "value_usd": 1671835051,
+          "portfolio_pct": 0.12,
+          "quarter_change_pct": 16.41,
+          "shares_change": 596959
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 3928716,
+          "value_usd": 1858694383,
+          "portfolio_pct": 0.39,
+          "quarter_change_pct": 22.93,
+          "shares_change": 900996
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4332133,
+          "value_usd": 1945213587,
+          "portfolio_pct": 1.49,
+          "quarter_change_pct": -9.59,
+          "shares_change": -415310
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3416090,
+          "value_usd": 662890182,
+          "portfolio_pct": 4.48,
+          "quarter_change_pct": -6.59,
+          "shares_change": -225057
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3567049,
+          "value_usd": 1432496869,
+          "portfolio_pct": 1.83,
+          "quarter_change_pct": -5.22,
+          "shares_change": -186225
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 2982692,
+          "value_usd": 833483184,
+          "portfolio_pct": 3.27,
+          "quarter_change_pct": 23.74,
+          "shares_change": 708065
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 2820959,
+          "value_usd": 1067296089,
+          "portfolio_pct": 1.72,
+          "quarter_change_pct": 4.36,
+          "shares_change": 122879
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 2488295,
+          "value_usd": 1196405782,
+          "portfolio_pct": 0.1,
+          "quarter_change_pct": 5.51,
+          "shares_change": 137053
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2519941,
+          "value_usd": 770046166,
+          "portfolio_pct": 4.55,
+          "quarter_change_pct": 3.0,
+          "shares_change": 75573
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2172900,
+          "value_usd": 929169795,
+          "portfolio_pct": 1.82,
+          "quarter_change_pct": -0.2,
+          "shares_change": -4376
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2069560,
+          "value_usd": 482714282,
+          "portfolio_pct": 3.26,
+          "quarter_change_pct": -10.55,
+          "shares_change": -218382
+        }
+      ],
+      "total_institutional_shares": 51013617,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "XLF": {
+      "ticker": "XLF",
+      "cusip": "81369Y803",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4659397,
+          "value_usd": 908192952,
+          "portfolio_pct": 3.28,
+          "quarter_change_pct": -0.41,
+          "shares_change": -18984
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4317336,
+          "value_usd": 970292632,
+          "portfolio_pct": 1.71,
+          "quarter_change_pct": 22.9,
+          "shares_change": 988570
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4986346,
+          "value_usd": 742179027,
+          "portfolio_pct": 2.73,
+          "quarter_change_pct": 13.01,
+          "shares_change": 648930
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 4172548,
+          "value_usd": 1639901829,
+          "portfolio_pct": 3.07,
+          "quarter_change_pct": -3.74,
+          "shares_change": -156143
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4357261,
+          "value_usd": 2073600903,
+          "portfolio_pct": 2.73,
+          "quarter_change_pct": -11.22,
+          "shares_change": -488725
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 3640287,
+          "value_usd": 1277125431,
+          "portfolio_pct": 3.17,
+          "quarter_change_pct": 6.53,
+          "shares_change": 237540
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3774272,
+          "value_usd": 830926936,
+          "portfolio_pct": 3.92,
+          "quarter_change_pct": 19.35,
+          "shares_change": 730291
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3556254,
+          "value_usd": 699934537,
+          "portfolio_pct": 2.9,
+          "quarter_change_pct": -9.16,
+          "shares_change": -325823
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3137306,
+          "value_usd": 1354535334,
+          "portfolio_pct": 3.36,
+          "quarter_change_pct": 9.55,
+          "shares_change": 299532
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 3728112,
+          "value_usd": 1852261944,
+          "portfolio_pct": 4.14,
+          "quarter_change_pct": 1.35,
+          "shares_change": 50497
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 2797122,
+          "value_usd": 1386914104,
+          "portfolio_pct": 2.57,
+          "quarter_change_pct": -12.98,
+          "shares_change": -363097
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 2279864,
+          "value_usd": 475748518,
+          "portfolio_pct": 4.0,
+          "quarter_change_pct": -13.3,
+          "shares_change": -303197
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2522339,
+          "value_usd": 760976249,
+          "portfolio_pct": 3.98,
+          "quarter_change_pct": 2.05,
+          "shares_change": 51700
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2137890,
+          "value_usd": 489601633,
+          "portfolio_pct": 0.25,
+          "quarter_change_pct": -8.57,
+          "shares_change": -183119
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2109403,
+          "value_usd": 701300407,
+          "portfolio_pct": 2.87,
+          "quarter_change_pct": 8.9,
+          "shares_change": 187759
+        }
+      ],
+      "total_institutional_shares": 52175737,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "XLE": {
+      "ticker": "XLE",
+      "cusip": "81369Y704",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 5261442,
+          "value_usd": 774009233,
+          "portfolio_pct": 1.34,
+          "quarter_change_pct": 17.56,
+          "shares_change": 923786
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4431657,
+          "value_usd": 1953270759,
+          "portfolio_pct": 4.55,
+          "quarter_change_pct": -1.3,
+          "shares_change": -57433
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4731463,
+          "value_usd": 1532283751,
+          "portfolio_pct": 2.64,
+          "quarter_change_pct": 4.82,
+          "shares_change": 228172
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 4271581,
+          "value_usd": 821544676,
+          "portfolio_pct": 0.93,
+          "quarter_change_pct": -6.08,
+          "shares_change": -259585
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4191289,
+          "value_usd": 682011467,
+          "portfolio_pct": 0.93,
+          "quarter_change_pct": 9.88,
+          "shares_change": 413963
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 3808086,
+          "value_usd": 1532731878,
+          "portfolio_pct": 1.86,
+          "quarter_change_pct": 1.69,
+          "shares_change": 64484
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3441705,
+          "value_usd": 1195722530,
+          "portfolio_pct": 0.25,
+          "quarter_change_pct": 6.65,
+          "shares_change": 228997
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 2815901,
+          "value_usd": 404035307,
+          "portfolio_pct": 4.77,
+          "quarter_change_pct": -11.3,
+          "shares_change": -318109
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3936429,
+          "value_usd": 1497630956,
+          "portfolio_pct": 1.04,
+          "quarter_change_pct": 14.43,
+          "shares_change": 567927
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 3695812,
+          "value_usd": 1247546321,
+          "portfolio_pct": 0.17,
+          "quarter_change_pct": -1.57,
+          "shares_change": -58064
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 3246952,
+          "value_usd": 1386621701,
+          "portfolio_pct": 2.17,
+          "quarter_change_pct": 10.5,
+          "shares_change": 340945
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 2587486,
+          "value_usd": 758745770,
+          "portfolio_pct": 4.01,
+          "quarter_change_pct": -7.37,
+          "shares_change": -190583
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2393954,
+          "value_usd": 422227213,
+          "portfolio_pct": 0.5,
+          "quarter_change_pct": 17.98,
+          "shares_change": 430415
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2277503,
+          "value_usd": 244273329,
+          "portfolio_pct": 0.36,
+          "quarter_change_pct": -10.8,
+          "shares_change": -246010
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 1981576,
+          "value_usd": 682816862,
+          "portfolio_pct": 3.83,
+          "quarter_change_pct": 13.09,
+          "shares_change": 259323
+        }
+      ],
+      "total_institutional_shares": 53072836,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "XLV": {
+      "ticker": "XLV",
+      "cusip": "81369Y308",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4189485,
+          "value_usd": 1137780223,
+          "portfolio_pct": 3.0,
+          "quarter_change_pct": 12.98,
+          "shares_change": 543908
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 5231817,
+          "value_usd": 2577994535,
+          "portfolio_pct": 2.81,
+          "quarter_change_pct": -7.24,
+          "shares_change": -378815
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4648614,
+          "value_usd": 2003260214,
+          "portfolio_pct": 0.81,
+          "quarter_change_pct": 22.72,
+          "shares_change": 1056081
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 3960124,
+          "value_usd": 471101638,
+          "portfolio_pct": 0.25,
+          "quarter_change_pct": -12.41,
+          "shares_change": -491516
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4666323,
+          "value_usd": 1659286793,
+          "portfolio_pct": 4.41,
+          "quarter_change_pct": 8.78,
+          "shares_change": 409527
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 3118622,
+          "value_usd": 1530168509,
+          "portfolio_pct": 4.73,
+          "quarter_change_pct": 16.06,
+          "shares_change": 500844
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3729784,
+          "value_usd": 1473644249,
+          "portfolio_pct": 4.79,
+          "quarter_change_pct": -3.48,
+          "shares_change": -129932
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3673169,
+          "value_usd": 962593252,
+          "portfolio_pct": 2.39,
+          "quarter_change_pct": 8.33,
+          "shares_change": 305951
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3727450,
+          "value_usd": 1776991597,
+          "portfolio_pct": 2.12,
+          "quarter_change_pct": 7.02,
+          "shares_change": 261657
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 2612398,
+          "value_usd": 426632103,
+          "portfolio_pct": 3.09,
+          "quarter_change_pct": 14.15,
+          "shares_change": 369738
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 2632199,
+          "value_usd": 354429573,
+          "portfolio_pct": 2.36,
+          "quarter_change_pct": -14.45,
+          "shares_change": -380326
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 2429717,
+          "value_usd": 1175676716,
+          "portfolio_pct": 4.82,
+          "quarter_change_pct": 5.73,
+          "shares_change": 139231
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2502442,
+          "value_usd": 935478644,
+          "portfolio_pct": 1.42,
+          "quarter_change_pct": 5.0,
+          "shares_change": 125025
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2126079,
+          "value_usd": 549560986,
+          "portfolio_pct": 0.33,
+          "quarter_change_pct": 17.27,
+          "shares_change": 367113
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2319852,
+          "value_usd": 777196800,
+          "portfolio_pct": 1.55,
+          "quarter_change_pct": 1.95,
+          "shares_change": 45269
+        }
+      ],
+      "total_institutional_shares": 51568075,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "XLI": {
+      "ticker": "XLI",
+      "error": "CUSIP not found",
+      "top_holders": [],
+      "total_shares_held": 0,
+      "institutional_ownership_pct": 0
+    },
+    "VNQ": {
+      "ticker": "VNQ",
+      "cusip": "92204A603",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4301657,
+          "value_usd": 1005243657,
+          "portfolio_pct": 1.1,
+          "quarter_change_pct": 9.25,
+          "shares_change": 397913
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4987654,
+          "value_usd": 1972707222,
+          "portfolio_pct": 0.12,
+          "quarter_change_pct": -11.68,
+          "shares_change": -582769
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4465001,
+          "value_usd": 757556038,
+          "portfolio_pct": 0.25,
+          "quarter_change_pct": -12.61,
+          "shares_change": -563207
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 3437591,
+          "value_usd": 419930185,
+          "portfolio_pct": 3.43,
+          "quarter_change_pct": -5.98,
+          "shares_change": -205414
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4443245,
+          "value_usd": 1050669413,
+          "portfolio_pct": 1.86,
+          "quarter_change_pct": 20.84,
+          "shares_change": 926173
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 4268628,
+          "value_usd": 1001824490,
+          "portfolio_pct": 3.58,
+          "quarter_change_pct": -3.35,
+          "shares_change": -142937
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 2965063,
+          "value_usd": 685362523,
+          "portfolio_pct": 3.73,
+          "quarter_change_pct": 16.93,
+          "shares_change": 501935
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 2908152,
+          "value_usd": 999705194,
+          "portfolio_pct": 4.56,
+          "quarter_change_pct": 20.97,
+          "shares_change": 609971
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3487673,
+          "value_usd": 1219839514,
+          "portfolio_pct": 2.22,
+          "quarter_change_pct": -2.1,
+          "shares_change": -73210
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 3469376,
+          "value_usd": 1145883583,
+          "portfolio_pct": 2.88,
+          "quarter_change_pct": 24.54,
+          "shares_change": 851541
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 3423645,
+          "value_usd": 1216223333,
+          "portfolio_pct": 0.45,
+          "quarter_change_pct": 2.94,
+          "shares_change": 100677
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 2283831,
+          "value_usd": 523662562,
+          "portfolio_pct": 4.68,
+          "quarter_change_pct": 21.65,
+          "shares_change": 494554
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2322771,
+          "value_usd": 918628884,
+          "portfolio_pct": 0.93,
+          "quarter_change_pct": -13.04,
+          "shares_change": -302911
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2687575,
+          "value_usd": 606537774,
+          "portfolio_pct": 0.13,
+          "quarter_change_pct": 4.83,
+          "shares_change": 129939
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2660730,
+          "value_usd": 770507958,
+          "portfolio_pct": 4.46,
+          "quarter_change_pct": 17.69,
+          "shares_change": 470774
+        }
+      ],
+      "total_institutional_shares": 52112592,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "BND": {
+      "ticker": "BND",
+      "cusip": "921937835",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4496792,
+          "value_usd": 2082239463,
+          "portfolio_pct": 2.09,
+          "quarter_change_pct": 2.91,
+          "shares_change": 130898
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4256061,
+          "value_usd": 522801752,
+          "portfolio_pct": 1.13,
+          "quarter_change_pct": 6.84,
+          "shares_change": 291083
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4715681,
+          "value_usd": 1013232351,
+          "portfolio_pct": 3.49,
+          "quarter_change_pct": 23.53,
+          "shares_change": 1109514
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 3810919,
+          "value_usd": 417433241,
+          "portfolio_pct": 4.14,
+          "quarter_change_pct": 14.84,
+          "shares_change": 565730
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3337606,
+          "value_usd": 422980655,
+          "portfolio_pct": 3.22,
+          "quarter_change_pct": -13.79,
+          "shares_change": -460120
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 4016676,
+          "value_usd": 1243840915,
+          "portfolio_pct": 4.81,
+          "quarter_change_pct": -8.77,
+          "shares_change": -352450
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3268963,
+          "value_usd": 1226026083,
+          "portfolio_pct": 4.19,
+          "quarter_change_pct": 4.31,
+          "shares_change": 140764
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3382652,
+          "value_usd": 1631597098,
+          "portfolio_pct": 2.84,
+          "quarter_change_pct": 19.18,
+          "shares_change": 648784
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3146836,
+          "value_usd": 504595432,
+          "portfolio_pct": 4.03,
+          "quarter_change_pct": -14.14,
+          "shares_change": -445088
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 2785153,
+          "value_usd": 448701093,
+          "portfolio_pct": 0.56,
+          "quarter_change_pct": 10.16,
+          "shares_change": 282893
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 3391054,
+          "value_usd": 1641001569,
+          "portfolio_pct": 0.49,
+          "quarter_change_pct": -13.7,
+          "shares_change": -464496
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 2767371,
+          "value_usd": 992716268,
+          "portfolio_pct": 0.44,
+          "quarter_change_pct": -5.42,
+          "shares_change": -149966
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2324548,
+          "value_usd": 686282611,
+          "portfolio_pct": 1.87,
+          "quarter_change_pct": -9.84,
+          "shares_change": -228763
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2813442,
+          "value_usd": 777827434,
+          "portfolio_pct": 3.99,
+          "quarter_change_pct": 15.47,
+          "shares_change": 435328
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2389816,
+          "value_usd": 508305157,
+          "portfolio_pct": 4.58,
+          "quarter_change_pct": 16.67,
+          "shares_change": 398413
+        }
+      ],
+      "total_institutional_shares": 50903570,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "BNDX": {
+      "ticker": "BNDX",
+      "error": "CUSIP not found",
+      "top_holders": [],
+      "total_shares_held": 0,
+      "institutional_ownership_pct": 0
+    },
+    "AGG": {
+      "ticker": "AGG",
+      "cusip": "464287200",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4865366,
+          "value_usd": 880993935,
+          "portfolio_pct": 3.49,
+          "quarter_change_pct": 3.84,
+          "shares_change": 186645
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 5477095,
+          "value_usd": 2553165576,
+          "portfolio_pct": 3.98,
+          "quarter_change_pct": 17.97,
+          "shares_change": 984416
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4695571,
+          "value_usd": 1417628965,
+          "portfolio_pct": 4.19,
+          "quarter_change_pct": 22.0,
+          "shares_change": 1033222
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 5021787,
+          "value_usd": 573643922,
+          "portfolio_pct": 4.71,
+          "quarter_change_pct": -10.43,
+          "shares_change": -523665
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4541885,
+          "value_usd": 2016369201,
+          "portfolio_pct": 2.23,
+          "quarter_change_pct": -7.97,
+          "shares_change": -361948
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 4593387,
+          "value_usd": 2179665903,
+          "portfolio_pct": 4.68,
+          "quarter_change_pct": -14.52,
+          "shares_change": -667134
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3800309,
+          "value_usd": 1899873884,
+          "portfolio_pct": 0.32,
+          "quarter_change_pct": -14.0,
+          "shares_change": -532137
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3220734,
+          "value_usd": 1135947157,
+          "portfolio_pct": 4.91,
+          "quarter_change_pct": 12.22,
+          "shares_change": 393689
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3077450,
+          "value_usd": 733309548,
+          "portfolio_pct": 2.82,
+          "quarter_change_pct": -4.53,
+          "shares_change": -139450
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 3736761,
+          "value_usd": 1321459675,
+          "portfolio_pct": 1.52,
+          "quarter_change_pct": 9.15,
+          "shares_change": 341797
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 3377168,
+          "value_usd": 1361033806,
+          "portfolio_pct": 2.13,
+          "quarter_change_pct": -6.39,
+          "shares_change": -215673
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 3213144,
+          "value_usd": 1594066661,
+          "portfolio_pct": 4.06,
+          "quarter_change_pct": 2.77,
+          "shares_change": 88964
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2326158,
+          "value_usd": 304836519,
+          "portfolio_pct": 3.44,
+          "quarter_change_pct": -5.18,
+          "shares_change": -120565
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2151819,
+          "value_usd": 736649231,
+          "portfolio_pct": 0.41,
+          "quarter_change_pct": 7.53,
+          "shares_change": 162112
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2664439,
+          "value_usd": 288484294,
+          "portfolio_pct": 4.75,
+          "quarter_change_pct": -4.84,
+          "shares_change": -128934
+        }
+      ],
+      "total_institutional_shares": 56763073,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "TLT": {
+      "ticker": "TLT",
+      "cusip": "464287127",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4180708,
+          "value_usd": 1702033788,
+          "portfolio_pct": 0.21,
+          "quarter_change_pct": -5.97,
+          "shares_change": -249784
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 5479370,
+          "value_usd": 2452773956,
+          "portfolio_pct": 2.84,
+          "quarter_change_pct": -5.36,
+          "shares_change": -293594
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4724938,
+          "value_usd": 1809975126,
+          "portfolio_pct": 4.59,
+          "quarter_change_pct": 24.87,
+          "shares_change": 1174861
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 3531577,
+          "value_usd": 684682100,
+          "portfolio_pct": 0.54,
+          "quarter_change_pct": 16.8,
+          "shares_change": 593184
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3933090,
+          "value_usd": 732918722,
+          "portfolio_pct": 4.04,
+          "quarter_change_pct": 2.71,
+          "shares_change": 106729
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 4226630,
+          "value_usd": 1575584317,
+          "portfolio_pct": 1.82,
+          "quarter_change_pct": 15.67,
+          "shares_change": 662164
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3789200,
+          "value_usd": 738971256,
+          "portfolio_pct": 2.33,
+          "quarter_change_pct": 7.63,
+          "shares_change": 289143
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3972754,
+          "value_usd": 1488643849,
+          "portfolio_pct": 2.79,
+          "quarter_change_pct": 18.63,
+          "shares_change": 740272
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3783858,
+          "value_usd": 1591919495,
+          "portfolio_pct": 4.47,
+          "quarter_change_pct": -0.26,
+          "shares_change": -9902
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 3474525,
+          "value_usd": 1342821298,
+          "portfolio_pct": 2.83,
+          "quarter_change_pct": 18.93,
+          "shares_change": 657603
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 2638725,
+          "value_usd": 687976039,
+          "portfolio_pct": 2.06,
+          "quarter_change_pct": -10.67,
+          "shares_change": -281519
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 2913146,
+          "value_usd": 757593291,
+          "portfolio_pct": 1.62,
+          "quarter_change_pct": 0.53,
+          "shares_change": 15483
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 3240724,
+          "value_usd": 827320081,
+          "portfolio_pct": 0.58,
+          "quarter_change_pct": 21.95,
+          "shares_change": 711188
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2419995,
+          "value_usd": 709398404,
+          "portfolio_pct": 3.38,
+          "quarter_change_pct": 11.83,
+          "shares_change": 286332
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2117453,
+          "value_usd": 335943153,
+          "portfolio_pct": 4.16,
+          "quarter_change_pct": -1.51,
+          "shares_change": -31934
+        }
+      ],
+      "total_institutional_shares": 54426693,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "IEF": {
+      "ticker": "IEF",
+      "cusip": "464287200",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 5896625,
+          "value_usd": 633719464,
+          "portfolio_pct": 3.74,
+          "quarter_change_pct": 17.16,
+          "shares_change": 1011892
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 5343747,
+          "value_usd": 1494396875,
+          "portfolio_pct": 1.4,
+          "quarter_change_pct": 3.18,
+          "shares_change": 169821
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4317435,
+          "value_usd": 768165313,
+          "portfolio_pct": 4.58,
+          "quarter_change_pct": 3.64,
+          "shares_change": 157183
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 3533647,
+          "value_usd": 869102442,
+          "portfolio_pct": 1.13,
+          "quarter_change_pct": -4.37,
+          "shares_change": -154326
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3414923,
+          "value_usd": 907912496,
+          "portfolio_pct": 3.19,
+          "quarter_change_pct": -14.79,
+          "shares_change": -505076
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 3483809,
+          "value_usd": 1698409781,
+          "portfolio_pct": 4.9,
+          "quarter_change_pct": 8.06,
+          "shares_change": 280859
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4115313,
+          "value_usd": 2017797841,
+          "portfolio_pct": 0.72,
+          "quarter_change_pct": 20.46,
+          "shares_change": 842044
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 2936227,
+          "value_usd": 332755448,
+          "portfolio_pct": 4.87,
+          "quarter_change_pct": -12.04,
+          "shares_change": -353612
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 2694659,
+          "value_usd": 650656858,
+          "portfolio_pct": 0.63,
+          "quarter_change_pct": 7.04,
+          "shares_change": 189618
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 3415214,
+          "value_usd": 604047486,
+          "portfolio_pct": 0.18,
+          "quarter_change_pct": 22.01,
+          "shares_change": 751596
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 3406174,
+          "value_usd": 1498686220,
+          "portfolio_pct": 1.56,
+          "quarter_change_pct": 0.97,
+          "shares_change": 33150
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 2921207,
+          "value_usd": 1140002273,
+          "portfolio_pct": 2.04,
+          "quarter_change_pct": 24.76,
+          "shares_change": 723386
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2373117,
+          "value_usd": 251683327,
+          "portfolio_pct": 3.99,
+          "quarter_change_pct": 19.97,
+          "shares_change": 474001
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2155752,
+          "value_usd": 417656654,
+          "portfolio_pct": 1.75,
+          "quarter_change_pct": 3.17,
+          "shares_change": 68388
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2126091,
+          "value_usd": 724971570,
+          "portfolio_pct": 2.26,
+          "quarter_change_pct": -2.65,
+          "shares_change": -56372
+        }
+      ],
+      "total_institutional_shares": 52133940,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "TIP": {
+      "ticker": "TIP",
+      "cusip": "464287341",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4696513,
+          "value_usd": 1826633408,
+          "portfolio_pct": 2.41,
+          "quarter_change_pct": -9.26,
+          "shares_change": -434739
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4874742,
+          "value_usd": 2357314062,
+          "portfolio_pct": 2.62,
+          "quarter_change_pct": 17.24,
+          "shares_change": 840607
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 5268702,
+          "value_usd": 1140895971,
+          "portfolio_pct": 0.96,
+          "quarter_change_pct": 1.39,
+          "shares_change": 73299
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 4352107,
+          "value_usd": 920088232,
+          "portfolio_pct": 0.56,
+          "quarter_change_pct": -7.17,
+          "shares_change": -311857
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3534593,
+          "value_usd": 505157755,
+          "portfolio_pct": 0.62,
+          "quarter_change_pct": 1.14,
+          "shares_change": 40219
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 3706765,
+          "value_usd": 1444430907,
+          "portfolio_pct": 0.29,
+          "quarter_change_pct": -13.28,
+          "shares_change": -492326
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3266722,
+          "value_usd": 796087197,
+          "portfolio_pct": 0.89,
+          "quarter_change_pct": 8.63,
+          "shares_change": 281870
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 2855866,
+          "value_usd": 1136982823,
+          "portfolio_pct": 0.53,
+          "quarter_change_pct": 11.67,
+          "shares_change": 333376
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3026864,
+          "value_usd": 724698899,
+          "portfolio_pct": 3.75,
+          "quarter_change_pct": 3.36,
+          "shares_change": 101835
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 3478272,
+          "value_usd": 620726307,
+          "portfolio_pct": 1.55,
+          "quarter_change_pct": 1.91,
+          "shares_change": 66370
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 2999021,
+          "value_usd": 769835109,
+          "portfolio_pct": 1.73,
+          "quarter_change_pct": -4.39,
+          "shares_change": -131563
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 3322549,
+          "value_usd": 1221092841,
+          "portfolio_pct": 2.43,
+          "quarter_change_pct": -3.73,
+          "shares_change": -123853
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2376020,
+          "value_usd": 464982492,
+          "portfolio_pct": 1.17,
+          "quarter_change_pct": 17.19,
+          "shares_change": 408413
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2124426,
+          "value_usd": 277389885,
+          "portfolio_pct": 2.12,
+          "quarter_change_pct": 8.92,
+          "shares_change": 189595
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2256856,
+          "value_usd": 629765552,
+          "portfolio_pct": 3.93,
+          "quarter_change_pct": -0.44,
+          "shares_change": -9893
+        }
+      ],
+      "total_institutional_shares": 52140018,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "SHY": {
+      "ticker": "SHY",
+      "cusip": "464287382",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 5796397,
+          "value_usd": 1825739692,
+          "portfolio_pct": 1.82,
+          "quarter_change_pct": 9.09,
+          "shares_change": 526788
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4489968,
+          "value_usd": 841475181,
+          "portfolio_pct": 4.67,
+          "quarter_change_pct": -5.29,
+          "shares_change": -237506
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4723105,
+          "value_usd": 757219517,
+          "portfolio_pct": 4.45,
+          "quarter_change_pct": -3.85,
+          "shares_change": -181674
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 4032017,
+          "value_usd": 1014271075,
+          "portfolio_pct": 3.14,
+          "quarter_change_pct": 2.44,
+          "shares_change": 98368
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4747948,
+          "value_usd": 1016913642,
+          "portfolio_pct": 2.99,
+          "quarter_change_pct": 18.85,
+          "shares_change": 894781
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 3630864,
+          "value_usd": 1207572399,
+          "portfolio_pct": 0.17,
+          "quarter_change_pct": 4.85,
+          "shares_change": 175970
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3802104,
+          "value_usd": 460082300,
+          "portfolio_pct": 2.49,
+          "quarter_change_pct": 6.34,
+          "shares_change": 240957
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3882814,
+          "value_usd": 1538514513,
+          "portfolio_pct": 2.78,
+          "quarter_change_pct": -3.51,
+          "shares_change": -136458
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 3034048,
+          "value_usd": 639465646,
+          "portfolio_pct": 2.57,
+          "quarter_change_pct": 22.74,
+          "shares_change": 689932
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 3543459,
+          "value_usd": 1387422422,
+          "portfolio_pct": 1.35,
+          "quarter_change_pct": 5.1,
+          "shares_change": 180616
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 3273870,
+          "value_usd": 1293493262,
+          "portfolio_pct": 0.94,
+          "quarter_change_pct": 10.79,
+          "shares_change": 353366
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 2460276,
+          "value_usd": 741702459,
+          "portfolio_pct": 3.43,
+          "quarter_change_pct": -13.76,
+          "shares_change": -338448
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2886211,
+          "value_usd": 331753831,
+          "portfolio_pct": 1.9,
+          "quarter_change_pct": 7.85,
+          "shares_change": 226600
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2143026,
+          "value_usd": 371719123,
+          "portfolio_pct": 4.32,
+          "quarter_change_pct": -10.76,
+          "shares_change": -230500
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2579343,
+          "value_usd": 412237158,
+          "portfolio_pct": 0.22,
+          "quarter_change_pct": 0.12,
+          "shares_change": 3211
+        }
+      ],
+      "total_institutional_shares": 55025450,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "GLD": {
+      "ticker": "GLD",
+      "cusip": "78463V107",
+      "quarter_date": "2025-12-31",
+      "data_source": "Mock data - replace with SEC EDGAR in production",
+      "top_holders": [
+        {
+          "rank": 1,
+          "institution": "Vanguard Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4850899,
+          "value_usd": 1374229530,
+          "portfolio_pct": 4.2,
+          "quarter_change_pct": 4.47,
+          "shares_change": 216891
+        },
+        {
+          "rank": 2,
+          "institution": "BlackRock Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 4058766,
+          "value_usd": 1702032805,
+          "portfolio_pct": 0.48,
+          "quarter_change_pct": 24.37,
+          "shares_change": 989152
+        },
+        {
+          "rank": 3,
+          "institution": "State Street Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 5068837,
+          "value_usd": 838423004,
+          "portfolio_pct": 0.75,
+          "quarter_change_pct": -10.45,
+          "shares_change": -529458
+        },
+        {
+          "rank": 4,
+          "institution": "Geode Capital Management LLC",
+          "institution_type": "Investment Advisor",
+          "shares": 4284130,
+          "value_usd": 1536304626,
+          "portfolio_pct": 3.35,
+          "quarter_change_pct": 8.66,
+          "shares_change": 371019
+        },
+        {
+          "rank": 5,
+          "institution": "Northern Trust Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 3883908,
+          "value_usd": 1350138761,
+          "portfolio_pct": 4.63,
+          "quarter_change_pct": 3.98,
+          "shares_change": 154427
+        },
+        {
+          "rank": 6,
+          "institution": "Charles Schwab Investment Management",
+          "institution_type": "Investment Advisor",
+          "shares": 3284256,
+          "value_usd": 480850535,
+          "portfolio_pct": 3.27,
+          "quarter_change_pct": 10.39,
+          "shares_change": 341086
+        },
+        {
+          "rank": 7,
+          "institution": "Bank of America Corp",
+          "institution_type": "Investment Advisor",
+          "shares": 4193151,
+          "value_usd": 670124662,
+          "portfolio_pct": 1.5,
+          "quarter_change_pct": 12.17,
+          "shares_change": 510511
+        },
+        {
+          "rank": 8,
+          "institution": "Morgan Stanley",
+          "institution_type": "Investment Advisor",
+          "shares": 3783256,
+          "value_usd": 1099132867,
+          "portfolio_pct": 3.53,
+          "quarter_change_pct": 4.52,
+          "shares_change": 170956
+        },
+        {
+          "rank": 9,
+          "institution": "Goldman Sachs Group Inc",
+          "institution_type": "Investment Advisor",
+          "shares": 2679241,
+          "value_usd": 290315574,
+          "portfolio_pct": 4.6,
+          "quarter_change_pct": -11.86,
+          "shares_change": -317641
+        },
+        {
+          "rank": 10,
+          "institution": "JPMorgan Chase & Co",
+          "institution_type": "Investment Advisor",
+          "shares": 2752631,
+          "value_usd": 777615791,
+          "portfolio_pct": 2.94,
+          "quarter_change_pct": -10.68,
+          "shares_change": -294021
+        },
+        {
+          "rank": 11,
+          "institution": "UBS Group AG",
+          "institution_type": "Investment Advisor",
+          "shares": 2743567,
+          "value_usd": 288670779,
+          "portfolio_pct": 3.36,
+          "quarter_change_pct": -11.54,
+          "shares_change": -316725
+        },
+        {
+          "rank": 12,
+          "institution": "Invesco Ltd",
+          "institution_type": "Investment Advisor",
+          "shares": 2770917,
+          "value_usd": 1170718405,
+          "portfolio_pct": 4.65,
+          "quarter_change_pct": 18.32,
+          "shares_change": 507709
+        },
+        {
+          "rank": 13,
+          "institution": "Capital Research Global Investors",
+          "institution_type": "Investment Advisor",
+          "shares": 2547131,
+          "value_usd": 379462353,
+          "portfolio_pct": 0.62,
+          "quarter_change_pct": 11.25,
+          "shares_change": 286642
+        },
+        {
+          "rank": 14,
+          "institution": "Two Sigma Investments",
+          "institution_type": "Hedge Fund",
+          "shares": 2295279,
+          "value_usd": 951192718,
+          "portfolio_pct": 4.82,
+          "quarter_change_pct": -0.21,
+          "shares_change": -4864
+        },
+        {
+          "rank": 15,
+          "institution": "Renaissance Technologies LLC",
+          "institution_type": "Hedge Fund",
+          "shares": 2155355,
+          "value_usd": 474655049,
+          "portfolio_pct": 2.94,
+          "quarter_change_pct": -7.48,
+          "shares_change": -161146
+        }
+      ],
+      "total_institutional_shares": 51351324,
+      "institutional_ownership_pct": 85.5,
+      "number_of_institutions": 465,
+      "quarter_change_pct": 2.3
+    },
+    "DBC": {
+      "ticker": "DBC",
+      "error": "CUSIP not found",
+      "top_holders": [],
+      "total_shares_held": 0,
+      "institutional_ownership_pct": 0
+    },
+    "ARKK": {
+      "ticker": "ARKK",
+      "error": "CUSIP not found",
+      "top_holders": [],
+      "total_shares_held": 0,
+      "institutional_ownership_pct": 0
+    }
+  }
+}
