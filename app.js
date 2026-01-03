@@ -4890,6 +4890,254 @@ function renderInstitutionalContent(data) {
     container.innerHTML = html;
 }
 
+// Calculate Institutional Confidence Score (1-10)
+function calculateInstitutionalSignal(data) {
+    const holders = data.top_holders || [];
+    
+    if (holders.length === 0) {
+        return {
+            score: 5,
+            rating: 'No Data',
+            summary: 'Insufficient data to calculate confidence score',
+            signal: 'NEUTRAL'
+        };
+    }
+    
+    // Component 1: Net Flow Momentum (0-3 points)
+    // Measure: % of institutions increasing positions
+    const increasingCount = holders.filter(h => h.quarter_change_pct > 0).length;
+    const decreasingCount = holders.filter(h => h.quarter_change_pct < 0).length;
+    const netFlowRatio = (increasingCount - decreasingCount) / holders.length;
+    const flowScore = Math.max(0, Math.min(3, 1.5 + (netFlowRatio * 1.5)));
+    
+    // Component 2: Position Change Magnitude (0-3 points)
+    // Measure: Average % change in holdings
+    const avgChange = holders.reduce((sum, h) => sum + (h.quarter_change_pct || 0), 0) / holders.length;
+    const magnitudeScore = Math.max(0, Math.min(3, 1.5 + (avgChange / 10)));
+    
+    // Component 3: Smart Money Concentration (0-2 points)
+    // Measure: Hedge fund activity vs passive funds
+    const hedgeFunds = holders.filter(h => h.institution_type === 'Hedge Fund');
+    const hedgeFundChange = hedgeFunds.length > 0 
+        ? hedgeFunds.reduce((sum, h) => sum + (h.quarter_change_pct || 0), 0) / hedgeFunds.length
+        : 0;
+    const smartMoneyScore = Math.max(0, Math.min(2, 1 + (hedgeFundChange / 15)));
+    
+    // Component 4: Institutional Commitment (0-2 points)
+    // Measure: Large position sizes relative to portfolios
+    const highCommitment = holders.filter(h => h.portfolio_pct > 1.0).length;
+    const commitmentScore = Math.max(0, Math.min(2, (highCommitment / holders.length) * 2));
+    
+    // Total Score (1-10)
+    const rawScore = flowScore + magnitudeScore + smartMoneyScore + commitmentScore;
+    const score = Math.max(1, Math.min(10, Math.round(rawScore)));
+    
+    // Determine rating and styling
+    let rating, scoreColor, confidencePercent, trendIcon, trendText, signal;
+    
+    if (score >= 8) {
+        rating = 'Very Bullish';
+        scoreColor = 'from-green-600 to-green-700';
+        confidencePercent = 90 + (score - 8) * 5;
+        trendIcon = '🚀';
+        trendText = 'Strong Accumulation';
+        signal = 'STRONG BUY';
+    } else if (score >= 7) {
+        rating = 'Bullish';
+        scoreColor = 'from-green-500 to-green-600';
+        confidencePercent = 75 + (score - 7) * 10;
+        trendIcon = '📈';
+        trendText = 'Accumulation';
+        signal = 'BUY';
+    } else if (score >= 6) {
+        rating = 'Slightly Bullish';
+        scoreColor = 'from-blue-500 to-blue-600';
+        confidencePercent = 60 + (score - 6) * 10;
+        trendIcon = '➕';
+        trendText = 'Modest Buying';
+        signal = 'ACCUMULATE';
+    } else if (score >= 5) {
+        rating = 'Neutral';
+        scoreColor = 'from-gray-500 to-gray-600';
+        confidencePercent = 50 + (score - 5) * 10;
+        trendIcon = '➡️';
+        trendText = 'Mixed Activity';
+        signal = 'HOLD';
+    } else if (score >= 4) {
+        rating = 'Slightly Bearish';
+        scoreColor = 'from-yellow-500 to-yellow-600';
+        confidencePercent = 40 + (score - 4) * 10;
+        trendIcon = '➖';
+        trendText = 'Modest Selling';
+        signal = 'REDUCE';
+    } else if (score >= 3) {
+        rating = 'Bearish';
+        scoreColor = 'from-orange-500 to-orange-600';
+        confidencePercent = 25 + (score - 3) * 10;
+        trendIcon = '📉';
+        trendText = 'Distribution';
+        signal = 'SELL';
+    } else {
+        rating = 'Very Bearish';
+        scoreColor = 'from-red-600 to-red-700';
+        confidencePercent = 10 + (score - 1) * 10;
+        trendIcon = '⚠️';
+        trendText = 'Heavy Selling';
+        signal = 'STRONG SELL';
+    }
+    
+    // Generate metrics breakdown
+    const metrics = [
+        {
+            label: 'Flow Momentum',
+            value: `${increasingCount}/${holders.length}`,
+            description: 'Institutions buying',
+            icon: increasingCount > decreasingCount ? '📊' : '📉',
+            colorClass: increasingCount > decreasingCount ? 'border-green-300' : 'border-red-300',
+            valueColor: increasingCount > decreasingCount ? 'text-green-600' : 'text-red-600',
+            barColor: increasingCount > decreasingCount ? 'bg-green-500' : 'bg-red-500',
+            barWidth: (increasingCount / holders.length) * 100
+        },
+        {
+            label: 'Position Change',
+            value: avgChange >= 0 ? `+${avgChange.toFixed(1)}%` : `${avgChange.toFixed(1)}%`,
+            description: 'Avg. quarterly change',
+            icon: avgChange >= 0 ? '📈' : '📉',
+            colorClass: avgChange >= 0 ? 'border-green-300' : 'border-red-300',
+            valueColor: avgChange >= 0 ? 'text-green-600' : 'text-red-600',
+            barColor: avgChange >= 0 ? 'bg-green-500' : 'bg-red-500',
+            barWidth: Math.min(100, Math.abs(avgChange) * 5)
+        },
+        {
+            label: 'Smart Money',
+            value: hedgeFunds.length > 0 ? `${hedgeFunds.length} funds` : 'None',
+            description: hedgeFundChange >= 0 ? 'Hedge funds buying' : 'Hedge funds selling',
+            icon: hedgeFunds.length > 0 ? '🎯' : '📊',
+            colorClass: hedgeFundChange >= 0 ? 'border-purple-300' : 'border-gray-300',
+            valueColor: hedgeFundChange >= 0 ? 'text-purple-600' : 'text-gray-600',
+            barColor: hedgeFundChange >= 0 ? 'bg-purple-500' : 'bg-gray-400',
+            barWidth: hedgeFunds.length > 0 ? (hedgeFunds.length / holders.length) * 100 : 10
+        },
+        {
+            label: 'Commitment',
+            value: `${highCommitment} high`,
+            description: '> 1% of portfolio',
+            icon: '💼',
+            colorClass: highCommitment >= holders.length/3 ? 'border-blue-300' : 'border-gray-300',
+            valueColor: highCommitment >= holders.length/3 ? 'text-blue-600' : 'text-gray-600',
+            barColor: highCommitment >= holders.length/3 ? 'bg-blue-500' : 'bg-gray-400',
+            barWidth: (highCommitment / holders.length) * 100
+        }
+    ];
+    
+    // Generate plain English interpretation
+    let interpretation = '';
+    let actionable = [];
+    
+    if (score >= 8) {
+        interpretation = `Institutional investors are showing STRONG confidence in this ETF. ${increasingCount} out of ${holders.length} major institutions increased their positions last quarter, with an average increase of ${avgChange.toFixed(1)}%. This level of coordinated buying from sophisticated investors suggests strong conviction in the fund's prospects.`;
+        actionable = [
+            'Consider this a strong positive signal for long-term holdings',
+            'Institutional accumulation often precedes outperformance',
+            'Monitor for continued buying in next quarter to confirm trend'
+        ];
+    } else if (score >= 7) {
+        interpretation = `Institutions are actively accumulating this ETF. The majority of tracked institutions (${increasingCount} of ${holders.length}) increased positions, signaling growing institutional confidence. This buying pressure typically supports price appreciation.`;
+        actionable = [
+            'Positive signal for existing holders to maintain position',
+            'May be a good entry point for new investors',
+            'Watch for continued institutional interest'
+        ];
+    } else if (score >= 6) {
+        interpretation = `Modest institutional buying is occurring. While ${increasingCount} institutions added to positions, the overall flow is moderately positive with an average change of ${avgChange.toFixed(1)}%. This suggests cautious optimism among professional investors.`;
+        actionable = [
+            'Neutral to slightly positive signal',
+            'Not a strong buy signal, but institutions are not fleeing',
+            'Consider as part of broader market analysis'
+        ];
+    } else if (score >= 5) {
+        interpretation = `Institutional activity is MIXED with no clear directional bias. Buying and selling are roughly balanced (${increasingCount} buyers vs ${decreasingCount} sellers), suggesting institutions are divided on near-term outlook. This is neither bullish nor bearish.`;
+        actionable = [
+            'No strong institutional signal to act on',
+            'Wait for clearer trend before making moves',
+            'Focus on fundamental analysis instead'
+        ];
+    } else if (score >= 4) {
+        interpretation = `Some institutional profit-taking is evident. More institutions reduced positions (${decreasingCount}) than increased (${increasingCount}), with an average change of ${avgChange.toFixed(1)}%. This could indicate near-term caution but isn't necessarily alarming.`;
+        actionable = [
+            'Consider reducing position size if overweight',
+            'Not necessarily a sell signal - could be rebalancing',
+            'Monitor next quarter for trend confirmation'
+        ];
+    } else if (score >= 3) {
+        interpretation = `Institutions are actively REDUCING exposure. ${decreasingCount} of ${holders.length} major holders decreased positions last quarter, averaging ${avgChange.toFixed(1)}%. This coordinated selling suggests institutional concern about near-term performance.`;
+        actionable = [
+            'Caution warranted - institutions are exiting',
+            'Review your investment thesis carefully',
+            'Consider trimming or exiting position'
+        ];
+    } else {
+        interpretation = `HEAVY institutional selling detected. The vast majority of institutions (${decreasingCount} of ${holders.length}) reduced holdings significantly, averaging ${avgChange.toFixed(1)}%. This level of coordinated selling is a strong negative signal.`;
+        actionable = [
+            'Serious warning sign - reconsider holding',
+            'Institutional exodus suggests fundamental concerns',
+            'Strongly consider reducing or exiting position'
+        ];
+    }
+    
+    // Methodology breakdown
+    const methodology = [
+        {
+            component: 'Flow',
+            points: 3,
+            metric: 'Buy/Sell Ratio',
+            explanation: `Measures what percentage of institutions are buying vs selling. ${increasingCount} buying, ${decreasingCount} selling out of ${holders.length} total.`,
+            yourScore: flowScore.toFixed(1),
+            scoreColor: flowScore >= 2 ? 'text-green-600 font-semibold' : flowScore >= 1.5 ? 'text-gray-600' : 'text-red-600 font-semibold'
+        },
+        {
+            component: 'Magnitude',
+            points: 3,
+            metric: 'Position Changes',
+            explanation: `Average size of position changes. Larger changes (up or down) indicate stronger conviction. Current: ${avgChange >= 0 ? '+' : ''}${avgChange.toFixed(1)}%.`,
+            yourScore: magnitudeScore.toFixed(1),
+            scoreColor: magnitudeScore >= 2 ? 'text-green-600 font-semibold' : magnitudeScore >= 1.5 ? 'text-gray-600' : 'text-red-600 font-semibold'
+        },
+        {
+            component: 'Smart Money',
+            points: 2,
+            metric: 'Hedge Fund Activity',
+            explanation: `Hedge funds are generally more active and sophisticated. ${hedgeFunds.length} hedge funds tracked, averaging ${hedgeFundChange >= 0 ? '+' : ''}${hedgeFundChange.toFixed(1)}% change.`,
+            yourScore: smartMoneyScore.toFixed(1),
+            scoreColor: smartMoneyScore >= 1.5 ? 'text-green-600 font-semibold' : smartMoneyScore >= 1 ? 'text-gray-600' : 'text-red-600 font-semibold'
+        },
+        {
+            component: 'Commitment',
+            points: 2,
+            metric: 'Portfolio Weight',
+            explanation: `How much of their portfolio institutions allocate here. ${highCommitment} institutions have >1% allocation, showing strong conviction.`,
+            yourScore: commitmentScore.toFixed(1),
+            scoreColor: commitmentScore >= 1.5 ? 'text-green-600 font-semibold' : commitmentScore >= 1 ? 'text-gray-600' : 'text-red-600 font-semibold'
+        }
+    ];
+    
+    return {
+        score,
+        rating,
+        scoreColor,
+        confidencePercent: Math.round(confidencePercent),
+        trendIcon,
+        trendText,
+        signal,
+        summary: interpretation,
+        interpretation,
+        actionable,
+        metrics,
+        methodology,
+        quarter: data.quarter_date || 'Latest'
+    };
+}
+
 function showInstitutionalHoldings(ticker) {
     if (!institutionalData) return;
     
@@ -4899,6 +5147,9 @@ function showInstitutionalHoldings(ticker) {
         return;
     }
     
+    // Calculate Institutional Confidence Score
+    const analysis = calculateInstitutionalSignal(holdings);
+    
     const container = document.getElementById('institutional-holdings-detail');
     
     const topHolders = holdings.top_holders;
@@ -4907,8 +5158,107 @@ function showInstitutionalHoldings(ticker) {
     
     let html = `
         <div class="card">
-            <h3 class="text-2xl font-bold mb-4">${ticker} - Top Institutional Holders</h3>
+            <h3 class="text-2xl font-bold mb-4">${ticker} - Institutional Analysis</h3>
             
+            <!-- INSTITUTIONAL CONFIDENCE SCORE CARD -->
+            <div class="bg-gradient-to-r ${analysis.scoreColor} p-6 rounded-lg shadow-lg mb-6">
+                <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                        <div class="flex items-center mb-2">
+                            <span class="text-sm font-semibold text-white uppercase tracking-wide">Institutional Confidence Score</span>
+                            <span class="ml-2 px-2 py-0.5 bg-white bg-opacity-30 rounded text-xs text-white font-semibold">${analysis.quarter}</span>
+                        </div>
+                        <div class="flex items-baseline mb-3">
+                            <span class="text-6xl font-bold text-white">${analysis.score}</span>
+                            <span class="text-3xl text-white opacity-75 ml-1">/10</span>
+                            <span class="ml-4 text-2xl font-semibold text-white">${analysis.rating}</span>
+                        </div>
+                        <p class="text-white text-opacity-90 text-base mb-3">${analysis.summary.substring(0, 180)}...</p>
+                        <div class="flex items-center space-x-4 text-white text-opacity-90">
+                            <div class="flex items-center">
+                                <span class="text-2xl mr-2">${analysis.trendIcon}</span>
+                                <span class="font-semibold">${analysis.trendText}</span>
+                            </div>
+                            <div class="border-l border-white border-opacity-30 pl-4">
+                                <span class="text-sm opacity-75">Signal: </span>
+                                <span class="font-bold">${analysis.signal}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ml-6 text-right">
+                        <div class="bg-white bg-opacity-20 rounded-lg p-4 backdrop-blur-sm">
+                            <div class="text-white text-opacity-75 text-xs uppercase tracking-wide mb-1">Confidence</div>
+                            <div class="text-4xl font-bold text-white">${analysis.confidencePercent}%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SIGNAL BREAKDOWN -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                ${analysis.metrics.map(m => `
+                    <div class="bg-white border-2 ${m.colorClass} rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-semibold text-gray-600 uppercase tracking-wide">${m.label}</span>
+                            <span class="text-2xl">${m.icon}</span>
+                        </div>
+                        <div class="text-2xl font-bold ${m.valueColor} mb-1">${m.value}</div>
+                        <div class="text-xs text-gray-600">${m.description}</div>
+                        <div class="mt-2 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="${m.barColor} h-full rounded-full" style="width: ${m.barWidth}%"></div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            
+            <!-- WHAT THIS MEANS (Plain English Explanation) -->
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <span class="text-2xl">💡</span>
+                    </div>
+                    <div class="ml-3">
+                        <h4 class="text-sm font-semibold text-blue-900 mb-2">What This Means For You</h4>
+                        <p class="text-sm text-blue-800">${analysis.interpretation}</p>
+                        ${analysis.actionable ? `
+                            <div class="mt-3 pt-3 border-t border-blue-200">
+                                <span class="text-xs font-semibold text-blue-900 uppercase tracking-wide">Recommended Actions:</span>
+                                <ul class="mt-2 space-y-1 text-sm text-blue-800">
+                                    ${analysis.actionable.map(a => `<li class="flex items-start"><span class="mr-2">•</span><span>${a}</span></li>`).join('')}
+                                </ul>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SCORE METHODOLOGY -->
+            <details class="mb-6 bg-gray-50 rounded-lg">
+                <summary class="cursor-pointer p-4 font-semibold text-gray-700 hover:bg-gray-100 rounded-lg">
+                    📊 How We Calculate This Score
+                </summary>
+                <div class="p-4 pt-2 text-sm text-gray-600 space-y-2">
+                    <p class="font-semibold text-gray-700 mb-3">The Institutional Confidence Score (1-10) combines four key factors:</p>
+                    ${analysis.methodology.map(m => `
+                        <div class="flex items-start py-2 border-b border-gray-200 last:border-0">
+                            <div class="flex-shrink-0 w-24">
+                                <span class="font-semibold text-gray-700">${m.component}</span>
+                                <div class="text-xs text-gray-500">(${m.points} pts)</div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-700 mb-1">${m.metric}</div>
+                                <div class="text-gray-600">${m.explanation}</div>
+                                <div class="mt-1 text-xs ${m.scoreColor}">Your score: ${m.yourScore} / ${m.points}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                    <div class="mt-4 p-3 bg-blue-100 rounded">
+                        <p class="text-xs text-gray-700"><strong>Industry Context:</strong> Scores above 7 indicate strong institutional support (bullish signal), 4-7 is neutral/mixed (no clear signal), below 4 suggests institutional caution or profit-taking (bearish signal).</p>
+                    </div>
+                </div>
+            </details>
+            
+            <!-- Summary Stats -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 <div class="bg-blue-50 p-4 rounded-lg">
                     <div class="text-sm text-gray-600">Institutional Ownership</div>
@@ -4924,6 +5274,8 @@ function showInstitutionalHoldings(ticker) {
                 </div>
             </div>
             
+            <!-- Top Holders Table -->
+            <h4 class="font-bold text-lg mb-3">Top Institutional Holders</h4>
             <div class="overflow-x-auto">
                 <table class="min-w-full">
                     <thead class="bg-gray-50">
