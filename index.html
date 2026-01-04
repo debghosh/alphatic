@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alphatic Educational Edition - Portfolio Analysis & Learning</title>
+    
+    <!-- Tailwind CSS via CDN (Development Only) -->
+    <!-- For production, install Tailwind CSS properly: https://tailwindcss.com/docs/installation -->
+    <!-- This CDN version works fine for testing and development -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Load scripts with defer to ensure they're available when page renders -->
     <script defer src="data.js"></script>
     <script defer src="portfolios.js"></script>
     <script defer src="educational.js"></script>
+    <script defer src="life_stage_config.js"></script>
+    <script defer src="life_stage.js"></script>
     <script defer src="app.js"></script>
     
     <style>
@@ -222,6 +228,7 @@
     <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div class="container mx-auto px-4">
             <div class="flex space-x-1">
+                <div class="nav-item" onclick="showView('lifestage')">👤 Your Portfolio</div>
                 <div class="nav-item active" onclick="showView('learn')">📚 Learn</div>
                 <div class="nav-item" onclick="showView('builder')">🏗️ Build</div>
                 <div class="nav-item" onclick="showView('analysis')">📊 Analyze</div>
@@ -234,6 +241,11 @@
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-6">
+        
+        <!-- LIFE-STAGE VIEW - Personalized Portfolio Recommendations -->
+        <div id="lifestage-view" class="view">
+            <div id="life-stage-content"></div>
+        </div>
         
         <!-- LEARN VIEW - Educational Portfolios -->
         <div id="learn-view" class="view active">

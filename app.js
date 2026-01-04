@@ -168,6 +168,14 @@ function showView(viewName) {
     
     // Load view content
     switch(viewName) {
+        case 'lifestage':
+            // Check if user has profile, show questionnaire or recommendation
+            if (typeof userProfile !== 'undefined' && userProfile) {
+                showLifeStageRecommendation();
+            } else {
+                showLifeStageQuestionnaire();
+            }
+            break;
         case 'builder':
             renderPortfolioBuilder();
             break;
