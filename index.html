@@ -15,6 +15,9 @@
     <script defer src="portfolios.js"></script>
     <script defer src="educational.js"></script>
     <script defer src="life_stage_config.js"></script>
+    <script defer src="goal_portfolios.js"></script>
+    <script defer src="market_conditions.js"></script>
+    <script defer src="technical_analysis.js"></script>
     <script defer src="life_stage.js"></script>
     <script defer src="app.js"></script>
     
@@ -227,13 +230,15 @@
     <!-- Navigation -->
     <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div class="container mx-auto px-4">
-            <div class="flex space-x-1">
+            <div class="flex space-x-1 overflow-x-auto">
                 <div class="nav-item" onclick="showView('lifestage')">👤 Your Portfolio</div>
                 <div class="nav-item active" onclick="showView('learn')">📚 Learn</div>
                 <div class="nav-item" onclick="showView('builder')">🏗️ Build</div>
                 <div class="nav-item" onclick="showView('analysis')">📊 Analyze</div>
                 <div class="nav-item" onclick="showView('backtest')">📈 Backtest</div>
                 <div class="nav-item" onclick="showView('compare')">⚖️ Compare</div>
+                <div class="nav-item" onclick="showView('market')">🌦️ Market Conditions</div>
+                <div class="nav-item" onclick="showView('technical')">📉 Technical</div>
                 <div class="nav-item" onclick="showView('institutional')">🏛️ Institutional</div>
             </div>
         </div>
@@ -342,6 +347,16 @@
         <!-- INSTITUTIONAL HOLDINGS VIEW -->
         <div id="institutional-view" class="view">
             <div id="institutional-view-content"></div>
+        </div>
+        
+        <!-- MARKET CONDITIONS VIEW -->
+        <div id="market-view" class="view">
+            <div id="market-conditions-content"></div>
+        </div>
+        
+        <!-- TECHNICAL ANALYSIS VIEW -->
+        <div id="technical-view" class="view">
+            <div id="technical-analysis-content"></div>
         </div>
     </main>
 

@@ -318,14 +318,31 @@ function showLifeStageRecommendation() {
     
     // Classify life stage
     const lifeStageKey = classifyLifeStage(userProfile);
-    const recommendation = recommendPortfolio(lifeStageKey, userProfile.riskTolerance);
+    const lifeStage = LIFE_STAGE_TEMPLATES[lifeStageKey];
     
-    if (!recommendation) {
-        console.error('Could not generate recommendation');
+    if (!lifeStage) {
+        console.error('Could not find life stage template:', lifeStageKey);
         return;
     }
     
-    const { lifeStage, portfolio, portfolioType } = recommendation;
+    // Use goal-based blending if goals are present
+    let portfolio;
+    if (userProfile.goals && userProfile.goals.length > 0 && typeof blendGoalPortfolios === 'function') {
+        console.log('Using goal-based portfolio blending for goals:', userProfile.goals);
+        portfolio = blendGoalPortfolios(lifeStageKey, userProfile.riskTolerance, userProfile.goals);
+    } else {
+        // Fallback to old system if goals not available
+        console.log('Using traditional risk-based portfolio');
+        const recommendation = recommendPortfolio(lifeStageKey, userProfile.riskTolerance);
+        portfolio = recommendation.portfolio;
+    }
+    
+    if (!portfolio) {
+        console.error('Could not generate portfolio recommendation');
+        return;
+    }
+    
+    const portfolioType = userProfile.riskTolerance;
     
     const container = document.getElementById('life-stage-content');
     

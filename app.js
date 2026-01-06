@@ -40,11 +40,15 @@ const ETF_DATABASE = {
         { symbol: 'USMV', name: 'iShares MSCI USA Min Vol', expense: 0.15, factor: 'Low Volatility', beta: 0.75, inception: '2011-10-18' },
         { symbol: 'IMOM', name: 'iShares MSCI Intl Momentum', expense: 0.30, factor: 'Momentum', beta: 0.95, inception: '2014-01-28' }
     ],
-    'Dividend': [
-        { symbol: 'SCHD', name: 'Schwab U.S. Dividend Equity', expense: 0.06, factor: 'Dividend', beta: 0.95, inception: '2011-10-20' },
-        { symbol: 'VYM', name: 'Vanguard High Dividend Yield', expense: 0.06, factor: 'Dividend', beta: 0.95, inception: '2006-11-10' },
-        { symbol: 'VYMI', name: 'Vanguard International High Dividend', expense: 0.22, factor: 'Dividend', beta: 0.85, inception: '2016-02-25' },
-        { symbol: 'HDV', name: 'iShares Core High Dividend', expense: 0.08, factor: 'Dividend', beta: 0.93, inception: '2011-03-29' }
+    'Dividend & Income': [
+        // Covered Call ETFs (High Yield via Options)
+        { symbol: 'JEPI', name: 'JPMorgan Equity Premium Income', expense: 0.35, factor: 'Income', beta: 0.75, inception: '2020-05-20', yield: 7.5 },
+        { symbol: 'JEPQ', name: 'JPMorgan Nasdaq Equity Premium Income', expense: 0.35, factor: 'Income', beta: 0.85, inception: '2022-05-03', yield: 9.0 },
+        // Dividend Growth ETFs
+        { symbol: 'SCHD', name: 'Schwab U.S. Dividend Equity', expense: 0.06, factor: 'Dividend', beta: 0.95, inception: '2011-10-20', yield: 3.5 },
+        { symbol: 'VYM', name: 'Vanguard High Dividend Yield', expense: 0.06, factor: 'Dividend', beta: 0.95, inception: '2006-11-10', yield: 3.0 },
+        { symbol: 'VYMI', name: 'Vanguard International High Dividend', expense: 0.22, factor: 'Dividend', beta: 0.85, inception: '2016-02-25', yield: 3.8 },
+        { symbol: 'HDV', name: 'iShares Core High Dividend', expense: 0.08, factor: 'Dividend', beta: 0.93, inception: '2011-03-29', yield: 3.2 }
     ],
     'International Equity': [
         { symbol: 'VXUS', name: 'Vanguard Total International Stock', expense: 0.07, factor: 'International', beta: 0.85, inception: '2011-01-26' },
@@ -187,6 +191,12 @@ function showView(viewName) {
             break;
         case 'compare':
             renderCompareView();
+            break;
+        case 'market':
+            renderMarketConditionsView();
+            break;
+        case 'technical':
+            renderTechnicalAnalysisView();
             break;
         case 'institutional':
             renderInstitutionalView();
@@ -5362,3 +5372,226 @@ function makeETFsClickable() {
 }
 
 console.log('Alphatic Compare Portfolios feature loaded! 📊');
+// ============================================================================
+// MARKET CONDITIONS VIEW
+// ============================================================================
+
+function renderMarketConditionsView() {
+    const container = document.getElementById('market-conditions-content');
+    
+    // Detect current regime
+    const regimeAnalysis = detectCurrentMarketRegime('SPY');
+    
+    if (!regimeAnalysis) {
+        container.innerHTML = `
+            <div class="max-w-4xl mx-auto text-center py-12">
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-lg">
+                    <h3 class="text-lg font-bold text-yellow-900 mb-2">
+                        ⚠️ Unable to Detect Market Conditions
+                    </h3>
+                    <p class="text-yellow-800 mb-4">
+                        Not enough historical data available. Market regime detection requires at least 252 days (1 year) of price data.
+                    </p>
+                    <p class="text-sm text-yellow-700">
+                        Current SPY data available: Check console for details
+                    </p>
+                </div>
+            </div>
+        `;
+        return;
+    }
+    
+    const { regime, regimeData, metrics } = regimeAnalysis;
+    
+    // Get tactical allocation if user has a portfolio
+    let tacticalRec = null;
+    if (currentPortfolio && currentPortfolio.allocation) {
+        tacticalRec = getTacticalAllocation(currentPortfolio, regimeAnalysis);
+    }
+    
+    const html = `
+        <div class="max-w-6xl mx-auto">
+            <!-- Header -->
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">
+                    🌦️ Current Market Conditions
+                </h2>
+                <p class="text-gray-600">Tactical asset allocation based on market regime - "Bat according to the pitch"</p>
+            </div>
+            
+            <!-- Current Regime Card -->
+            <div class="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl shadow-2xl p-8 text-white mb-8">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <div class="text-sm text-blue-200 mb-2">CURRENT MARKET REGIME</div>
+                        <h3 class="text-3xl font-bold mb-2">${regimeData.icon} ${regimeData.name}</h3>
+                        <p class="text-blue-100">${regimeData.description}</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                    <div class="bg-white bg-opacity-20 rounded-lg p-4">
+                        <div class="text-sm text-blue-200">Trend</div>
+                        <div class="text-2xl font-bold">${capitalize(metrics.trend)}</div>
+                    </div>
+                    <div class="bg-white bg-opacity-20 rounded-lg p-4">
+                        <div class="text-sm text-blue-200">Est. VIX</div>
+                        <div class="text-2xl font-bold">${metrics.estimatedVIX}</div>
+                    </div>
+                    <div class="bg-white bg-opacity-20 rounded-lg p-4">
+                        <div class="text-sm text-blue-200">S&P 500</div>
+                        <div class="text-2xl font-bold">$${metrics.currentPrice}</div>
+                    </div>
+                    <div class="bg-white bg-opacity-20 rounded-lg p-4">
+                        <div class="text-sm text-blue-200">Drawdown</div>
+                        <div class="text-2xl font-bold">${metrics.drawdown}%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Strategy Recommendation -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h4 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                        <span class="text-2xl mr-2">🎯</span>
+                        Recommended Strategy
+                    </h4>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="text-sm text-gray-600 mb-1">Stock Allocation</div>
+                            <div class="text-2xl font-bold text-gray-900">
+                                ${regimeData.strategy.stock_allocation[0]}-${regimeData.strategy.stock_allocation[1]}%
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="text-sm font-semibold text-gray-700 mb-2">Recommended ETFs:</div>
+                            <div class="flex flex-wrap gap-2">
+                                ${regimeData.strategy.recommended_etfs.map(etf => `
+                                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                                        ${etf}
+                                    </span>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="text-sm font-semibold text-gray-700 mb-2">Avoid:</div>
+                            <div class="flex flex-wrap gap-2">
+                                ${regimeData.strategy.avoid_etfs.map(etf => `
+                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">
+                                        ${etf}
+                                    </span>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-6">
+                    <h4 class="text-lg font-bold text-blue-900 mb-3 flex items-center">
+                        <span class="text-2xl mr-2">💡</span>
+                        Strategy Explanation
+                    </h4>
+                    <p class="text-blue-800">${regimeData.strategy.explanation}</p>
+                </div>
+            </div>
+            
+            ${tacticalRec ? `
+            <!-- Your Portfolio Analysis -->
+            <div class="bg-white rounded-lg shadow p-6 mb-8">
+                <h4 class="text-lg font-bold text-gray-900 mb-4">
+                    📊 Your Portfolio vs Market Conditions
+                </h4>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div>
+                        <div class="text-sm text-gray-600 mb-1">Your Current Allocation</div>
+                        <div class="text-2xl font-bold text-gray-900">${tacticalRec.currentAllocation.stocks}% Stocks</div>
+                        <div class="text-sm text-gray-600">${tacticalRec.currentAllocation.bonds}% Bonds</div>
+                    </div>
+                    <div>
+                        <div class="text-sm text-gray-600 mb-1">Recommended for This Market</div>
+                        <div class="text-2xl font-bold text-blue-600">${tacticalRec.recommendedAllocation.stocks}% Stocks</div>
+                        <div class="text-sm text-gray-600">${tacticalRec.recommendedAllocation.bonds}% Bonds</div>
+                    </div>
+                    <div>
+                        <div class="text-sm text-gray-600 mb-1">Adjustment Needed</div>
+                        <div class="text-2xl font-bold ${tacticalRec.adjustment.stocks > 0 ? 'text-green-600' : tacticalRec.adjustment.stocks < 0 ? 'text-red-600' : 'text-gray-600'}">
+                            ${tacticalRec.adjustment.stocks > 0 ? '+' : ''}${tacticalRec.adjustment.stocks.toFixed(0)}% Stocks
+                        </div>
+                        <div class="text-sm text-gray-600">
+                            ${tacticalRec.needsRebalancing ? '⚠️ Rebalancing recommended' : '✓ Well positioned'}
+                        </div>
+                    </div>
+                </div>
+                
+                ${tacticalRec.needsRebalancing ? `
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded">
+                    <h5 class="font-semibold text-yellow-900 mb-2">Suggested Actions:</h5>
+                    <ul class="space-y-1">
+                        ${tacticalRec.actions.map(action => `
+                            <li class="text-yellow-800 text-sm">• ${action}</li>
+                        `).join('')}
+                    </ul>
+                </div>
+                ` : `
+                <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded">
+                    <p class="text-green-800">✓ Your portfolio allocation is appropriate for current market conditions.</p>
+                </div>
+                `}
+            </div>
+            ` : ''}
+            
+            <!-- All Market Regimes Reference -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h4 class="text-lg font-bold text-gray-900 mb-4">📚 Market Regime Reference Guide</h4>
+                <p class="text-sm text-gray-600 mb-4">Cricket analogy: Different market conditions require different strategies, just like batting on different pitches</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    ${Object.entries(MARKET_REGIMES).map(([key, data]) => `
+                        <div class="border-2 ${key === regime ? 'border-blue-500 bg-blue-50' : 'border-gray-200'} rounded-lg p-4">
+                            <div class="flex items-center mb-2">
+                                <span class="text-3xl mr-2">${data.icon}</span>
+                                <div>
+                                    <div class="font-bold text-gray-900">${data.name}</div>
+                                    ${key === regime ? '<div class="text-xs text-blue-600 font-semibold">CURRENT</div>' : ''}
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-700 mb-2">${data.description}</p>
+                            <div class="text-sm">
+                                <strong>Stocks:</strong> ${data.strategy.stock_allocation[0]}-${data.strategy.stock_allocation[1]}%
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        </div>
+    `;
+    
+    container.innerHTML = html;
+}
+
+// ============================================================================
+// TECHNICAL ANALYSIS VIEW
+// ============================================================================
+
+function renderTechnicalAnalysisView() {
+    const container = document.getElementById('technical-analysis-content');
+    
+    // Default to SPY
+    const defaultTicker = 'SPY';
+    
+    // Check if ETF data is available
+    if (!ETF_DATA[defaultTicker]) {
+        container.innerHTML = `
+            <div class="text-center py-12">
+                <p class="text-gray-600">ETF data not loaded. Please refresh the page.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Show technical analysis for default ticker
+    showTechnicalAnalysis(defaultTicker);
+}
+
+console.log('✓ Market Conditions and Technical Analysis views loaded');
